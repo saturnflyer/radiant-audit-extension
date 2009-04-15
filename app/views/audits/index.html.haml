@@ -1,0 +1,11 @@
+%h1 Listing Audits
+%table
+  %thead
+    %tr
+      %th="Time"
+      %th="Log Message"
+  %tbody
+    -@audits.each do |a|
+      %tr
+        %td= a.created_at
+        %td= a.log_message
