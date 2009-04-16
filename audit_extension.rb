@@ -12,11 +12,17 @@ class AuditExtension < Radiant::Extension
     end
   end
   
+  OBSERVABLES = [User, Page, Layout, Snippet]
+  
   def activate
     AuditObserver.instance
     ApplicationController.send :include, Audit::ApplicationExtensions
     Admin::WelcomeController.send :include, Audit::WelcomeControllerExtensions
     User.send :include, Audit::UserExtensions
+
+    #registration is open for business!
+    Dir.glob(File.join(AuditExtension.root, 'lib', '*_registration.rb')).each { |f| require_dependency f }
+
     admin.tabs.add "Audit", "/admin/audits", :after => "Layouts", :visibility => [:all]
   end
   

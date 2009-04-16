@@ -1,5 +1,5 @@
 class AuditObserver < ActiveRecord::Observer
-  observe User, Page, Layout, Snippet
+  observe AuditExtension::OBSERVABLES
   
   cattr_accessor :current_user
   cattr_accessor :current_ip
