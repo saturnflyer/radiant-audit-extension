@@ -1,5 +1,8 @@
 module Audit
   module TYPES
+    extend ActionView::Helpers::UrlHelper
+    extend ActionController::PolymorphicRoutes
+    
     # :MOVE
     def self.register(action, &block)
       audit_type = AuditType.find_or_create_by_name(action.to_s)
@@ -11,24 +14,24 @@ module Audit
 
     register :CREATE do |event|
       name = if event.auditable.respond_to?(:name)
-        event.auditable.name
+        link_to(event.auditable.name, "/admin/#{event.auditable.name.pluralize.downcase}/#{event.auditable.id}")
       elsif event.auditable.respond_to?(:title)
-        event.auditable.title
+        link_to(event.auditable.title, "/admin/#{event.auditable.name.pluralize.downcase}/#{event.auditable.id}")
       else
         "#{event.auditable.class.name} #{event.auditable.id}"
       end
-        "#{event.user.name} created #{name}"
+      link_to("#{event.user.name}", "/admin/users/#{event.user.id}") + " created #{name}"
     end
 
     register :UPDATE do |event|
       name = if event.auditable.respond_to?(:name)
-        event.auditable.name
+        link_to(event.auditable.name, "/admin/#{event.auditable.name.pluralize.downcase}/#{event.auditable.id}")
       elsif event.auditable.respond_to?(:title)
-        event.auditable.title
+        link_to(event.auditable.title, "/admin/#{event.auditable.name.pluralize.downcase}/#{event.auditable.id}")
       else
         "#{event.auditable.class.name} #{event.auditable.id}"
       end
-        "#{event.user.name} updated #{name}"
+      "#{event.user.name} updated #{name}"
     end
 
     register :DESTROY  do |event|
@@ -39,15 +42,15 @@ module Audit
       else
         "#{event.auditable.class.name} #{event.auditable.id}"
       end
-        "#{event.user.name} deleted #{name}"
+      link_to("#{event.user.name}", "/admin/users/#{event.user.id}") + " deleted #{name}"
     end
 
     register :LOGIN do |event|
-      "#{event.user.name} logged in"
+      link_to("#{event.user.name}", "/admin/users/#{event.user.id}") + " logged in"
     end
 
     register :LOGOUT do |event|
-      "#{event.user.name} logged out"
+      link_to("#{event.user.name}", "/admin/users/#{event.user.id}") + " logged out"
     end
   end
 end          
