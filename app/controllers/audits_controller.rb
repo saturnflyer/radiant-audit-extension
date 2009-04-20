@@ -10,7 +10,7 @@ class AuditsController < ApplicationController
     # default order by date
     @startdate = params[:startdate].nil? ? Date.today : Date.parse(params[:startdate])
     @enddate = params[:enddate].nil? ? @startdate.next : Date.parse(params[:enddate])
-    @next_date = AuditEvent.find(:first, :select => :created_at, :conditions => ["created_at > ?", @enddate], :order => "created_at DESC")
+    @next_date = AuditEvent.find(:first, :select => :created_at, :conditions => ["created_at > ?", @enddate], :order => "created_at ASC")
     @previous_date = AuditEvent.find(:first, :select => :created_at, :conditions => ["created_at < ?", @startdate], :order => "created_at DESC")
     @next_date = @next_date.created_at unless @next_date.nil?
     @previous_date = @previous_date.created_at unless @previous_date.nil?
