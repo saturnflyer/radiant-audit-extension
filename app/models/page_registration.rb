@@ -18,13 +18,5 @@ class PageRegistration < Registration
     Audit::TYPES.register :DESTROY, Page  do |event|
       "#{event.user_link} deleted #{event.auditable.title}"
     end
-
-    Audit::TYPES.register :LOGIN, User do |event|
-      "#{event.user_link} logged in"
-    end
-
-    Audit::TYPES.register :LOGOUT, User do |event|
-      "#{event.user_link} logged out"
-    end
   end
 end
