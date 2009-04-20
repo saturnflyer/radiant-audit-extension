@@ -20,8 +20,10 @@ class AuditExtension < Radiant::Extension
     Admin::WelcomeController.send :include, Audit::WelcomeControllerExtensions
     User.send :include, Audit::UserExtensions
 
-    #registration is open for business!
-    Dir.glob(File.join(AuditExtension.root, 'lib', '*_registration.rb')).each { |f| require_dependency f }
+    # registration is open for business! add your registration class here to join.
+    [PageRegistration, LayoutRegistration, SnippetRegistration, UserRegistration].each do |klass|
+      klass.register
+    end
 
     admin.tabs.add "Audit", "/admin/audits", :after => "Layouts", :visibility => [:all]
   end
