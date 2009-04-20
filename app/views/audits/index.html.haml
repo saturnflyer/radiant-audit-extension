@@ -2,10 +2,16 @@
 %table
   %thead
     %tr
-      %th="Time"
-      %th="Log Message"
+      %th="Date / Time"
+      %th="IP Address"
+      %th="User"
+      %th="Event Type"
+      %th="Message"
   %tbody
     -@audits.each do |a|
       %tr
         %td= a.created_at
+        %td= a.ip_address
+        %td= a.user.name
+        %td= "#{a.auditable_type.upcase} #{a.audit_type.name}"
         %td= a.log_message

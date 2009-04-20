@@ -1,8 +1,12 @@
 class AuditEvent < ActiveRecord::Base
   belongs_to :auditable, :polymorphic => true
   belongs_to :user
-  
+  belongs_to :audit_type
   before_create :assemble_log_message
+  
+  def event_type
+    "#{auditable_type.upcase} #{audit_type.name}"
+  end
   
   private
   
