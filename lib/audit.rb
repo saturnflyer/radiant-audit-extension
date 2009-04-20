@@ -1,9 +1,16 @@
 module Audit
   module TYPES
-    CREATE = 0
-    UPDATE = 1
-    DESTROY = 2
-    LOGIN = 3
-    LOGOUT = 4
-  end        
+    
+    # register the action & class for its own AuditType
+    def self.register(action, klass, &block)
+      audit_type = AuditType.find_or_create_by_name(action.to_s)
+      unless const_defined? action
+        const_set action, audit_type
+        # initialize the log_formats hash
+        const_get(action).log_formats = {}
+      end
+      const_get(action).log_formats[klass] = block
+    end
+
+  end
 end          
