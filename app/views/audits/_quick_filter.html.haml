@@ -1,0 +1,4 @@
+Quick Filter
+-form_tag admin_audits_path, :method => 'get', :id => 'quick_filter_form', :class => 'InlineForm' do
+  =select("params", "ip_address", @ip_addresses)
+  =select("params", "user", @users)

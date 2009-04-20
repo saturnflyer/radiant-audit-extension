@@ -1,3 +1,5 @@
-= Audit
+= Radiant Audit Extension
 
-Description goes here
+The Audit Extension for Radiant logs user actions in Radiant.  It has built-in support for logging Create, Update and Delete of Page, User, Snippet, and Layout actions and provides an admin interface for viewing and searching through these events.
+
+TODO: talk about extensibility
