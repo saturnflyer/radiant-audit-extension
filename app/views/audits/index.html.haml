@@ -1,5 +1,13 @@
-%h1 Listing Audits
-%table
+%h1 Audit Log
+
+%h2= @startdate.strftime("%B %d, %Y")
+
+=link_to "#{@previous_date.strftime('%b %d, %Y')}", admin_audits_path + "?startdate=#{@previous_date}" unless @previous_date.nil?
+=link_to "#{@next_date.strftime('%b %d, %Y')}", admin_audits_path + "?startdate=#{@next_date}" unless @next_date.nil?
+
+=render :partial => "quick_filter"
+
+%table.index
   %thead
     %tr
       %th="Date / Time"
@@ -10,8 +18,8 @@
   %tbody
     -@audits.each do |a|
       %tr
-        %td= a.created_at
+        %td= a.created_at.to_formatted_s(:db)
         %td= a.ip_address
         %td= a.user.name
-        %td= "#{a.auditable_type.upcase} #{a.audit_type.name}"
+        %td= a.event_type
         %td= a.log_message
