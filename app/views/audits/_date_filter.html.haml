@@ -1,0 +1,10 @@
+#datefilter{:style => "float:right;"}
+  =link_to "#{@previous_date.strftime('%b %d, %Y')}", admin_audits_path + "?startdate=#{@previous_date}" unless @previous_date.nil?
+  
+  -form_tag admin_audits_path, :method => 'get', :id => 'quick_filter_form', :class => 'InlineForm' do
+    =hidden_field_tag :ip_address, params[:ip_address]
+    =hidden_field_tag :user, params[:user]
+    =hidden_field_tag :event_type, params[:event_type]
+    
+  
+  =link_to "#{@next_date.strftime('%b %d, %Y')}", admin_audits_path + "?startdate=#{@next_date}" unless @next_date.nil?

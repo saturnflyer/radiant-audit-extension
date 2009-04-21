@@ -1,4 +1,21 @@
-Quick Filter
 -form_tag admin_audits_path, :method => 'get', :id => 'quick_filter_form', :class => 'InlineForm' do
-  =select("params", "ip_address", @ip_addresses)
-  =select("params", "user", @users)
+  Quick Filter
+  %label{:for => 'ip_address'}
+  %select{:name => 'ip_address'}
+    %option{:value => ""} IP Address
+    %option{ :value => "" } &nbsp;
+    =options_for_select(@ip_addresses, (params[:ip_address]))
+  %label{:for => 'user'}
+  %select{:name => 'user'}
+    %option{:value => ""} User
+    %option{ :value => "" } &nbsp;
+    =options_for_select(@users, (params[:user]))
+  %label{:for => 'event_type'}
+  %select{:name => 'event_type'}
+    %option{:value => ""} Event Type
+    %option{ :value => "" } &nbsp;
+    =options_for_select(@event_types, (params[:user]))
+  %label{:for => 'message_text'}="Message Text"
+  =text_field_tag :message_text
+
+  =submit_tag("Apply Filter")

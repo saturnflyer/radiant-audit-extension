@@ -2,9 +2,7 @@
 
 %h2= @startdate.strftime("%B %d, %Y")
 
-=link_to "#{@previous_date.strftime('%b %d, %Y')}", admin_audits_path + "?startdate=#{@previous_date}" unless @previous_date.nil?
-=link_to "#{@next_date.strftime('%b %d, %Y')}", admin_audits_path + "?startdate=#{@next_date}" unless @next_date.nil?
-
+=render :partial => "date_filter"
 =render :partial => "quick_filter"
 
 %table.index

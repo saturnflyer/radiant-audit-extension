@@ -19,5 +19,6 @@ class AuditsController < ApplicationController
     # some helper arrays for filter options
     @ip_addresses = @audits.map(&:ip_address).uniq
     @users = @audits.map(&:user).uniq.map(&:name)
+    @event_types = @audits.collect { |a| a.event_type }.uniq
   end
 end
