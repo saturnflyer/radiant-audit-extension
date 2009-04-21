@@ -4,8 +4,6 @@ class AuditObserver < ActiveRecord::Observer
   cattr_accessor :current_user
   cattr_accessor :current_ip
   
-  attr_accessor :logging_disabled
-  
   def after_create(model)
     AuditEvent.create({:auditable => model, :user => @@current_user, :ip_address => @@current_ip, :audit_type => Audit::TYPES::CREATE})
   end

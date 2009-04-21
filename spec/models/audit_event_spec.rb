@@ -12,4 +12,11 @@ describe AuditEvent do
     audit.user_link.should eql(link_to(admin.name, edit_admin_user_path(admin)))
   end
 
+  it "should disable logging when logging_disabled is set to true" do
+    AuditEvent.logging_disabled = true
+    count = AuditEvent.count
+    User.create!(user_params)
+    AuditEvent.count.should == count
+  end
+
 end

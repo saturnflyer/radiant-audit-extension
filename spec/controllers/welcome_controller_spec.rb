@@ -13,7 +13,7 @@ describe Admin::WelcomeController do
     post :login, :user => {:login => "admin", :password => "password"}
     count = AuditEvent.count
     get :logout
-    AuditEvent.count.should > count+1 #logout also updates a user's session token
+    AuditEvent.count.should == count+1
   end
   
 end
