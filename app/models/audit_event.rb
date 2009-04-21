@@ -3,8 +3,9 @@ class AuditEvent < ActiveRecord::Base
   belongs_to :user
   belongs_to :audit_type
 
-  extend ActionView::Helpers::UrlHelper
-  extend ActionView::Helpers::TagHelper
+  include ActionView::Helpers::UrlHelper
+  include ActionView::Helpers::TagHelper
+  include ActionController::UrlWriter
 
   # before the AuditEvent is saved, call the proc defined for this AuditType & class to assemble
   # appropriate log message
@@ -18,8 +19,7 @@ class AuditEvent < ActiveRecord::Base
     if user.nil?
       "Unknown User"
     else
-      "<a href=\"/admin/users/#{user.id}\">#{user.name}</a>"
-      # link_to(user.name, "/admin/users/#{user.id}")
+      link_to(user.name, edit_admin_user_path(user))
     end
   end
 

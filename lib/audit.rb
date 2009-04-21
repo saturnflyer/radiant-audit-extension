@@ -6,8 +6,6 @@ module Audit
       audit_type = AuditType.find_or_create_by_name(action.to_s)
       unless const_defined? action
         const_set action, audit_type
-        # initialize the log_formats hash
-        const_get(action).log_formats = {}
       end
       const_get(action).log_formats[klass] = block
     end

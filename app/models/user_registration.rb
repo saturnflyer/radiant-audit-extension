@@ -1,23 +1,23 @@
-class UserRegistration < Registration
-  def self.register
-    Audit::TYPES.register :CREATE, User do |event|
-      "#{event.user_link} created " + link_to(event.auditable.name, "/admin/users/#{event.auditable.id}")
-    end
+class UserRegistration < Audit::Registration
+  audits User
 
-    Audit::TYPES.register :UPDATE, User do |event|
-      "#{event.user_link} updated " + link_to(event.auditable.name, "/admin/users/#{event.auditable.id}")
-    end
+  register :CREATE do |event|
+    "#{event.user_link} created " + link_to(event.auditable.name, "/admin/users/#{event.auditable.id}")
+  end
 
-    Audit::TYPES.register :DESTROY, User  do |event|
-      "#{event.user_link} deleted #{event.auditable.name}"
-    end
-    
-    Audit::TYPES.register :LOGIN, User do |event|
-      "#{event.user_link} logged in"
-    end
+  register :UPDATE do |event|
+    "#{event.user_link} updated " + link_to(event.auditable.name, "/admin/users/#{event.auditable.id}")
+  end
 
-    Audit::TYPES.register :LOGOUT, User do |event|
-      "#{event.user_link} logged out"
-    end
+  register :DESTROY do |event|
+    "#{event.user_link} deleted #{event.auditable.name}"
+  end
+
+  register :LOGIN do |event|
+    "#{event.user_link} logged in"
+  end
+
+  register :LOGOUT do |event|
+    "#{event.user_link} logged out"
   end
 end
