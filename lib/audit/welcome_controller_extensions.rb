@@ -2,6 +2,7 @@ module Audit
   module WelcomeControllerExtensions
     def self.included(base)
       base.class_eval do
+        include Auditor
         alias_method_chain :login, :auditing
         alias_method_chain :logout, :auditing
       end
@@ -12,14 +13,14 @@ module Audit
     def login_with_auditing
       login_without_auditing
       if (current_user)
-        AuditEvent.create({:auditable => current_user, :user => current_user, :ip_address => request.remote_ip, :audit_type => Audit::TYPES::LOGIN})
+        audit :item => current_user, :user => current_user, :ip => request.remote_ip, :type => Audit::TYPES::LOGIN
       end
     end
     
     def logout_with_auditing
       if (current_user)
         current_user.logging_out = true
-        AuditEvent.create({:auditable => current_user, :user => current_user, :ip_address => request.remote_ip, :audit_type => Audit::TYPES::LOGOUT})
+        audit :item => current_user, :user => current_user, :ip => request.remote_ip, :type => Audit::TYPES::LOGOUT
       end
       logout_without_auditing
     end
