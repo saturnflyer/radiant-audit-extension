@@ -10,6 +10,7 @@ class Audit::Registration
 
     def register(method,&block)
       raise 'Please specify a class to audit' if @@audit_class.blank?
+      return unless ActiveRecord::Base.connection.tables.include?(AuditType.table_name)
       Audit::TYPES.register method.to_s.upcase, @@audit_class, &block
     end
 
