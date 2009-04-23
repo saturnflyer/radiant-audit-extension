@@ -17,11 +17,11 @@ describe AuditEvent do
     audit.user_link.should eql("Unknown User")
   end
 
-  it "should disable logging when logging_disabled is set to true" do
-    AuditEvent.logging_disabled = true
-    count = AuditEvent.count
-    User.create!(user_params)
-    AuditEvent.count.should == count
+  it "should not write logs when Audit.logging is disabled" do
+    Audit.disable_logging
+    lambda {
+      User.create!(user_params)
+    }.should_not change(AuditEvent, :count)
   end
 
 end

@@ -7,9 +7,6 @@ class AuditEvent < ActiveRecord::Base
   include ActionView::Helpers::TagHelper
   include ActionController::UrlWriter
 
-  cattr_accessor :logging_disabled
-  @@logging_disabled = false
-
   # before the AuditEvent is saved, call the proc defined for this AuditType & class to assemble
   # appropriate log message
   before_create :assemble_log_message
@@ -28,7 +25,7 @@ class AuditEvent < ActiveRecord::Base
 
   private
   def assemble_log_message
-    return false if @@logging_disabled
+    return false if not Audit.logging?
     self.log_message = audit_type.log_formats[self.auditable.class].call(self)
   end
 
