@@ -18,7 +18,6 @@ class AuditExtension < Radiant::Extension
     AuditObserver.instance
     ApplicationController.send :include, Audit::ApplicationExtensions
     Admin::WelcomeController.send :include, Audit::WelcomeControllerExtensions
-    User.send :include, Audit::UserExtensions
 
     Dir.glob(File.join(AuditExtension.root, %w(app models), '*_registration.rb')).each { |f| require_dependency f }
 
