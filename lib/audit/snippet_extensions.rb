@@ -5,15 +5,15 @@ module Audit
       base.class_eval do
         extend Auditable
 
-        audit_event :CREATE do |event|
+        audit_event :create do |event|
           "#{event.user_link} created " + link_to(event.auditable.name, edit_admin_snippet_path(event.auditable))
         end
 
-        audit_event :UPDATE do |event|
+        audit_event :update do |event|
           "#{event.user_link} updated " + link_to(event.auditable.name, edit_admin_snippet_path(event.auditable))
         end
 
-        audit_event :DESTROY do |event|
+        audit_event :destroy do |event|
           "#{event.user_link} deleted #{event.auditable.name}"
         end
       end

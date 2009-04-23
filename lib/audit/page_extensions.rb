@@ -5,11 +5,11 @@ module Audit
       base.class_eval do
         extend Auditable
 
-        audit_event :CREATE do |event|
+        audit_event :create do |event|
           "#{event.user_link} created " + link_to(event.auditable.title, edit_admin_page_path(event.auditable))
         end
 
-        audit_event :UPDATE do |event|
+        audit_event :update do |event|
           if event.auditable.status_id_changed?
             case event.auditable.status.name
             when 'Published' : "#{event.user_link} published " + link_to(event.auditable.title, edit_admin_page_path(event.auditable))
@@ -19,7 +19,7 @@ module Audit
           end
         end
 
-        audit_event :DESTROY do |event|
+        audit_event :destroy do |event|
           "#{event.user_link} deleted #{event.auditable.title}"
         end
       end

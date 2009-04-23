@@ -24,4 +24,10 @@ describe AuditEvent do
     }.should_not change(AuditEvent, :count)
   end
 
+  it "should take a symbol as an audit type" do
+    user = users(:admin)
+    event = AuditEvent.new(:auditable => user, :user => user, :ip_address => '127.0.0.1', :audit_type => :create)
+    event.audit_type.should eql(Audit::TYPES::CREATE)
+  end
+
 end
