@@ -4,16 +4,16 @@ describe Admin::WelcomeController do
   dataset :users
   
   it "should log a login" do
-    count = AuditEvent.count
-    post :login, :user => {:login => "admin", :password => "password"}
-    AuditEvent.count.should == count+1
+    lambda {
+      post :login, :user => {:login => "admin", :password => "password"}
+    }.should change(AuditEvent, :count).by(1)
   end
   
   it "should log a logout" do
-    post :login, :user => {:login => "admin", :password => "password"}
-    count = AuditEvent.count
-    get :logout
-    AuditEvent.count.should == count+1
+    login_as :admin
+    lambda {
+      get :logout 
+    }.should change(AuditEvent, :count).by(1)
   end
   
 end

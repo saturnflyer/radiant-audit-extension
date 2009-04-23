@@ -3,26 +3,26 @@ module Audit
     def self.included(base)
       base.class_eval do
         include Auditor
-        alias_method_chain :login, :auditing
-        alias_method_chain :logout, :auditing
+        after_filter :audit_login, :only => :login
+        around_filter :audit_logout, :only => :logout
       end
     end
-    
+
     private
     
-    def login_with_auditing
-      login_without_auditing
+    def audit_login
       if (current_user)
         audit :item => current_user, :user => current_user, :ip => request.remote_ip, :type => Audit::TYPES::LOGIN
       end
     end
-    
-    def logout_with_auditing
+
+    def audit_logout
       if (current_user)
-        current_user.logging_out = true
         audit :item => current_user, :user => current_user, :ip => request.remote_ip, :type => Audit::TYPES::LOGOUT
       end
-      logout_without_auditing
+      Audit.disable_logging do
+        yield
+      end
     end
   end
 end
