@@ -10,7 +10,6 @@ class AuditObserver < ActiveRecord::Observer
   end
 
   def after_update(model)
-    return true if model.is_a?(User) && model.logging_out
     audit :item => model, :user => @@current_user, :ip => @@current_ip, :type => Audit::TYPES::UPDATE
   end
   

@@ -25,6 +25,7 @@ module Audit
 
     # register the action & class for its own AuditType
     def self.register(action, klass, &block)
+      return unless ActiveRecord::Base.connection.tables.include?(AuditType.table_name)
       audit_type = AuditType.find_or_create_by_name(action.to_s)
       unless const_defined? action
         const_set action, audit_type
