@@ -6,15 +6,15 @@ class AuditObserver < ActiveRecord::Observer
   cattr_accessor :current_ip
   
   def after_create(model)
-    audit :item => model, :user => @@current_user, :ip => @@current_ip, :type => Audit::TYPES::CREATE
+    audit :item => model, :user => @@current_user, :ip => @@current_ip, :type => :create
   end
 
   def after_update(model)
-    audit :item => model, :user => @@current_user, :ip => @@current_ip, :type => Audit::TYPES::UPDATE
+    audit :item => model, :user => @@current_user, :ip => @@current_ip, :type => :update
   end
   
   def after_destroy(model)
-    audit :item => model, :user => @@current_user, :ip => @@current_ip, :type => Audit::TYPES::DESTROY
+    audit :item => model, :user => @@current_user, :ip => @@current_ip, :type => :destroy
   end
 
 end

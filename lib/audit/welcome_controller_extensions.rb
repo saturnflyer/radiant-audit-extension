@@ -12,13 +12,13 @@ module Audit
     
     def audit_login
       if (current_user)
-        audit :item => current_user, :user => current_user, :ip => request.remote_ip, :type => Audit::TYPES::LOGIN
+        audit :item => current_user, :user => current_user, :ip => request.remote_ip, :type => :login
       end
     end
 
     def audit_logout
       if (current_user)
-        audit :item => current_user, :user => current_user, :ip => request.remote_ip, :type => Audit::TYPES::LOGOUT
+        audit :item => current_user, :user => current_user, :ip => request.remote_ip, :type => :logout
       end
       Audit.disable_logging do
         yield
