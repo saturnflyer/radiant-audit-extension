@@ -3,12 +3,10 @@ module Audit
 
   class << self
     def disable_logging
+      @@logging_disabled = true
       if block_given?
-        @@logging_disabled = true
         yield
         @@logging_disabled = false
-      else
-        @@logging_disabled = true
       end
     end
 
@@ -25,7 +23,7 @@ module Audit
 
     # register the action & class for its own AuditType
     def self.register(action, klass, &block)
-      return unless ActiveRecord::Base.connection.tables.include?(AuditType.table_name)
+      return if not Audit.logging?
       audit_type = AuditType.find_or_create_by_name(action.to_s)
       unless const_defined? action
         const_set action, audit_type
