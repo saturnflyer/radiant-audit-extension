@@ -9,6 +9,7 @@ unless defined? RADIANT_ROOT
     require "#{File.expand_path(File.dirname(__FILE__) + "/../../../../")}/config/environment"
   end
 end
+
 require "#{RADIANT_ROOT}/spec/spec_helper"
 
 Dataset::Resolver.default << (File.dirname(__FILE__) + "/datasets")
@@ -22,3 +23,4 @@ Spec::Runner.configure do |config|
     Audit.enable_logging
   end
 end
+

@@ -31,9 +31,8 @@ describe AuditEvent do
   end
   
   it "should find log format in auditable's class" do
-    format = mock(:format, :[] => proc { 'log message' })
-    Page.stub!(:log_formats).and_return(format)
-    event = AuditEvent.new :auditable => Page.new, :audit_type => :create
+    Page.log_formats[:bogus] = proc { 'log message' }
+    event = AuditEvent.new :auditable => Page.new, :audit_type => :bogus
     msg = event.send(:assemble_log_message)
     msg.should eql('log message')
   end
