@@ -1,7 +1,9 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe AuditObserver do
-  dataset :users, :pages_with_layouts, :snippets
+  Audit.disable_logging do
+    dataset :users, :pages_with_layouts, :snippets
+  end
 
   before(:each) do
     @user = users(:existing)

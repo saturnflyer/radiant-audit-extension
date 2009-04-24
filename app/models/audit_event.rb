@@ -24,17 +24,16 @@ class AuditEvent < ActiveRecord::Base
   end
 
   def audit_type_with_cast=(type)
-    if type.is_a?(Symbol)
-      type = Audit::TYPES.const_get(type.to_s.upcase)
-    end
+    @event_type = type.to_sym
+    type = AuditType.find_by_name(type.to_s.upcase)
     self.audit_type_without_cast = type
   end
   alias_method_chain :audit_type=, :cast
 
   private
   def assemble_log_message
-    return true if not Audit.logging?
-    self.log_message = audit_type.log_formats[self.auditable.class.base_class].call(self)
+    return false unless Audit.logging?
+    self.log_message = self.auditable.class.log_formats[@event_type].call(self)
   end
 
 end

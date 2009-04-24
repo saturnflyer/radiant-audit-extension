@@ -27,7 +27,15 @@ describe AuditEvent do
   it "should take a symbol as an audit type" do
     user = users(:admin)
     event = AuditEvent.new(:auditable => user, :user => user, :ip_address => '127.0.0.1', :audit_type => :create)
-    event.audit_type.should eql(Audit::TYPES::CREATE)
+    event.audit_type.should eql(AuditType.find_by_name('create'))
+  end
+  
+  it "should find log format in auditable's class" do
+    format = mock(:format, :[] => proc { 'log message' })
+    Page.stub!(:log_formats).and_return(format)
+    event = AuditEvent.new :auditable => Page.new, :audit_type => :create
+    msg = event.send(:assemble_log_message)
+    msg.should eql('log message')
   end
 
 end

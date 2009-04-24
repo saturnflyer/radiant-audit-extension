@@ -2,8 +2,16 @@ module Auditable
   include ActionController::UrlWriter
   include ActionView::Helpers::UrlHelper
 
+  def self.extended(base)
+    base.class_eval do
+      class_inheritable_hash :log_formats
+      self.log_formats = {}
+    end
+  end
+
   def audit_event(method, &block)
-    Audit::TYPES.register method.to_s.upcase, self, &block
+    AuditType.find_or_create_by_name(method.to_s.upcase)
+    self.log_formats[method.to_sym] = block
   end
 
   # override the built-in ActionController::UrlWriter#url_for since we

@@ -22,4 +22,5 @@ describe Audit do
     end
     Audit.logging?.should be_true
   end
+
 end

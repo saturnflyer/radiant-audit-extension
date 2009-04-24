@@ -8,4 +8,5 @@ describe AuditType do
   it "should be valid" do
     @audit_type.should be_valid
   end
+
 end
