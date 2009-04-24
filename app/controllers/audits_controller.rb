@@ -44,8 +44,8 @@ class AuditsController < ApplicationController
 
     @audits = AuditEvent.find(:all, :conditions => [conditions, conditionshash], :order => "created_at DESC")
     # some helper arrays for filter options
-    @ip_addresses = @audits.map(&:ip_address).uniq
-    @users = @audits.map(&:user).uniq
-    @event_types = @audits.collect { |a| a.event_type }.uniq
+    @ip_addresses = @audits.map(&:ip_address).uniq.compact
+    @users = @audits.map(&:user).uniq.compact
+    @event_types = @audits.collect { |a| a.event_type }.uniq.compact
   end
 end
