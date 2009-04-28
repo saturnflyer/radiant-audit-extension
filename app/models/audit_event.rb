@@ -9,13 +9,8 @@ class AuditEvent < ActiveRecord::Base
 
   # sphinxable_resource / thinking sphinx indices
   define_index do
-    indexes log_message, ip_address
+    indexes log_message, ip_address, user_id, auditable_type, audit_type_id
     has created_at, :sortable => true
-
-    # *** when support for nil is added in, these guys can go away 
-    # indexes ["LOWER(`audit_events`.`log_message`)"], :as => :log_message_sort,  :sortable => true
-    # indexes log_message, :sortable => true
-
   end
 
 
