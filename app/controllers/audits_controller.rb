@@ -32,11 +32,18 @@ class AuditsController < ApplicationController
       params[:filter][:auditable_type] = auditable_type.capitalize
     end
     
+    params[:range] = "created_at"
+    params[:low] = Time.local(@startdate.year, @startdate.month, @startdate.day)
+    params[:high] = Time.local(@enddate.year, @enddate.month, @enddate.day)
+    
+    # default to sort by descending date
+    params[:direction] ||= 'desc'
+    
     # @audits = AuditEvent.find(:all, :conditions => [conditions, conditionshash], :order => "created_at DESC")
     @audits = AuditEvent.search(sphinxed_search_terms, sphinxed_search_conditions)
 
     # show all filter options for this date range
-    @auditmenus = AuditEvent.find(:all) #, :conditions => ["created_at > :startdate AND created_at < :enddate", {:startdate => @startdate, :enddate => @enddate}])
+    @auditmenus = AuditEvent.find(:all, :conditions => ["created_at > :startdate AND created_at < :enddate", {:startdate => @startdate, :enddate => @enddate}])
     # some helper arrays for filter options
     @ip_addresses = @auditmenus.map(&:ip_address).uniq.compact
     @users = @auditmenus.map(&:user).uniq.compact

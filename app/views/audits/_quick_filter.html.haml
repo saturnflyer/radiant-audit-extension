@@ -1,15 +1,17 @@
 -form_tag admin_audits_path, :method => 'get', :id => 'quick_filter_form', :class => 'InlineForm' do
   Quick Filter
+  -params[:filter] ||= {} # in case no filter params are sent, don't choke on the params[:filter][:foo] below
   %label{:for => 'ip_address'}
   %select{:name => 'filter[ip_address]'}
     %option{:value => ""} IP Address
     %option{ :value => "" } &nbsp;
-    =options_for_select(@ip_addresses)
+    =options_for_select(@ip_addresses, params[:filter][:ip_address])
   %label{:for => 'user_id'}
   %select{:name => 'filter[user_id]'}
     %option{:value => ""} User
     %option{ :value => "" } &nbsp;
-    =options_from_collection_for_select(@users, 'id', 'name')
+    -selected = params[:filter][:user_id].blank? ? "" : params[:filter][:user_id].to_i
+    =options_from_collection_for_select(@users, 'id', 'name', selected)
   %label{:for => 'event_type'}
   %select{:name => 'event_type'}
     %option{:value => ""} Event Type
