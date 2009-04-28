@@ -14,12 +14,16 @@
       %th="Event Type"
       %th="Message"
   %tbody
-    -@audits.each do |a|
+    -if @audits.size == 0
       %tr
-        %td= a.created_at.to_formatted_s(:db)
-        %td= a.ip_address
-        %td= a.user.nil? ? "(Unknown)" : a.user.login
-        %td= a.event_type
-        %td= a.log_message
+        %td{:colspan => 5}="No events that match the criteria exist for this day."
+    -else
+      -@audits.each do |a|
+        %tr
+          %td= a.created_at.to_formatted_s(:db)
+          %td= a.ip_address
+          %td= a.user.nil? ? "(Unknown)" : a.user.login
+          %td= a.event_type
+          %td= a.log_message
 
 =will_paginate @audits
