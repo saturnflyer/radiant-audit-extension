@@ -15,6 +15,7 @@ class AuditExtension < Radiant::Extension
   OBSERVABLES = [User, Page, Layout, Snippet]
   
   def activate
+    AuditEvent
     Audit.disable_logging unless ActiveRecord::Base.connection.tables.include?(AuditType.table_name)
     ApplicationController.send :include, Audit::ApplicationExtensions
     Admin::WelcomeController.send :include, Audit::WelcomeControllerExtensions

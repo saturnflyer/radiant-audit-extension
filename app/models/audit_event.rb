@@ -7,6 +7,18 @@ class AuditEvent < ActiveRecord::Base
   include ActionView::Helpers::TagHelper
   include ActionController::UrlWriter
 
+  # sphinxable_resource / thinking sphinx indices
+  define_index do
+    indexes log_message, ip_address
+    has created_at, :sortable => true
+
+    # *** when support for nil is added in, these guys can go away 
+    # indexes ["LOWER(`audit_events`.`log_message`)"], :as => :log_message_sort,  :sortable => true
+    # indexes log_message, :sortable => true
+
+  end
+
+
   # before the AuditEvent is saved, call the proc defined for this AuditType & class to assemble
   # appropriate log message
   before_create :assemble_log_message
