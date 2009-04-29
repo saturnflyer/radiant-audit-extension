@@ -1,9 +1,16 @@
 %h1 Audit Log
 
-%h2= @startdate.strftime("%B %d, %Y")
-
-=render :partial => "date_filter"
-=render :partial => "quick_filter"
+-if params[:report] == "custom"
+  %ul#reporttabs
+    %li=link_to "Browse by Date", admin_audits_path
+    %li="Report"
+  =render :partial => "custom_report"
+-else
+  %ul#reporttabs
+    %li="Browse by Date"
+    %li=link_to "Report", admin_audits_path + "?report=custom"
+  =render :partial => "date_filter"
+  =render :partial => "quick_filter"
 
 %table.index
   %thead
@@ -16,7 +23,7 @@
   %tbody
     -if @audits.size == 0
       %tr
-        %td{:colspan => 5}="No events that match the criteria exist for this day."
+        %td{:colspan => 5}="No events that match the criteria exist for this query."
     -else
       -@audits.each do |a|
         %tr

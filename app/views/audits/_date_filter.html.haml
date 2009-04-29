@@ -1,3 +1,5 @@
+%h2= @startdate.strftime("%B %d, %Y")
+
 #datefilter{:style => "float:right;"}
   -params[:filter] ||= {} # in case no filter params are sent, don't choke on the params[:filter][:foo] below
 
