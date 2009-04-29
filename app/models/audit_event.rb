@@ -11,6 +11,7 @@ class AuditEvent < ActiveRecord::Base
   define_index do
     indexes log_message, ip_address, user_id, auditable_type, audit_type_id
     has created_at, :sortable => true
+    set_property :delta => true
   end
 
 

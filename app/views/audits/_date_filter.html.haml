@@ -1,7 +1,13 @@
 #datefilter{:style => "float:right;"}
+  -params[:filter] ||= {} # in case no filter params are sent, don't choke on the params[:filter][:foo] below
   =link_to "#{@previous_date.strftime('%b %d, %Y')}", admin_audits_path + "?startdate=#{@previous_date.strftime('%Y-%m-%d')}" unless @previous_date.nil?
   
   -form_tag admin_audits_path, :method => 'get', :id => 'quick_filter_form', :class => 'InlineForm' do
-    =hidden_field_tag :filter, params[:filter]
-    =text_field_tag :range, @startdate.strftime('%b %d %Y')
+    =hidden_field_tag 'filter[ip_address]', params[:filter][:ip_address] unless params[:filter][:ip_address].blank?
+    =hidden_field_tag 'filter[user_id]', params[:filter][:user_id] unless params[:filter][:user_id].blank?
+    =hidden_field_tag 'event_type', params[:event_type] unless params[:event_type].blank?
+    =hidden_field_tag 'query', params[:query] unless params[:query].blank?
+    
+    =text_field_tag :startdate, @startdate.strftime('%b %d %Y')
+    
   =link_to "#{@next_date.strftime('%b %d, %Y')}", admin_audits_path + "?startdate=#{@next_date.strftime('%Y-%m-%d')}" unless @next_date.nil?

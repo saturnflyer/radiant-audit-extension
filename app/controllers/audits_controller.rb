@@ -22,6 +22,8 @@ class AuditsController < ApplicationController
     @next_date = @next_date.created_at unless @next_date.nil?
     @previous_date = @previous_date.created_at unless @previous_date.nil?
 
+    params[:filter] ||= {} # in case no filter params are sent, don't choke on the params[:filter][:foo] below
+    
     # filter by Event Type
     if !params[:event_type].blank?
       # event type comes through as "AUDITABLETYPE AUDITTYPE"; need to find both
