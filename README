@@ -2,4 +2,14 @@
 
 The Audit Extension for Radiant logs user actions in Radiant.  It has built-in support for logging Create, Update and Delete of Page, User, Snippet, and Layout actions and provides an admin interface for viewing and searching through these events.
 
-TODO: talk about extensibility
+== Requirements
+ * Sphinx-it! plugin https://github.com/digitalpulp/sphinxable-resource-extension/
+ Sphinx-it! requires the following plugins:
+    * thinking-sphinx http://github.com/freelancing-god/thinking-sphinx/
+    * will-paginate http://github.com/mislav/will_paginate/
+    
+== Extending
+ The Audit Extension was designed to be extensible so logging of any non-core Radiant functionality can be added.  The AuditEvent model logs your transactions...
+ 
+ In general, logging follows one of two patterns.  The Observer pattern can be used to monitor ActiveRecord model actions.  To observe a model, add the model to the Observables array in audit_extension.rb and send the model
+ If, say, your extension creates or updates Pages and you don't want redundant log messages from both the Page model and your extension, you can disable logging by setting AuditEvent.logging_disabled to true. ***
