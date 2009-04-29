@@ -14,17 +14,16 @@
   %label{:for => 'user'} User login
   =text_field_tag :user, params[:user]
   
-  
   %div.clear
   
-  %label{:for => 'object_kind'} Object Kind
-  =text_field_tag :object_kind, params[:object_kind]
+  %label{:for => 'auditable_type'} Object Kind
+  =text_field_tag :auditable_type, params[:filter][:auditable_type]
   
-  %label{:for => 'object_id'} Object ID
-  =text_field_tag :object_id, params[:object_id]
+  %label{:for => 'auditable_id'} Object ID
+  =text_field_tag :auditable_d, params[:filter][:auditable_id]
     
-  %label{:for => 'event_type'} Event Type
-  =text_field_tag :event_type, params[:event_type]
+  %label{:for => 'audit_type_name'} Event Type
+  =text_field_tag :audit_type_name, params[:audit_type_name]
 
   %label{:for => 'query'}="Message"
   =text_field_tag :query, params[:query]
