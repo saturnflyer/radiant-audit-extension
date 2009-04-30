@@ -11,13 +11,6 @@ class AuditsController < ApplicationController
     params[:filter] ||= {} # in case no filter params are sent, don't choke on the params[:filter][:foo] below
     
     if params[:report].blank?
-      # BROWSE-BY-DATE specific stuff
-      @auditmenus = AuditEvent.find(:all, :conditions => ["created_at > :startdate AND created_at < :enddate", {:startdate => @startdate, :enddate => @enddate}])
-      # some helper arrays for filter options
-      @ip_addresses = @auditmenus.map(&:ip_address).uniq.compact
-      @users = @auditmenus.map(&:user).uniq.compact
-      @event_types = @auditmenus.collect { |a| a.event_type }.uniq.compact
-
       # filter by Event Type
       if !params[:event_type].blank?
         # event type comes through as "AUDITABLETYPE AUDITTYPE"; need to find both
@@ -37,6 +30,13 @@ class AuditsController < ApplicationController
       @previous_date = AuditEvent.find(:first, :select => :created_at, :conditions => ["created_at < ?", @startdate], :order => "created_at DESC")
       @next_date = @next_date.created_at unless @next_date.nil?
       @previous_date = @previous_date.created_at unless @previous_date.nil?
+
+      # BROWSE-BY-DATE specific stuff
+      @auditmenus = AuditEvent.find(:all, :conditions => ["created_at > :startdate AND created_at < :enddate", {:startdate => @startdate, :enddate => @enddate.next}])
+      # some helper arrays for filter options
+      @ip_addresses = @auditmenus.map(&:ip_address).uniq.compact
+      @users = @auditmenus.map(&:user).uniq.compact
+      @event_types = @auditmenus.collect { |a| a.event_type }.uniq.compact
       
     else
       # CUSTOM REPORT specific stuff
