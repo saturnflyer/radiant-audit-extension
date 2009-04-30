@@ -18,12 +18,6 @@ class AuditsController < ApplicationController
       @users = @auditmenus.map(&:user).uniq.compact
       @event_types = @auditmenus.collect { |a| a.event_type }.uniq.compact
 
-      # calculate next and previous dates 
-      @next_date = AuditEvent.find(:first, :select => :created_at, :conditions => ["created_at > ?", @enddate], :order => "created_at ASC")
-      @previous_date = AuditEvent.find(:first, :select => :created_at, :conditions => ["created_at < ?", @startdate], :order => "created_at DESC")
-      @next_date = @next_date.created_at unless @next_date.nil?
-      @previous_date = @previous_date.created_at unless @previous_date.nil?
-
       # filter by Event Type
       if !params[:event_type].blank?
         # event type comes through as "AUDITABLETYPE AUDITTYPE"; need to find both
@@ -37,6 +31,12 @@ class AuditsController < ApplicationController
       # browse-by-date only shows one day at a time
       @startdate = params[:startdate].blank? ? Date.today : Date.parse(params[:startdate])
       @enddate = @startdate
+
+      # calculate next and previous dates 
+      @next_date = AuditEvent.find(:first, :select => :created_at, :conditions => ["created_at > ?", @enddate.next], :order => "created_at ASC")
+      @previous_date = AuditEvent.find(:first, :select => :created_at, :conditions => ["created_at < ?", @startdate], :order => "created_at DESC")
+      @next_date = @next_date.created_at unless @next_date.nil?
+      @previous_date = @previous_date.created_at unless @previous_date.nil?
       
     else
       # CUSTOM REPORT specific stuff
