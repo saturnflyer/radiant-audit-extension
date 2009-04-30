@@ -33,3 +33,9 @@
   =hidden_field_tag :report, "custom"
   =submit_tag "Apply Filter"
   =link_to "Remove Filter", admin_audits_path
+
+Showing
+%strong=@audits.total_entries
+= "of #{AuditEvent.count} total events"
+
+=will_paginate @audits
