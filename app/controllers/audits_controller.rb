@@ -36,7 +36,7 @@ class AuditsController < ApplicationController
 
       # browse-by-date only shows one day at a time
       @startdate = params[:startdate].blank? ? Date.today : Date.parse(params[:startdate])
-      @enddate = @startdate.next
+      @enddate = @startdate
       
     else
       # CUSTOM REPORT specific stuff
@@ -50,22 +50,29 @@ class AuditsController < ApplicationController
       
       @startdate = params[:startdate].blank? ? "" : Date.parse(params[:startdate])
       # make enddate inclusive- show events through the enddate specified
-      @enddate = params[:enddate].blank? ? "" : Date.parse(params[:enddate]).next
+      @enddate = params[:enddate].blank? ? "" : Date.parse(params[:enddate])
       
     end
 
-
     # date range
-    params[:range] = "created_at"
-    params[:low] = Time.local(@startdate.year, @startdate.month, @startdate.day) unless @startdate.blank?
-    params[:high] = Time.local(@enddate.year, @enddate.month, @enddate.day) unless @enddate.blank?
+    # ThinkingSphinx apparently doesn't take logical operators, so we always need to provide it with an upper and lower bound for the date.
+    if @startdate.blank?
+      @startdate = AuditEvent.minimum(:created_at)
+    end
+    if @enddate.blank?
+      @enddate = Date.today
+    end
     
+    params[:range] = "created_at" unless (@startdate.blank? && @enddate.blank?)
+    params[:low] = Time.local(@startdate.year, @startdate.month, @startdate.day)
+    # high = last second of the day
+    params[:high] = Time.local(@enddate.year, @enddate.month, @enddate.day, 23, 59, 59)
+
     # default to sort by descending date
     params[:direction] ||= 'desc'
     
-    # find our audits
+    # search for our audits with a little help from our friend Sphinx-it!
     @audits = AuditEvent.search(sphinxed_search_terms, sphinxed_search_conditions)
-
 
   end
 end

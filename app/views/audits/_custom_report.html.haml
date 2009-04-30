@@ -8,8 +8,8 @@
   %label{:for => 'enddate'} to
   =text_field_tag :enddate, params[:enddate]
 
-  %label{:for => 'ip_address'} IP Address
-  =text_field_tag :ip_address, params[:filter][:ip_address]
+  %label{:for => 'filter[ip_address]'} IP Address
+  =text_field_tag 'filter[ip_address]', params[:filter][:ip_address]
 
   %label{:for => 'user'} User login
   =text_field_tag :user, params[:user]
@@ -32,7 +32,7 @@
 
   =hidden_field_tag :report, "custom"
   =submit_tag "Apply Filter"
-  =link_to "Remove Filter", admin_audits_path
+  =link_to "Remove Filter", admin_audits_path + "?report=custom"
 
 Showing
 %strong=@audits.total_entries
