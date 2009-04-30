@@ -43,10 +43,6 @@ class AuditsController < ApplicationController
       if !params[:audit_type_name].blank?
         params[:filter][:audit_type_id] = AuditType.find_by_name(params[:audit_type_name]).id rescue nil
       end
-
-      if !params[:user].blank?
-        params[:filter][:user_id] = User.find_by_login(params[:user]).id rescue nil
-      end
       
       @startdate = params[:startdate].blank? ? "" : Date.parse(params[:startdate])
       # make enddate inclusive- show events through the enddate specified
