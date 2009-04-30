@@ -9,7 +9,7 @@ class AuditEvent < ActiveRecord::Base
 
   # sphinxable_resource / thinking sphinx indices
   define_index do
-    indexes log_message, ip_address, user_id, auditable_type, audit_type_id
+    indexes log_message, ip_address, user_id, auditable_type, auditable_id, audit_type_id
     has created_at, :sortable => true
     set_property :delta => true
   end
@@ -27,8 +27,12 @@ class AuditEvent < ActiveRecord::Base
     if user.nil?
       "Unknown User"
     else
-      link_to(user.name, edit_admin_user_path(user))
+      link_to(user.login, admin_audits_path + "?report=custom&filter[user_id]=#{user.id}&login=#{user.login}")
     end
+  end
+
+  def auditable_path
+    admin_audits_path + "?report=custom&filter[auditable_type]=#{auditable_type}&filter[auditable_id]=#{auditable_id}"
   end
 
   def audit_type_with_cast=(type)

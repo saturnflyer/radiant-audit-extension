@@ -1,7 +1,7 @@
 class AuditsController < ApplicationController
 
   sphinx_resource   :sortable_attributes =>['created_at'],
-                    :filterable_attributes => ['auditable_type', 'user_id', 'ip_address', 'audit_type_id'],
+                    :filterable_attributes => ['auditable_type', 'user_id', 'ip_address', 'audit_type_id', 'auditable_id'],
                     :range_attributes => ['created_at'],
                     :default_sort => "created_at",
                     :per_page => 100
