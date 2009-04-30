@@ -16,11 +16,11 @@
   
   %div.clear
   
-  %label{:for => 'auditable_type'} Object Kind
-  =text_field_tag :auditable_type, params[:filter][:auditable_type]
+  %label{:for => 'filter[auditable_type]'} Object Kind
+  =text_field_tag 'filter[auditable_type]', params[:filter][:auditable_type]
   
-  %label{:for => 'auditable_id'} Object ID
-  =text_field_tag :auditable_d, params[:filter][:auditable_id]
+  %label{:for => 'filter[auditable_id]'} Object ID
+  =text_field_tag 'filter[auditable_id]', params[:filter][:auditable_id]
     
   %label{:for => 'audit_type_name'} Event Type
   =text_field_tag :audit_type_name, params[:audit_type_name]
