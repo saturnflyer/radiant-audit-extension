@@ -38,6 +38,8 @@ class AuditsController < ApplicationController
       @users = @auditmenus.map(&:user).uniq.compact
       @event_types = @auditmenus.collect { |a| a.event_type }.uniq.compact
       
+      # default to chronological order for day view
+      params[:direction] ||= 'asc'
     else
       # CUSTOM REPORT specific stuff
       if !params[:audit_type_name].blank?
