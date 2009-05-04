@@ -10,6 +10,8 @@ module Audit
           "#{event.user_link} created " + link_to(event.auditable.title, event.auditable_path)
         end
 
+        updatables = ["title", "slug", "breadcrumb", "description", "keywords"]
+
         audit_event :update do |event|
           if event.auditable.status_id_changed?
             case event.auditable.status.name
@@ -17,8 +19,9 @@ module Audit
               audit :item => event.auditable, :user => event.user, :ip => event.ip_address, :type => :publish
             end
           end
-          # if event.auditable.parts_with_pending
-          "#{event.user_link} updated " + link_to(event.auditable.title, event.auditable_path)
+          # take the intersection of any interesting fields that may have been updated 
+          updated = (event.auditable.changed & updatables).join(", ") + " for" unless (event.auditable.changed & updatables).empty?
+          "#{event.user_link} updated #{updated} " + link_to(event.auditable.title, event.auditable_path)
         end
 
         audit_event :publish do |event|
