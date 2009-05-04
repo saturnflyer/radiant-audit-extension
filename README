@@ -9,7 +9,18 @@ The Audit Extension for Radiant logs user actions in Radiant.  It has built-in s
     * will-paginate http://github.com/mislav/will_paginate/
     
 == Extending
- The Audit Extension was designed to be extensible so logging of any non-core Radiant functionality can be added.  The AuditEvent model logs your transactions...
+ The Audit Extension was designed to be extensible so logging of any non-core Radiant functionality can be added.  This extension adds two models to your application- AuditEvent and AuditType.  AuditType describes the type of event that is being audited (such as CREATE, UPDATE, DESTROY).  AuditEvents store the audited events along with a handful of useful information about the event (the user and IP address of who performed the event, the time at which the event occurred, and the class and type of event that occurred).
+  
+ Logging has been implemented using the Observer pattern as well as through filters.  The Observer pattern can be used to monitor ActiveRecord model actions.  To observe a model, add the model to the Observables array in audit_extension.rb and send your extensions to be included in that model.  Then, in your model extension, define the events you wish to audit.  See lib/audit/page_extensions.rb for an example.
+ Filtering is useful when adding auditing to a controller's actions.  See lib/audit/welcome_controller_extensions.rb to see how the login and logout actions have been extended by using around_filter and after_filter.  Also, note that logging can be disabled as needed in case you don't want core events to be logged-- in the case of the WelcomeControllerExtensions, logging on the User model is suspended when the logout event occurs since logging out writes to the session_token of the User model.  This is accomplished by the following:
  
- In general, logging follows one of two patterns.  The Observer pattern can be used to monitor ActiveRecord model actions.  To observe a model, add the model to the Observables array in audit_extension.rb and send the model
- If, say, your extension creates or updates Pages and you don't want redundant log messages from both the Page model and your extension, you can disable logging by setting AuditEvent.logging_disabled to true. ***
+ def audit_logout
+   if (current_user)
+     audit :item => current_user, :user => current_user, :ip => request.remote_ip, :type => :logout
+   end
+   Audit.disable_logging do
+     yield
+   end
+ end
+
+audit_logout is an around_filter for the WelcomeController's logout action; note how the logout action is audited and then WelcomeController::logout is called via 'yield' in the Audit.disable_logging block.
