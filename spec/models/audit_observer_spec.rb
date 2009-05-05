@@ -11,7 +11,7 @@ describe AuditObserver do
   describe "Page logging" do
     it "should log create" do
       lambda {
-        Page.create!(page_params)
+        page = Page.create(:title => 'title', :slug => 'slug', :breadcrumb => 'breadcrumb')
       }.should change(AuditEvent, :count).by(1)
     end
     
