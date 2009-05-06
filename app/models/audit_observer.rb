@@ -19,7 +19,8 @@ class AuditObserver < ActiveRecord::Observer
       model.class::OBSERVABLE_FIELDS.each do |field|
         # check to see if the field you're interested in has changed using ActiveRecord's dirty methods
         if model.send "#{field.to_s}_changed?"
-          audit :item => model, :user => @@current_user, :ip => @@current_ip, :type => "#{field.to_s}_changed".to_sym
+          # gsub out '_id' in the field to make the log message prettier (i.e. Status Changed vs Status ID Changed)
+          audit :item => model, :user => @@current_user, :ip => @@current_ip, :type => "#{field.to_s.gsub(/_id$/, '')}_change".to_sym
         end
       end
     end

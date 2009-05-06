@@ -13,16 +13,20 @@ module Audit
         end
         
         audit_event :update do |event|
-          # list any fields that we're interested in that were updated
+          # we are interested in the following fields to see if they've changed
+          # it will be noted in the log message if any of the following fields have changed
           updatables = ["title", "slug", "breadcrumb", "description", "keywords"]
 
-          updated = (event.auditable.changed & updatables).join(", ") + " for" unless (event.auditable.changed & updatables).empty?
-          "#{event.user_link} updated #{updated} " + link_to(event.auditable.title, event.auditable_path)
+          updated = (event.auditable.changed & updatables).join(", ") unless (event.auditable.changed & updatables).empty?
+          "#{event.user_link} updated " + link_to(event.auditable.title, event.auditable_path) + " (#{updated})"
         end
         
         # separate event for logging page status changes- fired after page :update if the status has changed.
-        audit_event :status_id_changed do |event|
-          "#{event.user_link} changed the status of " + link_to(event.auditable.title, event.auditable_path) + " to #{event.auditable.status.name}"
+        audit_event :status_change do |event|
+          oldstatus = Status.find_all.reject{|x| x.id != event.auditable.status_id_was}.first.name
+          log_message = "#{event.user_link} changed the status of " + link_to(event.auditable.title, event.auditable_path)
+          log_message += " from #{oldstatus}" unless oldstatus.blank?
+          log_message += " to #{event.auditable.status.name}"
         end
         
         audit_event :destroy do |event|

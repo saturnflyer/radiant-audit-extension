@@ -20,7 +20,7 @@ class AuditEvent < ActiveRecord::Base
   before_create :assemble_log_message
 
   def event_type
-    "#{auditable_type.upcase} #{audit_type.name}"
+    "#{auditable_type} #{audit_type.name.gsub(/_/, " ").titleize}"
   end
   
   def user_link
