@@ -11,7 +11,7 @@
     %option{:value => ""} User
     %option{ :value => "" } &nbsp;
     -selected = params[:filter][:user_id].blank? ? "" : params[:filter][:user_id].to_i
-    =options_from_collection_for_select(@users, 'id', 'name', selected)
+    =options_from_collection_for_select(@users, 'id', 'login', selected)
   %label{:for => 'event_type'}
   %select{:name => 'event_type', :id => "event_type"}
     %option{:value => ""} Event Type

@@ -33,10 +33,11 @@ class AuditsController < ApplicationController
 
       # BROWSE-BY-DATE specific stuff
       @auditmenus = AuditEvent.find(:all, :conditions => ["created_at > :startdate AND created_at < :enddate", {:startdate => @startdate, :enddate => @enddate.next}])
-      # some helper arrays for filter options
-      @ip_addresses = @auditmenus.map(&:ip_address).uniq.compact
+      # some helper arrays for filter options- sorted
+      @ip_addresses = @auditmenus.map(&:ip_address).uniq.compact.sort
       @users = @auditmenus.map(&:user).uniq.compact
-      @event_types = @auditmenus.collect { |a| a.event_type }.uniq.compact
+      @users.sort!{ |x,y| x.login <=> y.login} # sort users by login
+      @event_types = @auditmenus.collect { |a| a.event_type }.uniq.compact.sort
       
       # default to chronological order for day view
       params[:direction] ||= 'asc'
