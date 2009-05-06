@@ -31,7 +31,7 @@ H2#current-date { float: left; }
 
 #audit-results { margin-top: 1em; }
 
-#custom-report-fieldset { border: 1px solid #CCC !important; margin-bottom: 1em; }
+#custom-report-fieldset { border: 1px solid #CCC !important; margin-bottom: 1em; padding-bottom: 1em; }
 #custom-report-fieldset LEGEND { font-weight: bold; color: #000; }
 #custom-report-fieldset TABLE { width: 100%; }
 #custom-report-fieldset TABLE TD { padding: .25em 0; }
