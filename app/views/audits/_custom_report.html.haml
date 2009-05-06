@@ -1,35 +1,36 @@
-%h2 Custom Report
+%label{:for => 'startdate'} Date Range
+=text_field_tag :startdate, params[:startdate]
+%label{:for => 'enddate'} to
+=text_field_tag :enddate, params[:enddate]
 
--form_tag admin_audits_path, :method => 'get', :id => 'quick_filter_form', :class => 'InlineForm' do
-  -params[:filter] ||= {} # in case no filter params are sent, don't choke on the params[:filter][:foo] below
+%label{:for => 'filter[ip_address]'} IP Address
+=text_field_tag 'filter[ip_address]', params[:filter][:ip_address]
 
-  %label{:for => 'startdate'} Date Range
-  =text_field_tag :startdate, params[:startdate]
-  %label{:for => 'enddate'} to
-  =text_field_tag :enddate, params[:enddate]
+%label{:for => 'filter[user_id]'} User ID
+=text_field_tag 'filter[user_id]', params[:filter][:user_id]
 
-  %label{:for => 'ip_address'} IP Address
-  =text_field_tag :ip_address, params[:filter][:ip_address]
+%div.clear
 
-  %label{:for => 'user'} User login
-  =text_field_tag :user, params[:user]
+%label{:for => 'filter[auditable_type]'} Object Kind
+=text_field_tag 'filter[auditable_type]', params[:filter][:auditable_type]
+
+%label{:for => 'filter[auditable_id]'} Object ID
+=text_field_tag 'filter[auditable_id]', params[:filter][:auditable_id]
   
-  %div.clear
-  
-  %label{:for => 'filter[auditable_type]'} Object Kind
-  =text_field_tag 'filter[auditable_type]', params[:filter][:auditable_type]
-  
-  %label{:for => 'filter[auditable_id]'} Object ID
-  =text_field_tag 'filter[auditable_id]', params[:filter][:auditable_id]
-    
-  %label{:for => 'audit_type_name'} Event Type
-  =text_field_tag :audit_type_name, params[:audit_type_name]
+%label{:for => 'audit_type_name'} Event Type
+=text_field_tag :audit_type_name, params[:audit_type_name]
 
-  %label{:for => 'query'}="Message"
-  =text_field_tag :query, params[:query]
+%label{:for => 'query'}="Message"
+=text_field_tag :query, params[:query]
 
-  %div.clear
+%div.clear
 
-  =hidden_field_tag :report, "custom"
-  =submit_tag "Apply Filter"
-  =link_to "Remove Filter", admin_audits_path
+=hidden_field_tag :report, "custom"
+=submit_tag "Apply Filter"
+=link_to "Remove Filter", admin_audits_path + "?report=custom"
+
+Showing
+%strong=@audits.total_entries
+= "of #{AuditEvent.count} total events"
+
+=will_paginate @audits

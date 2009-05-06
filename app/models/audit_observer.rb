@@ -11,6 +11,19 @@ class AuditObserver < ActiveRecord::Observer
 
   def after_update(model)
     audit :item => model, :user => @@current_user, :ip => @@current_ip, :type => :update
+
+    # allow an audit event to be chained on after the update event fires.
+    # define the OBSERVABLE_FIELDS you want to create custom AuditEvent messages for in your class
+    # (see page_extensions for an example) and the appropriate audit_event.
+    if defined?(model.class::OBSERVABLE_FIELDS) && model.class::OBSERVABLE_FIELDS.any?
+      model.class::OBSERVABLE_FIELDS.each do |field|
+        # check to see if the field you're interested in has changed using ActiveRecord's dirty methods
+        if model.send "#{field.to_s}_changed?"
+          audit :item => model, :user => @@current_user, :ip => @@current_ip, :type => "#{field.to_s}_changed".to_sym
+        end
+      end
+    end
+
   end
   
   def after_destroy(model)
