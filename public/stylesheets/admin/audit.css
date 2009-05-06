@@ -21,8 +21,8 @@ H2#current-date { float: left; }
 #date-filter { float: right; padding-top: 1em; }
 #date-filter IMG { vertical-align: top; }
 #date-filter #startdate { vertical-align: top; margin: -3px 0 0 5px; text-align: center; font-weight: bold; width: 105px; }
-#date-filter A { text-decoration: none; vertical-align: top; background: #EFEDED; border: 1px solid #CCC; padding: 2px 3px 2px 4px; }
-#date-filter A:hover { border-color: #AAA; }
+#date-filter A { text-decoration: none; vertical-align: top; border: 1px solid #EFEDED; padding: 2px 3px 2px 4px; }
+#date-filter A:hover { border-color: #CCC; }
 #date-filter A:hover SPAN { text-decoration: underline; }
 
 #quick-filter { clear: both; border-bottom: 1px solid #F5F5F5; padding-bottom: .5em; }
@@ -31,9 +31,19 @@ H2#current-date { float: left; }
 
 #audit-results { margin-top: 1em; }
 
+#custom-report-fieldset { border: 1px solid #CCC !important; margin-bottom: 1em; }
+#custom-report-fieldset LEGEND { font-weight: bold; color: #000; }
+#custom-report-fieldset TABLE { width: 100%; }
+#custom-report-fieldset TABLE TD { padding: .25em 0; }
+#custom-report-fieldset TABLE TD INPUT { float: left; }
+#custom-report-fieldset TABLE TD LABEL { padding-top: .2em; float: left; display: block; width: 110px; text-align: right; padding-right: 5px; }
+#custom-report-fieldset TABLE TD LABEL.Smaller { width: 80px; }
+
 * HTML #tabs-wrapper { zoom: 1; }
 * HTML .AdminTabSet UL.AdminTabNav { padding-top: 1px; }
 * HTML H2#current-date { padding-top: .5em; }
+* HTML #quick-filter FIELDSET,
+* HTML #quick-filter .FormAction,
 * HTML #date-filter { padding-top: 0; }
 * HTML #date-filter A { zoom: 1; margin-top: 1px; }
 * HTML #date-filter #startdate { margin-top: 0; }
