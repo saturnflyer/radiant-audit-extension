@@ -17,8 +17,9 @@ module Audit
           # it will be noted in the log message if any of the following fields have changed
           updatables = ["title", "slug", "breadcrumb", "description", "keywords"]
 
-          updated = (event.auditable.changed & updatables).join(", ") unless (event.auditable.changed & updatables).empty?
-          "#{event.user_link} updated " + link_to(event.auditable.title, event.auditable_path) + " (#{updated})"
+          log_message = "#{event.user_link} updated " + link_to(event.auditable.title, event.auditable_path)
+          log_message += " (#{(event.auditable.changed & updatables).join(", ")})" unless (event.auditable.changed & updatables).empty?
+          log_message
         end
         
         # separate event for logging page status changes- fired after page :update if the status has changed.
