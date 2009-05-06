@@ -31,8 +31,15 @@ H2#current-date { float: left; }
 
 #audit-results { margin-top: 1em; }
 
+* HTML #tabs-wrapper { zoom: 1; }
+* HTML .AdminTabSet UL.AdminTabNav { padding-top: 1px; }
+* HTML H2#current-date { padding-top: .5em; }
+* HTML #date-filter { padding-top: 0; }
 * HTML #date-filter A { zoom: 1; margin-top: 1px; }
 * HTML #date-filter #startdate { margin-top: 0; }
 
+*:first-child+HTML #tabs-wrapper { zoom: 1; }
+*:first-child+HTML H2#current-date { padding-top: .5em; }
+*:first-child+HTML #date-filter { padding-top: 0; }
 *:first-child+HTML #date-filter A { zoom: 1; margin-top: 1px; }
 *:first-child+HTML #date-filter #startdate { margin-top: 0; }
