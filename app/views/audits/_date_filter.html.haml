@@ -3,12 +3,15 @@
 #datefilter{:style => "float:right;"}
   -params[:filter] ||= {} # in case no filter params are sent, don't choke on the params[:filter][:foo] below
 
+  -# it doesn't make sense to persist these filters between days since they're drawn based on the events of the day
+  -# so navigating to a new day where the same event may not have occurred would leave the quick select menus in a
+  -# strange state.  so I'm commenting all these guys out for now and only passing the date.
   -paramslink = {}
-  -paramslink[:filter] = {}
-  -paramslink[:filter][:ip_address] = params[:filter][:ip_address]
-  -paramslink[:filter][:user_id] = params[:filter][:user_id]
-  -paramslink[:event_type] = params[:event_type]
-  -paramslink[:query] = params[:query]
+  -#paramslink[:filter] = {}
+  -#paramslink[:filter][:ip_address] = params[:filter][:ip_address]
+  -#paramslink[:filter][:user_id] = params[:filter][:user_id]
+  -#paramslink[:event_type] = params[:event_type]
+  -#paramslink[:query] = params[:query]
   
   -unless @previous_date.nil?
     -paramslink[:startdate] = @previous_date.strftime('%b %d, %Y')
