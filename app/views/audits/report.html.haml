@@ -2,18 +2,17 @@
 
 #tabs-wrapper.AdminTabSet
   %ul#report-tabs.AdminTabNav
+    %li= link_to "Browse by Date", admin_audits_path
     %li.Selected
-      %span Browse by Date
-    %li= link_to "Custom Report", admin_audits_report_path
+      %span Custom Report
   .ClearFix <!-- do not remove -->
 .ClearFix <!-- do not remove -->
 
-%h2#current-date.Block= @startdate.strftime("%B %d, %Y")
+%h2.Block Custom Report
 
-- form_tag admin_audits_path, :method => "get", :id => "audit_filter_form", :class => "InlineForm" do
+- form_tag admin_audits_report_path, :method => "get", :id => "audit_filter_form", :class => "BlockForm" do
 
-  = render :partial => "date_filter"
-  = render :partial => "quick_filter"
+  = render :partial => "custom_report"
   
 %table#audit-results.index
   %thead

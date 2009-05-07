@@ -19,4 +19,4 @@ module Audit
     end
   end
 
-end          
+end

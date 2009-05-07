@@ -1,33 +1,16 @@
-%h2= @startdate.strftime("%B %d, %Y")
+%fieldset#date-filter
 
-#datefilter{:style => "float:right;"}
-  -params[:filter] ||= {} # in case no filter params are sent, don't choke on the params[:filter][:foo] below
-
-  -# it doesn't make sense to persist these filters between days since they're drawn based on the events of the day
-  -# so navigating to a new day where the same event may not have occurred would leave the quick select menus in a
-  -# strange state.  so I'm commenting all these guys out for now and only passing the date.
-  -paramslink = {}
-  -#paramslink[:filter] = {}
-  -#paramslink[:filter][:ip_address] = params[:filter][:ip_address]
-  -#paramslink[:filter][:user_id] = params[:filter][:user_id]
-  -#paramslink[:event_type] = params[:event_type]
-  -#paramslink[:query] = params[:query]
-  
-  -unless @previous_date.nil?
-    -paramslink[:startdate] = @previous_date.strftime("%F")
-    -dateformat = @previous_date.year == @startdate.year ? '%b %d' : '%b %d, %Y'
-    =link_to "#{@previous_date.strftime(dateformat)}", admin_audits_path + "?#{paramslink.to_param}"
-  
-  -form_tag admin_audits_path, :method => 'get', :id => 'date_filter_form', :class => 'InlineForm' do
-    =hidden_field_tag 'filter[ip_address]', params[:filter][:ip_address] unless params[:filter][:ip_address].blank?
-    =hidden_field_tag 'filter[user_id]', params[:filter][:user_id] unless params[:filter][:user_id].blank?
-    =hidden_field_tag 'event_type', params[:event_type] unless params[:event_type].blank?
-    =hidden_field_tag 'query', params[:query] unless params[:query].blank?
+  %legend.Invisible Date Filter
     
-    %label{:for => :startdate}= "Date"
-    =text_field_tag :startdate, @startdate.strftime("%F")
-    =submit_tag "Submit"
+  -unless @previous_date.nil?
+    %a{ :href => "#{admin_audits_path}?#{@params_to_pass_for_previous_day}" }
+      = image_tag "/images/admin/go_left.gif", :alt => "Previous Day"
+      %span= @previous_date.strftime "%b %d, %Y"
+    
+  =text_field_tag :startdate, @startdate.strftime('%b %d %Y'), :class => "DatePicker"
+    
   -unless @next_date.nil?
-    -paramslink[:startdate] = @next_date.strftime("%F")
-    -dateformat = @next_date.year == @startdate.year ? '%b %d' : '%b %d, %Y'
-    =link_to "#{@next_date.strftime(dateformat)}", admin_audits_path + "?#{paramslink.to_param}"
+    
+    %a{ :href => "#{admin_audits_path}?#{@params_to_pass_for_next_day}" }
+      %span= @next_date.strftime "%b %d, %Y"
+      = image_tag "/images/admin/go_right.gif", :alt => "Next Day"
