@@ -1,6 +1,6 @@
 class AuditsController < ApplicationController
 
-  before_filter :include_stylesheet
+  before_filter :include_assets
 
   sphinx_resource   :sortable_attributes =>['created_at'],
                     :filterable_attributes => ['auditable_type', 'user_id', 'ip_address', 'audit_type_id', 'auditable_id'],
@@ -62,8 +62,13 @@ class AuditsController < ApplicationController
   alias :show :report
   
   private
-    def include_stylesheet
+    def include_assets
+      @stylesheets << 'admin/date_picker'
       @stylesheets << 'admin/audit'
+      @javascripts << 'lowpro'
+      @javascripts << 'prototype_extensions'
+      @javascripts << 'admin/DatePicker'
+      @javascripts << 'admin/audit'
     end
     
     def prepare_sphinx_results

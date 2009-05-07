@@ -14,6 +14,8 @@
 
   = render :partial => "date_filter"
   = render :partial => "quick_filter"
+
+.Top= will_paginate @audits
   
 %table#audit-results.index
   %thead
@@ -37,4 +39,4 @@
           %td= a.event_type
           %td= a.log_message
 
-= will_paginate @audits
+.Bottom= will_paginate @audits
