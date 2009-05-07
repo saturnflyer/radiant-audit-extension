@@ -1,5 +1,4 @@
 #quick-filter
-  
   %fieldset
     
     %legend.Invisible Quick Filter
@@ -29,6 +28,6 @@
 
   .FormAction
     = submit_tag("Apply Filter")
-    = link_to "Remove Filter", admin_audits_path, :class => "Small"    
+    = link_to "Remove Filter", admin_audits_path, :class => "Small" if browse_by_date_filters_set?
 
   .ClearFix <!-- do not remove -->

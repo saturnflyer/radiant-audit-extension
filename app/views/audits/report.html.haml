@@ -19,7 +19,8 @@
 %table#audit-results.index
   %thead
     %tr
-      %th= "Date / Time"
+      -@params_to_pass[:direction] = @params_to_pass[:direction] == 'desc' ? 'asc' : 'desc'
+      %th= link_to "Date / Time", admin_audits_report_path + "?" + @params_to_pass.to_param
       %th= "IP Address"
       %th= "User"
       %th= "Event Type"

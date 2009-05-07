@@ -3,7 +3,6 @@
   %legend.Invisible Date Filter
     
   -unless @previous_date.nil?
-    
     %a{ :href => "#{admin_audits_path}?#{@params_to_pass_for_previous_day}" }
       = image_tag "/images/admin/go_left.gif", :alt => "Previous Day"
       %span= @previous_date.strftime "%b %d, %Y"

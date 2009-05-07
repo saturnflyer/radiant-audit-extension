@@ -27,12 +27,12 @@ class AuditEvent < ActiveRecord::Base
     if user.nil?
       "Unknown User"
     else
-      link_to(user.login, admin_audits_path + "?report=custom&filter[user_id]=#{user.id}")
+      link_to(user.login, admin_audits_report_path + "?filter[user_id]=#{user.id}")
     end
   end
 
   def auditable_path
-    admin_audits_path + "?report=custom&filter[auditable_type]=#{auditable_type}&filter[auditable_id]=#{auditable_id}"
+    admin_audits_report_path + "?filter[auditable_type]=#{auditable_type}&filter[auditable_id]=#{auditable_id}"
   end
 
   def audit_type_with_cast=(type)
