@@ -37,7 +37,7 @@
 
 .FormAction
   =submit_tag "Apply Filter"
-  =link_to "Remove Filter", admin_audits_report_path, :class => "Small"
+  =link_to "Remove Filter", admin_audits_report_path, :class => "Small" if custom_report_filters_set?
 
 %p
   Showing
