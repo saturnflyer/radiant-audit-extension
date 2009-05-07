@@ -101,6 +101,7 @@ class AuditsController < ApplicationController
       @params_to_pass[:filter][:user_id] = params[:filter][:user_id]
       @params_to_pass[:event_type] = params[:event_type]
       @params_to_pass[:query] = params[:query]
+      @params_to_pass[:direction] = params[:direction]
 
       @params_to_pass_for_previous_day = @params_to_pass.merge({ :startdate => @previous_date.strftime('%F') }).to_param unless @previous_date.nil?
       @params_to_pass_for_next_day = @params_to_pass.merge({ :startdate => @next_date.strftime('%F') }).to_param unless @next_date.nil?
