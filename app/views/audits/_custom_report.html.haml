@@ -35,12 +35,11 @@
 
 .ClearFix <!-- do not remove -->
 
-=submit_tag "Apply Filter"
-=link_to "Remove Filter", admin_audits_path + "?report=custom"
+.FormAction
+  =submit_tag "Apply Filter"
+  =link_to "Remove Filter", admin_audits_report_path, :class => "Small"
 
 %p
   Showing
   %strong=@audits.total_entries
   = "of #{AuditEvent.count} total events"
-
-=will_paginate @audits

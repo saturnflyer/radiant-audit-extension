@@ -1,0 +1,31 @@
+.CalendarWidget { position: absolute; width: 13.5em; padding: 8px; background: #FFF; border: 1px solid #CCC; border-width: 1px 2px 2px 1px; line-height: 1; font-family: helvetica, arial, sans-serif; font-size: 13px; }
+.CalendarMonth { }
+
+.CalendarNav { height: 0; position: relative; }
+.CalendarNavPrev { position: absolute; top: 0; left: 0; }
+.CalendarNavNext { position: absolute; top: 0; right: 0; }
+
+.CalendarNavPrevYear,
+.CalendarNavNextYear { display: none; }
+
+.CalendarTable { border-collapse: collapse; width: 100%; }
+.CalendarTable CAPTION { margin: 0; padding: 0 0 .5em; }
+.CalendarTable THEAD TH,
+.CalendarTable TBODY TD { text-align: center; border: 1px solid #CCC; padding: .2em 0 0 !important; }
+.CalendarTable THEAD TH { font-weight: bold; text-align: center !important; }
+
+* HTML .CalendarTable THEAD TH,
+* HTML .CalendarTable TBODY TD { padding: .2em 0; }
+
+.CalendarTable TBODY TD { cursor: pointer; }
+.CalendarTable TBODY TD.OtherMonth { background: #EEE; color: #CCC; cursor: default; }
+.CalendarTable TBODY TD.Disabled { color: #CCC; cursor: default; }
+.CalendarTable TBODY TD.Today { background: #FCC; }
+.CalendarTable TBODY TD.Hover { background: #333; color: #FFF; }
+.CalendarTable TBODY TD.Selected { background: #FFC; }
+.CalendarTable TBODY TD.Selected:hover { color: #000; }
+
+DIV.CalendarHelperText { color: #777; margin-bottom: .3em; font-weight: normal !important; }
+
+.CalendarNav SPAN { border: 1px solid #CCC; padding: 0 .3em 0; display: none; }
+.CalendarNav SPAN.Link { display: inline; text-decoration: none; }
