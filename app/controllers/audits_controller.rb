@@ -56,7 +56,10 @@ class AuditsController < ApplicationController
     @enddate = params[:enddate].blank? ? "" : Date.parse(params[:enddate])
     
     finalize_sphinx_results
+    render :action => "report"
   end
+  
+  alias :show :report
   
   private
     def include_stylesheet
