@@ -1,7 +1,5 @@
 class AuditsController < ApplicationController
 
-  # a comment on the DP branch
-  
   before_filter :include_assets
 
   sphinx_resource   :sortable_attributes =>['created_at'],
