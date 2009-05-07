@@ -32,14 +32,9 @@
         %td
           %label{:for => 'query'}="Message"
           =text_field_tag :query, params[:query]
+          
+  .FormAction
+    =submit_tag "Apply Filter"
+    =link_to "Remove Filter", admin_audits_report_path, :class => "Small", :id => "remove-filters" if custom_report_filters_set?
 
 .ClearFix <!-- do not remove -->
-
-.FormAction
-  =submit_tag "Apply Filter"
-  =link_to "Remove Filter", admin_audits_report_path, :class => "Small" if custom_report_filters_set?
-
-%p
-  Showing
-  %strong=@audits.total_entries
-  = "of #{AuditEvent.count} total events"

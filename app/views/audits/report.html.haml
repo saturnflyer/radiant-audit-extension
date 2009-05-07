@@ -14,7 +14,14 @@
 
   = render :partial => "custom_report"
 
-.Top=will_paginate @audits
+%p#total-audit-display
+  Showing
+  %strong= @audits.size
+  = "of #{AuditEvent.count} total events"
+  
+#top-report-pagination.Top=will_paginate @audits, :previous_label => "Previous", :next_label => "Next"
+
+.ClearFix <!-- do not remove -->
 
 %table#audit-results.index
   %thead
@@ -39,4 +46,4 @@
           %td= a.event_type
           %td= a.log_message
 
-.Bottom= will_paginate @audits
+.Bottom= will_paginate @audits, :previous_label => "Previous", :next_label => "Next"

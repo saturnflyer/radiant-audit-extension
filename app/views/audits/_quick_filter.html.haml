@@ -23,11 +23,12 @@
       = options_for_select(@event_types, (params[:event_type]))
   
   %fieldset
-    %label{ :for => "query" } Message Text:
+    %label{ :for => "query", :class => "Invisible" } Message Text:
+    Message Text:
     = text_field_tag :query, params[:query]
 
   .FormAction
     = submit_tag("Apply Filter")
-    = link_to "Remove Filter", admin_audits_path, :class => "Small" if browse_by_date_filters_set?
+    = link_to "Remove Filter", admin_audits_path, :class => "Small", :id => "remove-filters" if browse_by_date_filters_set?
 
   .ClearFix <!-- do not remove -->
