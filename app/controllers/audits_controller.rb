@@ -42,7 +42,6 @@ class AuditsController < ApplicationController
     params[:direction] ||= 'asc'
     
     finalize_sphinx_results
-    save_parameters_for_linking
   end
   
   def report
@@ -57,7 +56,6 @@ class AuditsController < ApplicationController
     @enddate = params[:enddate].blank? ? "" : Date.parse(params[:enddate])
     
     finalize_sphinx_results
-    save_parameters_for_linking
     render :action => "report"
   end
   
@@ -83,8 +81,12 @@ class AuditsController < ApplicationController
     def finalize_sphinx_results
       # date range
       # ThinkingSphinx apparently doesn't take logical operators, so we always need to provide it with an upper and lower bound for the date.
-      @startdate = AuditEvent.minimum(:created_at) if @startdate.blank?
-      @enddate = Date.today if @enddate.blank?
+      if @startdate.blank?
+        @startdate = AuditEvent.minimum(:created_at)
+      end
+      if @enddate.blank?
+        @enddate = Date.today
+      end
 
       params[:range] = "created_at" unless (@startdate.blank? && @enddate.blank?)
       params[:low] = Time.local(@startdate.year, @startdate.month, @startdate.day)
@@ -96,9 +98,8 @@ class AuditsController < ApplicationController
 
       # search for our audits with a little help from our friend Sphinx-it!
       @audits = AuditEvent.search(sphinxed_search_terms, sphinxed_search_conditions)
-    end
-    
-    def save_parameters_for_linking
+
+      # Moving these params to save into controller, to be used on date "links"
       @params_to_pass = {}
       @params_to_pass[:filter] = {}
       @params_to_pass[:filter][:ip_address] = params[:filter][:ip_address]
@@ -106,18 +107,9 @@ class AuditsController < ApplicationController
       @params_to_pass[:event_type] = params[:event_type]
       @params_to_pass[:query] = params[:query]
       @params_to_pass[:direction] = params[:direction]
-      @params_to_pass[:startdate] = params[:startdate]
 
-      # Remove empty params and empty filter params
-      @params_to_pass.each_pair { |k,v| @params_to_pass.delete(k) if v.blank? }
-      @params_to_pass[:filter].each_pair { |k,v| @params_to_pass[:filter].delete(k) if v.blank? }
-      
-      # And flip the direction for sorting links
-      @params_to_pass_in_opposite_direction = @params_to_pass.merge({ :direction => @params_to_pass[:direction].eql?("desc") ? "asc" : "desc" }).to_param
-      
-      # Just previous + next day date parameters -- disregard current filtering
-      @params_to_pass_for_previous_day = { :startdate => @previous_date.strftime('%F') }.to_param unless @previous_date.nil?
-      @params_to_pass_for_next_day = { :startdate => @next_date.strftime('%F') }.to_param unless @next_date.nil?
+      @params_to_pass_for_previous_day = @params_to_pass.merge({ :startdate => @previous_date.strftime('%F') }).to_param unless @previous_date.nil?
+      @params_to_pass_for_next_day = @params_to_pass.merge({ :startdate => @next_date.strftime('%F') }).to_param unless @next_date.nil?
     end
   
 end

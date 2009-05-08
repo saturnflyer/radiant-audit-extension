@@ -10,25 +10,27 @@
 
 %h2#current-date.Block= @startdate.strftime("%B %d, %Y")
 
-= render :partial => "date_filter"
+- form_tag admin_audits_path, :method => "get", :id => "audit_filter_form", :class => "InlineForm" do
 
-= render :partial => "quick_filter"
-
+  = render :partial => "date_filter"
+  = render :partial => "quick_filter"
+  
 %table#audit-results.index
   %thead
     %tr
-      %th= link_to "Date / Time", "#{admin_audits_path}?#{@params_to_pass_in_opposite_direction}"
+      -@params_to_pass[:direction] = @params_to_pass[:direction] == 'desc' ? 'asc' : 'desc'
+      %th= link_to "Date / Time", admin_audits_path + "?" + @params_to_pass.to_param
       %th= "IP Address"
       %th= "User"
       %th= "Event Type"
       %th= "Message"
   %tbody
-    - if @audits.empty?
+    - if @audits.size == 0
       %tr
         %td.Placeholder{ :colspan => 5 }
           %p= "No events that match the criteria exist for this day."
     - else
-      - @audits.each do |a|
+      -@audits.each do |a|
         %tr
           %td= a.created_at.to_formatted_s(:db)
           %td= a.ip_address
