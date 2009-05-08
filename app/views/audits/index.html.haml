@@ -32,7 +32,7 @@
     - else
       -@audits.each do |a|
         %tr
-          %td= a.created_at.to_formatted_s(:db)
+          %td= a.created_at.to_s(:mdy_time)
           %td= a.ip_address
           %td= a.user.nil? ? "(Unknown)" : a.user.login
           %td= a.event_type

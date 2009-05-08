@@ -13,6 +13,15 @@ class AuditExtension < Radiant::Extension
     end
   end
   
+  DATE_TIME_FORMATS = {
+    :iso8601     => '%F',
+    :mdy_time    => '%m/%d/%Y %I:%M %p',
+    :mdy_short   => '%m/%d/%y'
+  }
+  
+  ActiveSupport::CoreExtensions::Date::Conversions::DATE_FORMATS.merge!(AuditExtension::DATE_TIME_FORMATS)
+  ActiveSupport::CoreExtensions::Time::Conversions::DATE_FORMATS.merge!(AuditExtension::DATE_TIME_FORMATS)
+    
   OBSERVABLES = [User, Page, Layout, Snippet]
   
   def activate
