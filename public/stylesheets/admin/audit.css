@@ -30,6 +30,7 @@ H2#current-date { float: left; }
 
 #tabs-wrapper { border-bottom: 1px solid #CCC; }
 
+#date_filter_form FIELDSET,
 #audit_filter_form FIELDSET { border: 0; }
 
 #date-filter { float: right; padding: 1.6em 0 0; }

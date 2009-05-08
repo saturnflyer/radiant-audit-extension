@@ -24,3 +24,10 @@ AuditDatePicker.CONFIG = DatePicker.CONFIG;
 Event.addBehavior({ 
   ".AuditDatePicker" : AuditDatePicker
 });
+
+document.observe("dom:loaded", function(){
+  var date_filter_form = $("date_filter_form");
+  if (date_filter_form) {
+    date_filter_form.select(".FormAction").invoke("hide");
+  }
+});

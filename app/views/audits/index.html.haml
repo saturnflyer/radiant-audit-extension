@@ -10,10 +10,8 @@
 
 %h2#current-date.Block= @startdate.strftime("%B %d, %Y")
 
-- form_tag admin_audits_path, :method => "get", :id => "audit_filter_form", :class => "InlineForm" do
-
-  = render :partial => "date_filter"
-  = render :partial => "quick_filter"
+= render :partial => "date_filter"
+= render :partial => "quick_filter"
   
 %table#audit-results.index
   %thead
