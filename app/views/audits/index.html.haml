@@ -11,7 +11,7 @@
 %h2#current-date.Block= @startdate.strftime("%B %d, %Y")
 
 = render :partial => "date_filter"
-= render :partial => "quick_filter"
+= render :partial => "quick_filter" unless @audits.size == 0
   
 %table#audit-results.index
   %thead
