@@ -1,34 +1,36 @@
-#quick-filter
-  %fieldset
-    
-    %legend.Invisible Quick Filter
-    Quick Filter:
-    
-    %label{ :for => "ip_address", :class => "Invisible" } IP Address
-    %select{ :name => "filter[ip_address]", :id => "ip_address" }
-      %option{ :value => "" } IP Address
-      %option{ :value => "" } &nbsp;
-      = options_for_select(@ip_addresses, params[:filter][:ip_address])
+- form_tag admin_audits_path, :method => "get", :id => "audit_filter_form", :class => "InlineForm" do
 
-    %label{ :for => "user_id", :class => "Invisible" } User
-    %select{ :name => "filter[user_id]", :id => "user_id" }
-      %option{ :value => "" } User
-      %option{ :value => "" } &nbsp;
-      = options_from_collection_for_select(@users, "id", "login", params[:filter][:user_id].blank? ? "" : params[:filter][:user_id].to_i)
+  #quick-filter
+    %fieldset
+    
+      %legend.Invisible Quick Filter
+      Quick Filter:
+    
+      %label{ :for => "ip_address", :class => "Invisible" } IP Address
+      %select{ :name => "filter[ip_address]", :id => "ip_address" }
+        %option{ :value => "" } IP Address
+        %option{ :value => "" } &nbsp;
+        = options_for_select(@ip_addresses, params[:filter][:ip_address])
 
-    %label{ :for => "event_type", :class => "Invisible" } Event Type
-    %select{ :name => "event_type", :id => "event_type" }
-      %option{ :value => "" } Event Type
-      %option{ :value => "" } &nbsp;
-      = options_for_select(@event_types, (params[:event_type]))
+      %label{ :for => "user_id", :class => "Invisible" } User
+      %select{ :name => "filter[user_id]", :id => "user_id" }
+        %option{ :value => "" } User
+        %option{ :value => "" } &nbsp;
+        = options_from_collection_for_select(@users, "id", "login", params[:filter][:user_id].blank? ? "" : params[:filter][:user_id].to_i)
+
+      %label{ :for => "event_type", :class => "Invisible" } Event Type
+      %select{ :name => "event_type", :id => "event_type" }
+        %option{ :value => "" } Event Type
+        %option{ :value => "" } &nbsp;
+        = options_for_select(@event_types, (params[:event_type]))
   
-  %fieldset
-    %label{ :for => "query", :class => "Invisible" } Message Text:
-    Message Text:
-    = text_field_tag :query, params[:query]
+    %fieldset
+      %label{ :for => "query", :class => "Invisible" } Message Text:
+      Message Text:
+      = text_field_tag :query, params[:query]
 
-  .FormAction
-    = submit_tag("Apply Filter")
-    = link_to "Remove Filter", admin_audits_path, :class => "Small", :id => "remove-filters" if browse_by_date_filters_set?
+    .FormAction
+      = submit_tag("Apply Filter")
+      = link_to "Remove Filter", admin_audits_path, :class => "Small", :id => "remove-filters" if browse_by_date_filters_set?
 
-  .ClearFix <!-- do not remove -->
+    .ClearFix <!-- do not remove -->

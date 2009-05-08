@@ -1,16 +1,21 @@
-%fieldset#date-filter
+- form_tag admin_audits_path, :method => "get", :id => "date_filter_form", :class => "InlineForm" do
 
-  %legend.Invisible Date Filter
+  %fieldset#date-filter
+
+    %legend.Invisible Date Filter
     
-  -unless @previous_date.nil?
-    %a{ :href => "#{admin_audits_path}?#{@params_to_pass_for_previous_day}" }
-      = image_tag "/images/admin/go_left.gif", :alt => "Previous Day"
-      %span= @previous_date.strftime "%b %d, %Y"
+    -unless @previous_date.nil?
+      %a{ :href => "#{admin_audits_path}?#{@params_to_pass_for_previous_day}" }
+        = image_tag "/images/admin/go_left.gif", :alt => "Previous Day"
+        %span= @previous_date.strftime "%b %d, %Y"
     
-  =text_field_tag :startdate, @startdate.strftime('%m/%d/%Y'), :class => "AuditDatePicker"
+    =text_field_tag :startdate, @startdate.strftime('%m/%d/%Y'), :class => "AuditDatePicker"
     
-  -unless @next_date.nil?
+    -unless @next_date.nil?
     
-    %a{ :href => "#{admin_audits_path}?#{@params_to_pass_for_next_day}" }
-      %span= @next_date.strftime "%b %d, %Y"
-      = image_tag "/images/admin/go_right.gif", :alt => "Next Day"
+      %a{ :href => "#{admin_audits_path}?#{@params_to_pass_for_next_day}" }
+        %span= @next_date.strftime "%b %d, %Y"
+        = image_tag "/images/admin/go_right.gif", :alt => "Next Day"
+    
+    .FormAction
+      = submit_tag("Filter by Date")
