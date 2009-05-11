@@ -30,7 +30,6 @@
     - else
       -@audits.each do |a|
         %tr
-          -debugger
           %td= a.created_at.localtime.to_s(:mdy_time)
           %td= a.ip_address
           %td= a.user.nil? ? "(Unknown)" : a.user.login
