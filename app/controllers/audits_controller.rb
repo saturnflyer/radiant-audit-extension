@@ -102,12 +102,16 @@ class AuditsController < ApplicationController
       # Moving these params to save into controller, to be used on date "links"
       @params_to_pass = {}
       @params_to_pass[:filter] = {}
-      @params_to_pass[:filter][:ip_address] = params[:filter][:ip_address]
-      @params_to_pass[:filter][:user_id] = params[:filter][:user_id]
-      @params_to_pass[:event_type] = params[:event_type]
-      @params_to_pass[:query] = params[:query]
-      @params_to_pass[:direction] = params[:direction]
-      @params_to_pass[:startdate] = params[:startdate]
+      @params_to_pass[:filter][:ip_address] = params[:filter][:ip_address] unless params[:filter][:ip_address].blank?
+      @params_to_pass[:filter][:user_id] = params[:filter][:user_id] unless params[:filter][:user_id].blank?
+      @params_to_pass[:event_type] = params[:event_type] unless params[:event_type].blank?
+      @params_to_pass[:query] = params[:query] unless params[:query].blank?
+      @params_to_pass[:direction] = params[:direction] unless params[:direction].blank?
+      @params_to_pass[:startdate] = params[:startdate] unless params[:startdate].blank?
+      @params_to_pass[:enddate] = params[:enddate] unless params[:enddate].blank?
+      @params_to_pass[:filter][:auditable_type] = params[:filter][:auditable_type] unless params[:filter][:auditable_type].blank?
+      @params_to_pass[:filter][:auditable_id] = params[:filter][:auditable_id] unless params[:filter][:auditable_id].blank?
+
 
       @params_to_pass_for_previous_day = { :startdate => @previous_date.strftime('%F') }.to_param unless @previous_date.nil?
       @params_to_pass_for_next_day = { :startdate => @next_date.strftime('%F') }.to_param unless @next_date.nil?
