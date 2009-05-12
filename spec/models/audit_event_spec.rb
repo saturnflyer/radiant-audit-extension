@@ -9,7 +9,7 @@ describe AuditEvent do
   it "should link to user" do
     admin = users(:admin)
     audit = AuditEvent.new(:user => admin)
-    audit.user_link.should eql(link_to(admin.name, edit_admin_user_path(admin)))
+    audit.user_link.should eql("<a href='/admin/audits/report?filter[:user_id]=#{admin.id}'>#{admin.name}</a>")
   end
   
   it "should return 'Unknown User' if unknown user" do
