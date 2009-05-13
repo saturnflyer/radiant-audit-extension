@@ -4,12 +4,13 @@ class AuditEvent < ActiveRecord::Base
   belongs_to :audit_type
   
   # sphinxable_resource / thinking sphinx indices
-  define_index do
-    indexes log_message, ip_address, user_id, auditable_type, auditable_id, audit_type_id
-    has created_at, :sortable => true
-    set_property :delta => true
+  if ActiveRecord::Base.connection.tables.include?(AuditEvent.table_name)
+    define_index do
+      indexes log_message, ip_address, user_id, auditable_type, auditable_id, audit_type_id
+      has created_at, :sortable => true
+      set_property :delta => true
+    end
   end
-
 
   # before the AuditEvent is saved, call the proc defined for this AuditType & class to assemble
   # appropriate log message
