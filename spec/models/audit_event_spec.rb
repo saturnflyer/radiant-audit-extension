@@ -4,12 +4,19 @@ describe AuditEvent do
   include ActionView::Helpers::UrlHelper
   include ActionView::Helpers::TagHelper
   include ActionController::UrlWriter
-  dataset :users
+  dataset :users, :pages
 
-  it "should link to user" do
+  it "should link to the custom report view for the user" do
     admin = users(:admin)
     audit = AuditEvent.new(:user => admin)
-    audit.user_link.should eql("<a href='/admin/audits/report?filter[:user_id]=#{admin.id}'>#{admin.name}</a>")
+    audit.user_link.should eql("<a href='/admin/audits/report?filter[user_id]=#{admin.id}'>#{admin.login}</a>")
+  end
+  
+  it "should link to the custom report view for the auditable" do
+    admin = users(:admin)
+    auditable = pages(:home)
+    audit = AuditEvent.new(:user => admin, :auditable => auditable)
+    audit.auditable_path.should eql("/admin/audits/report?filter[auditable_type]=Page&filter[auditable_id]=#{auditable.id}")
   end
   
   it "should return 'Unknown User' if unknown user" do

@@ -13,10 +13,6 @@ describe Auditable do
     @base.log_formats.should be_kind_of(Hash)
   end
 
-  it "should have url helpers" do
-    @base.send(:admin_path).should eql('/admin')
-  end
-  
   describe ".audit_event" do
     it "should register an event type" do
       lambda {
