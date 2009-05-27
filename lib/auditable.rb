@@ -15,4 +15,12 @@ module Auditable
     self.log_formats[method.to_sym] = block
   end
 
+  # Bypass most of ActionController::UrlWriter#url_for. Most of the assumed
+  # methods/vars won't be in existence.
+  def url_for(options)
+    return options if options.is_a?(String)
+    options.delete :only_path
+    ActionController::Routing::Routes.generate(options)
+  end
+
 end
