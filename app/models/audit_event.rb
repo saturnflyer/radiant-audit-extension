@@ -3,6 +3,8 @@ class AuditEvent < ActiveRecord::Base
   belongs_to :user
   belongs_to :audit_type
   
+  include Auditable
+    
   # sphinxable_resource / thinking sphinx indices
   if ActiveRecord::Base.connection.tables.include?(AuditEvent.table_name)
     define_index do
@@ -24,12 +26,12 @@ class AuditEvent < ActiveRecord::Base
     if user.nil?
       "Unknown User"
     else
-      "<a href='/admin/audits/report?filter[user_id]=#{user.id}'>#{user.login}</a>"
+      link_to user.login, admin_audits_report_path + "?filter[user_id]=#{user.id}"
     end
   end
 
   def auditable_path
-    "/admin/audits/report?filter[auditable_type]=#{auditable_type}&filter[auditable_id]=#{auditable_id}"
+    "#{admin_audits_report_path}?filter[auditable_type]=#{auditable_type}&filter[auditable_id]=#{auditable_id}"
   end
 
   def audit_type_with_cast=(type)
