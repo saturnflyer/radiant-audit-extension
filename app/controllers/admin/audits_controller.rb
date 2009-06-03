@@ -1,4 +1,4 @@
-class AuditsController < ApplicationController
+class Admin::AuditsController < ApplicationController
 
   before_filter :include_assets
 

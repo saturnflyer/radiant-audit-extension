@@ -7,7 +7,7 @@ class AuditExtension < Radiant::Extension
   url "http://digitalpulp.com"
   
   define_routes do |map|
-    map.namespace :admin, :member => { :remove => :get } do |admin|
+    map.namespace :admin do |admin|
       admin.resources :audits
       admin.audits_report 'audits/report', :controller => "audits", :action => "report"
     end

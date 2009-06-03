@@ -1,4 +1,4 @@
-module AuditsHelper
+module Admin::AuditsHelper
   def browse_by_date_filters_set?
     # have any filters been set on the browse_by_date form?
     !(params[:filter][:ip_address].blank? && params[:filter][:user_id].blank? && params[:event_type].blank? && params[:query].blank?)
