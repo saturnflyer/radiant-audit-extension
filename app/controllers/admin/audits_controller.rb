@@ -97,7 +97,7 @@ class Admin::AuditsController < ApplicationController
       params[:direction] ||= 'desc'
 
       # search for our audits with a little help from our friend Sphinx-it!
-      @audits = AuditEvent.search(sphinxed_search_terms, sphinxed_search_conditions)
+      @audits = AuditEvent.search(sphinxed_search_terms, sphinxed_search_conditions).compact
 
       # Moving these params to save into controller, to be used on date "links"
       @params_to_pass = {}
