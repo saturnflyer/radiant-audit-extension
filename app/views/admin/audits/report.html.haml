@@ -23,31 +23,31 @@
         %tr
           %td
             %label{ :for => "startdate" } Date Range
-            = text_field_tag :startdate, params[:startdate]
+            = text_field_tag :startdate, params[:after]
             %label.Smaller{ :for => "enddate" } to
-            = text_field_tag :enddate, params[:enddate]
+            = text_field_tag :enddate, params[:before]
 
           %td
             %label{ :for => "filter[ip_address]" } IP Address
-            = text_field_tag "filter[ip_address]", params[:filter][:ip_address]
+            = text_field_tag "filter[ip_address]", params[:ip]
 
           %td
             %label{ :for => "filter[user_id]" } User ID
-            = text_field_tag "filter[user_id]", params[:filter][:user_id]
+            = text_field_tag "filter[user_id]", params[:user]
         %tr
           %td
             %label{ :for => "filter[auditable_type]" } Object Kind
-            = text_field_tag "filter[auditable_type]", params[:filter][:auditable_type]
+            = text_field_tag "filter[auditable_type]", params[:auditable_type]
             %label.Smaller{ :for => "filter[auditable_id]" } Object ID
-            = text_field_tag "filter[auditable_id]", params[:filter][:auditable_id]
+            = text_field_tag "filter[auditable_id]", params[:auditable_id]
 
           %td
             %label{ :for => "audit_type_name" } Event Type
-            = text_field_tag :audit_type_name, params[:audit_type_name]
+            = text_field_tag :audit_type_name, params[:event_type]
 
           %td
             %label{ :for => "query" } Message
-            = text_field_tag :query, params[:query]
+            = text_field_tag :query, params[:log]
 
     .FormAction
       = submit_tag "Apply Filter"
@@ -67,8 +67,7 @@
 %table#audit-results.index
   %thead
     %tr
-      -@params_to_pass[:direction] = @params_to_pass[:direction] == 'desc' ? 'asc' : 'desc'
-      %th= link_to "Date / Time", report_admin_audits_path + "?" + @params_to_pass.to_param
+      %th= link_to "Date / Time", overwrite_params(:direction => reverse_direction)
       %th= "IP Address"
       %th= "User"
       %th= "Event Type"
