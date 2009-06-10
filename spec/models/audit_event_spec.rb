@@ -44,4 +44,28 @@ describe AuditEvent do
     msg.should eql('log message')
   end
 
+  describe ".date_before" do
+    dataset :audit
+
+    it "should be nil" do
+      AuditEvent.date_before(audit_events(:first).created_at).should be_nil
+    end
+
+    it "should be the previous date" do
+      AuditEvent.date_before(audit_events(:second).created_at).should eql(audit_events(:first).created_at.to_date)
+    end
+  end
+
+  describe ".date_after" do
+    dataset :audit
+
+    it "should be nil" do
+      AuditEvent.date_after(audit_events(:third).created_at).should be_nil
+    end
+
+    it "should be the next date" do
+      AuditEvent.date_after(audit_events(:second).created_at).should eql(audit_events(:third).created_at.to_date)
+    end
+  end
+
 end

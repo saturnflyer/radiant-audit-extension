@@ -1,12 +1,18 @@
 class AuditEvent < ActiveRecord::Base
-  belongs_to :auditable, :polymorphic => true
-  belongs_to :user
-  belongs_to :audit_type
-  
   include Auditable
 
   cattr_reader :per_page
   @@per_page = 100
+
+  default_scope :order => 'created_at asc'
+
+  belongs_to :auditable, :polymorphic => true
+  belongs_to :user
+  belongs_to :audit_type
+  
+  # before the AuditEvent is saved, call the proc defined for this AuditType & class to assemble
+  # appropriate log message
+  before_create :assemble_log_message
 
   named_scope :ip,              lambda { |ip|   {:conditions => { :ip_address => ip }} }
   named_scope :user,            lambda { |user| {:conditions => { :user_id => user }} }
@@ -19,10 +25,24 @@ class AuditEvent < ActiveRecord::Base
     auditable, audit_type = event.split(' ')
     {:include => :audit_type, :conditions => { 'audit_types.name' => audit_type.upcase, :auditable_type => auditable}}
   }
+  named_scope :on,              lambda { |date|
+    date = DateTime.parse(date.to_s).utc
+    {:conditions => ['created_at >= ? AND created_at <= ?', date.beginning_of_day, date.end_of_day]}
+  }
+  
+  class << self
+    def date_before(date)
+      if event = find(:first, :conditions => ['created_at < ?', Date.parse(date.to_s).beginning_of_day], :select => :created_at)
+        event.created_at.to_date
+      end
+    end
 
-  # before the AuditEvent is saved, call the proc defined for this AuditType & class to assemble
-  # appropriate log message
-  before_create :assemble_log_message
+    def date_after(date)
+      if event = find(:first, :conditions => ['created_at > ?', Date.parse(date.to_s).end_of_day], :select => :created_at)
+        event.created_at.to_date
+      end
+    end
+  end
 
   def event_type
     "#{auditable_type} #{audit_type.name.gsub(/_/, " ").titleize}"
@@ -48,9 +68,10 @@ class AuditEvent < ActiveRecord::Base
   alias_method_chain :audit_type=, :cast
 
   private
-  def assemble_log_message
-    return false unless Audit.logging?
-    self.log_message = self.auditable.class.log_formats[@event_type].call(self)
-  end
+
+    def assemble_log_message
+      return false unless Audit.logging?
+      self.log_message = self.auditable.class.log_formats[@event_type].call(self)
+    end
 
 end
