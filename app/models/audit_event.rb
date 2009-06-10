@@ -10,8 +10,8 @@ class AuditEvent < ActiveRecord::Base
 
   named_scope :ip,              lambda { |ip|   {:conditions => { :ip_address => ip }} }
   named_scope :user,            lambda { |user| {:conditions => { :user_id => user }} }
-  named_scope :before,          lambda { |date| {:conditions => ['created_at <= ?', date.utc]} }
-  named_scope :after,           lambda { |date| {:conditions => ['created_at >= ?', date.utc]} }
+  named_scope :before,          lambda { |date| {:conditions => ['created_at <= ?', DateTime.parse(date.to_s).utc]} }
+  named_scope :after,           lambda { |date| {:conditions => ['created_at >= ?', DateTime.parse(date.to_s).utc]} }
   named_scope :log,             lambda { |msg| {:conditions => ['log_message LIKE ?', "%#{msg}%"]} }
   named_scope :auditable_type,  lambda { |type| {:conditions => {:auditable_type => type}} }
   named_scope :auditable_id,    lambda { |type| {:conditions => {:auditable_id => id}} }

@@ -22,32 +22,32 @@
       %tbody
         %tr
           %td
-            %label{ :for => "startdate" } Date Range
-            = text_field_tag :startdate, params[:after]
-            %label.Smaller{ :for => "enddate" } to
-            = text_field_tag :enddate, params[:before]
+            %label{ :for => "after" } Date Range
+            = text_field_tag :after, params[:after]
+            %label.Smaller{ :for => "before" } to
+            = text_field_tag :before, params[:before]
 
           %td
-            %label{ :for => "filter[ip_address]" } IP Address
-            = text_field_tag "filter[ip_address]", params[:ip]
+            %label{ :for => "ip" } IP Address
+            = text_field_tag "ip", params[:ip]
 
           %td
-            %label{ :for => "filter[user_id]" } User ID
-            = text_field_tag "filter[user_id]", params[:user]
+            %label{ :for => "user" } User ID
+            = text_field_tag "user", params[:user]
         %tr
           %td
-            %label{ :for => "filter[auditable_type]" } Object Kind
-            = text_field_tag "filter[auditable_type]", params[:auditable_type]
-            %label.Smaller{ :for => "filter[auditable_id]" } Object ID
-            = text_field_tag "filter[auditable_id]", params[:auditable_id]
+            %label{ :for => "auditable_type" } Object Kind
+            = text_field_tag "auditable_type", params[:auditable_type]
+            %label.Smaller{ :for => "auditable_id" } Object ID
+            = text_field_tag "auditable_id", params[:auditable_id]
 
           %td
-            %label{ :for => "audit_type_name" } Event Type
-            = text_field_tag :audit_type_name, params[:event_type]
+            %label{ :for => "event_type" } Event Type
+            = text_field_tag :event_type, params[:event_type]
 
           %td
             %label{ :for => "query" } Message
-            = text_field_tag :query, params[:log]
+            = text_field_tag :log, params[:log]
 
     .FormAction
       = submit_tag "Apply Filter"

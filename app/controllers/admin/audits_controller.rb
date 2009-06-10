@@ -56,9 +56,9 @@ class Admin::AuditsController < ApplicationController
     def scope_from_params(p = params)
       filters = %w(ip user event_type before after log auditable_type auditable_id)
       filters.inject(AuditEvent) do |chain,filter|
-        chain = chain.send(filter, p[filter]) if p.include?(filter)
+        chain = chain.send(filter, p[filter]) unless p[filter].blank?
         chain
-      end.paginate(:page => p[:page], :order => "created_at #{p['direction'] || 'desc'}")
+      end.paginate(:page => p[:page], :order => "audit_events.created_at #{p['direction'] || 'desc'}")
     end
 
     def prepare_sphinx_results

@@ -15,6 +15,12 @@ describe Admin::AuditsController do
       audits = controller.send(:scope_from_params, params)
       audits.should eql(AuditEvent.paginate(:page => 1, :order => "created_at asc"))
     end
+
+    it "should discard blank params" do
+      params = {'user' => user_id(:admin), 'ip' => '', 'event_type' => ''}
+      audits = controller.send(:scope_from_params, params)
+      audits.should eql(AuditEvent.user(user_id(:admin)).paginate(:page => 1, :order => "created_at desc"))
+    end
   end
 
   describe "#report" do
