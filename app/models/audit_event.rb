@@ -4,8 +4,6 @@ class AuditEvent < ActiveRecord::Base
   cattr_reader :per_page
   @@per_page = 100
 
-  default_scope :order => 'audit_events.created_at asc'
-
   belongs_to :auditable, :polymorphic => true
   belongs_to :user
   belongs_to :audit_type
@@ -26,7 +24,7 @@ class AuditEvent < ActiveRecord::Base
     auditable, audit_type = event.split(' ')
     {:include => :audit_type, :conditions => { 'audit_types.name' => audit_type.upcase, 'audit_events.auditable_type' => auditable.camelcase}}
   }
-  named_scope :date,              lambda { |date|
+  named_scope :date,            lambda { |date|
     date = DateTime.parse(date.to_s).utc
     {:conditions => ['audit_events.created_at >= ? AND audit_events.created_at <= ?', date.beginning_of_day, date.end_of_day]}
   }
@@ -39,7 +37,7 @@ class AuditEvent < ActiveRecord::Base
     end
 
     def date_after(date)
-      if event = find(:first, :conditions => ['created_at > ?', Date.parse(date.to_s).end_of_day], :select => :created_at)
+      if event = find(:first, :conditions => ['created_at > ?', Date.parse(date.to_s).end_of_day], :select => :created_at, :order => 'audit_events.created_at asc')
         event.created_at.to_date
       end
     end

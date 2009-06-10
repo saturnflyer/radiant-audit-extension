@@ -29,16 +29,16 @@ class Admin::AuditsController < ApplicationController
       @javascripts << 'admin/audit'
     end
     
-    def scope_from_params(p = params)
+    def scope_from_params
       filters = %w(ip user event_type before date after log auditable_type auditable_id)
       filters.inject(AuditEvent) do |chain,filter|
-        chain = chain.send(filter, p[filter]) unless p[filter].blank?
+        chain = chain.send(filter, params[filter]) unless params[filter].blank?
         chain
-      end.paginate(:page => p[:page], :order => "audit_events.created_at #{sort_direction}")
+      end.paginate(:page => params[:page], :order => "audit_events.created_at #{sort_direction}")
     end
 
     def sort_direction
-      params[:direction] == 'asc' ? 'asc' : 'desc'
+      params['direction'] == 'asc' ? 'asc' : 'desc'
     end
   
 end
