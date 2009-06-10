@@ -2,11 +2,6 @@ class Admin::AuditsController < ApplicationController
 
   before_filter :include_assets
 
-  sphinx_resource   :sortable_attributes =>['created_at'],
-                    :filterable_attributes => ['auditable_type', 'user_id', 'ip_address', 'audit_type_id', 'auditable_id'],
-                    :range_attributes => ['created_at'],
-                    :default_sort => "created_at",
-                    :per_page => 100
   def index
     prepare_sphinx_results
     
@@ -46,7 +41,6 @@ class Admin::AuditsController < ApplicationController
   
   def report
     prepare_sphinx_results
-    
     if !params[:audit_type_name].blank?
       params[:filter][:audit_type_id] = AuditType.find_by_name(params[:audit_type_name]).id rescue nil
     end
@@ -71,6 +65,14 @@ class Admin::AuditsController < ApplicationController
       @javascripts << 'admin/audit'
     end
     
+    def scope_from_params(p = params)
+      filters = %w(ip user event_type before after log auditable_type auditable_id)
+      filters.inject(AuditEvent) do |chain,filter|
+        chain = chain.send(filter, p[filter]) if p.include?(filter)
+        chain
+      end.paginate(:page => p[:page], :order => "created_at #{p['direction'] || 'desc'}")
+    end
+
     def prepare_sphinx_results
       # in case no filter params are sent, don't choke on the params[:filter][:foo] below
       params[:filter] ||= {}
