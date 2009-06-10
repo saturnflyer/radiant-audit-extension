@@ -67,7 +67,7 @@
 %table#audit-results.index
   %thead
     %tr
-      %th= link_to "Date / Time", overwrite_params(:direction => reverse_direction)
+      %th= link_to "Date / Time", :overwrite_params => { :direction => reverse_direction }
       %th= "IP Address"
       %th= "User"
       %th= "Event Type"
