@@ -18,7 +18,14 @@ describe Admin::AuditsController do
   end
 
   describe "#report" do
-    it "should build audits array based on scope from params"
+    before do
+      login_as :admin
+    end
+
+    it "should build audits array based on scope from params" do
+      get :report, :after => 30.minutes.ago
+      assigns(:audits).should eql(AuditEvent.after(30.minutes.ago).paginate(:page => 1))
+    end
   end
 
 end

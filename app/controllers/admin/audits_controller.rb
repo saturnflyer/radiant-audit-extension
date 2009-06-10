@@ -40,20 +40,8 @@ class Admin::AuditsController < ApplicationController
   end
   
   def report
-    prepare_sphinx_results
-    if !params[:audit_type_name].blank?
-      params[:filter][:audit_type_id] = AuditType.find_by_name(params[:audit_type_name]).id rescue nil
-    end
-    
-    @startdate = params[:startdate].blank? ? "" : Date.parse(params[:startdate])
-    # make enddate inclusive- show events through the enddate specified
-    @enddate = params[:enddate].blank? ? "" : Date.parse(params[:enddate])
-    
-    finalize_sphinx_results
-    render :action => "report"
+    @audits = scope_from_params
   end
-  
-  alias :show :report
   
   private
     def include_assets
