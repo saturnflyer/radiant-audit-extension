@@ -23,9 +23,9 @@
         %tr
           %td
             %label{ :for => "after" } Date Range
-            = text_field_tag :after, params[:after]
+            = text_field_tag :after, params[:after], :class => 'DatePicker'
             %label.Smaller{ :for => "before" } to
-            = text_field_tag :before, params[:before]
+            = text_field_tag :before, params[:before], :class => 'DatePicker'
 
           %td
             %label{ :for => "ip" } IP Address
