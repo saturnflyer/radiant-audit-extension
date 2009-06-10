@@ -11,8 +11,49 @@
 %h2.Block Custom Report
 
 - form_tag report_admin_audits_path, :method => "get", :id => "audit_filter_form", :class => "BlockForm" do
+  %fieldset#custom-report-fieldset
 
-  = render :partial => "custom_report"
+    %legend Report Query
+
+    %table
+      %col{ :width => "50%" }
+      %col{ :width => "25%" }
+      %col{ :width => "25%" }
+      %tbody
+        %tr
+          %td
+            %label{ :for => "startdate" } Date Range
+            = text_field_tag :startdate, params[:startdate]
+            %label.Smaller{ :for => "enddate" } to
+            = text_field_tag :enddate, params[:enddate]
+
+          %td
+            %label{ :for => "filter[ip_address]" } IP Address
+            = text_field_tag "filter[ip_address]", params[:filter][:ip_address]
+
+          %td
+            %label{ :for => "filter[user_id]" } User ID
+            = text_field_tag "filter[user_id]", params[:filter][:user_id]
+        %tr
+          %td
+            %label{ :for => "filter[auditable_type]" } Object Kind
+            = text_field_tag "filter[auditable_type]", params[:filter][:auditable_type]
+            %label.Smaller{ :for => "filter[auditable_id]" } Object ID
+            = text_field_tag "filter[auditable_id]", params[:filter][:auditable_id]
+
+          %td
+            %label{ :for => "audit_type_name" } Event Type
+            = text_field_tag :audit_type_name, params[:audit_type_name]
+
+          %td
+            %label{ :for => "query" } Message
+            = text_field_tag :query, params[:query]
+
+    .FormAction
+      = submit_tag "Apply Filter"
+      = link_to "Remove Filter", report_admin_audits_path, :class => "Small", :id => "remove-filters" if custom_report_filters_set?
+
+  .ClearFix <!-- do not remove -->
 
 %p#total-audit-display
   Showing
