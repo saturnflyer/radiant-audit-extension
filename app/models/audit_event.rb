@@ -23,7 +23,7 @@ class AuditEvent < ActiveRecord::Base
   named_scope :auditable_id,    lambda { |id| {:conditions => {:auditable_id => id}} }
   named_scope :event_type,      lambda { |event|
     auditable, audit_type = event.split(' ')
-    {:include => :audit_type, :conditions => { 'audit_types.name' => audit_type.upcase, :auditable_type => auditable}}
+    {:include => :audit_type, :conditions => { 'audit_types.name' => audit_type.upcase, 'audit_events.auditable_type' => auditable.camelcase}}
   }
   named_scope :date,              lambda { |date|
     date = DateTime.parse(date.to_s).utc

@@ -68,4 +68,16 @@ describe AuditEvent do
     end
   end
 
+  describe "event_type scope" do
+    dataset :audit
+
+    it "should capitalize classes" do
+      AuditEvent.event_type('page UPDATE').should == AuditEvent.event_type('Page UPDATE')
+    end
+
+    it "should upcase events" do
+      AuditEvent.event_type('Page update').should == AuditEvent.event_type('Page UPDATE')
+    end
+  end
+
 end
