@@ -34,4 +34,16 @@ describe Admin::AuditsController do
     end
   end
 
+  describe "#index" do
+    before do
+      login_as :admin
+    end
+
+    it "should build audits array based on date" do
+      date = Date.today.to_s
+      get :index, :after => date, :before => date
+      assigns(:audits).should eql(AuditEvent.on(date).paginate(:page => 1))
+    end
+  end
+
 end

@@ -8,16 +8,69 @@
   .ClearFix <!-- do not remove -->
 .ClearFix <!-- do not remove -->
 
-%h2#current-date.Block= @startdate.strftime("%B %d, %Y")
+%h2#current-date.Block= params[:date].strftime("%B %d, %Y")
 
-= render :partial => "date_filter"
-= render :partial => "quick_filter" unless @audits.size == 0
-  
+- form_tag admin_audits_path, :method => "get", :id => "date_filter_form", :class => "InlineForm" do
+  %fieldset#date-filter
+    %legend.Invisible Date Filter
+    - if previous_date = AuditEvent.date_before(params[:date])
+      - link_to :overwrite_params => {:date => previous_date} do
+        = image_tag "/images/admin/go_left.gif", :alt => "Previous Day"
+        %span= previous_date.strftime "%b %d, %Y"
+
+    %label{ :for => "date", :class => "Invisible" } Date
+    =text_field_tag :date, params[:date].strftime('%m/%d/%Y'), :class => "AuditDatePicker"
+
+    - if next_date = AuditEvent.date_after(params[:date])
+      - link_to :overwrite_params => {:date => next_date} do
+        %span= next_date.strftime "%b %d, %Y"
+        = image_tag "/images/admin/go_right.gif", :alt => "Next Day"
+
+    .FormAction
+      = submit_tag "Filter by Date"
+
+- if @audits.any?
+  - form_tag admin_audits_path, :method => "get", :id => "audit_filter_form", :class => "InlineForm" do
+
+    #quick-filter
+      %fieldset
+        %legend.Invisible Quick Filter
+        Quick Filter:
+        %label{ :for => "ip", :class => "Invisible" } IP Address
+        %select{ :name => "ip", :id => "ip" }
+          %option{ :value => "" } IP Address
+          %option{ :value => "" } &nbsp;
+          = options_for_select(@ip_addresses, params[:ip])
+
+        %label{ :for => "user", :class => "Invisible" } User
+        %select{ :name => "user", :id => "user" }
+          %option{ :value => "" } User
+          %option{ :value => "" } &nbsp;
+          = options_from_collection_for_select(@users, "id", "login", (params[:user_id] || 0).to_i)
+
+        %label{ :for => "event_type", :class => "Invisible" } Event Type
+        %select{ :name => "event_type", :id => "event_type" }
+          %option{ :value => "" } Event Type
+          %option{ :value => "" } &nbsp;
+          = options_for_select(@event_types, (params[:event_type]))
+
+      %fieldset
+        %label{ :for => "log", :class => "Invisible" } Message Text:
+        Message Text:
+        = text_field_tag :log, params[:log]
+
+      .FormAction
+        - if params[:date]
+          %input{ :type => "hidden", :name => "date", :value => params[:date] }
+        = submit_tag("Apply Filter")
+        = link_to "Remove Filter", admin_audits_path, :class => "Small", :id => "remove-filters" if browse_by_date_filters_set?
+
+      .ClearFix <!-- do not remove -->
+
 %table#audit-results.index
   %thead
     %tr
-      -@params_to_pass[:direction] = @params_to_pass[:direction] == 'desc' ? 'asc' : 'desc'
-      %th= link_to "Date / Time", admin_audits_path + "?" + @params_to_pass.to_param
+      %th= link_to "Date / Time", :overwrite_params => { :direction => reverse_direction }
       %th= "IP Address"
       %th= "User"
       %th= "Event Type"

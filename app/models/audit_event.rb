@@ -4,7 +4,7 @@ class AuditEvent < ActiveRecord::Base
   cattr_reader :per_page
   @@per_page = 100
 
-  default_scope :order => 'created_at asc'
+  default_scope :order => 'audit_events.created_at asc'
 
   belongs_to :auditable, :polymorphic => true
   belongs_to :user
@@ -16,8 +16,8 @@ class AuditEvent < ActiveRecord::Base
 
   named_scope :ip,              lambda { |ip|   {:conditions => { :ip_address => ip }} }
   named_scope :user,            lambda { |user| {:conditions => { :user_id => user }} }
-  named_scope :before,          lambda { |date| {:conditions => ['created_at <= ?', DateTime.parse(date.to_s).utc]} }
-  named_scope :after,           lambda { |date| {:conditions => ['created_at >= ?', DateTime.parse(date.to_s).utc]} }
+  named_scope :before,          lambda { |date| {:conditions => ['audit_events.created_at <= ?', DateTime.parse(date.to_s).utc]} }
+  named_scope :after,           lambda { |date| {:conditions => ['audit_events.created_at >= ?', DateTime.parse(date.to_s).utc]} }
   named_scope :log,             lambda { |msg| {:conditions => ['log_message LIKE ?', "%#{msg}%"]} }
   named_scope :auditable_type,  lambda { |type| {:conditions => {:auditable_type => type}} }
   named_scope :auditable_id,    lambda { |id| {:conditions => {:auditable_id => id}} }
@@ -25,14 +25,14 @@ class AuditEvent < ActiveRecord::Base
     auditable, audit_type = event.split(' ')
     {:include => :audit_type, :conditions => { 'audit_types.name' => audit_type.upcase, :auditable_type => auditable}}
   }
-  named_scope :on,              lambda { |date|
+  named_scope :date,              lambda { |date|
     date = DateTime.parse(date.to_s).utc
-    {:conditions => ['created_at >= ? AND created_at <= ?', date.beginning_of_day, date.end_of_day]}
+    {:conditions => ['audit_events.created_at >= ? AND audit_events.created_at <= ?', date.beginning_of_day, date.end_of_day]}
   }
   
   class << self
     def date_before(date)
-      if event = find(:first, :conditions => ['created_at < ?', Date.parse(date.to_s).beginning_of_day], :select => :created_at)
+      if event = find(:first, :conditions => ['created_at < ?', Date.parse(date.to_s).beginning_of_day], :select => :created_at, :order => 'audit_events.created_at desc')
         event.created_at.to_date
       end
     end

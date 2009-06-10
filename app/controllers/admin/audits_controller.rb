@@ -3,40 +3,16 @@ class Admin::AuditsController < ApplicationController
   before_filter :include_assets
 
   def index
-    prepare_sphinx_results
-    
-    # filter by Event Type
-    if !params[:event_type].blank?
-      # event type comes through as "AUDITABLETYPE AUDITTYPE"; need to find both
-      auditable_type, audit_type = params[:event_type].split(" ")
-      audit_type_id = AuditType.find_by_name(audit_type).id
-      params[:filter][:audit_type_id] = audit_type_id
-      # convert "AUDITABLETYPE" => "Auditabletype"- it's a class name
-      params[:filter][:auditable_type] = auditable_type.capitalize
-    end
-
-    # browse-by-date only shows one day at a time
-    @startdate = params[:startdate].blank? ? Date.today : Date.parse(params[:startdate])
-    @enddate = @startdate
-
-    # calculate next and previous dates 
-    @next_date = AuditEvent.find(:first, :select => :created_at, :conditions => ["created_at > ?", @enddate.next], :order => "created_at ASC")
-    @previous_date = AuditEvent.find(:first, :select => :created_at, :conditions => ["created_at < ?", @startdate], :order => "created_at DESC")
-    @next_date = @next_date.created_at unless @next_date.nil?
-    @previous_date = @previous_date.created_at unless @previous_date.nil?
-
-    # BROWSE-BY-DATE specific stuff
-    @auditmenus = AuditEvent.find(:all, :conditions => ["created_at > :startdate AND created_at < :enddate", {:startdate => @startdate, :enddate => @enddate.next}])
-    # some helper arrays for filter options - sorted
-    @ip_addresses = @auditmenus.map(&:ip_address).uniq.compact.sort
-    @users = @auditmenus.map(&:user).uniq.compact
-    @users.sort!{ |x,y| x.login <=> y.login} # sort users by login
-    @event_types = @auditmenus.collect { |a| a.event_type }.uniq.compact.sort
-    
-    # default to chronological order for day view
     params[:direction] ||= 'asc'
+    params[:date] &&= Date.parse(params[:date])
+    params[:date] ||= Date.today
+    @audits = scope_from_params
     
-    finalize_sphinx_results
+    # some helper arrays for filter options - sorted
+    @ip_addresses = @audits.map(&:ip_address).uniq.compact.sort
+    @users = @audits.map(&:user).uniq.compact
+    @users.sort!{ |x,y| x.login <=> y.login} # sort users by login
+    @event_types = @audits.collect { |a| a.event_type }.uniq.compact.sort
   end
   
   def report
@@ -54,11 +30,15 @@ class Admin::AuditsController < ApplicationController
     end
     
     def scope_from_params(p = params)
-      filters = %w(ip user event_type before after log auditable_type auditable_id)
+      filters = %w(ip user event_type before date after log auditable_type auditable_id)
       filters.inject(AuditEvent) do |chain,filter|
         chain = chain.send(filter, p[filter]) unless p[filter].blank?
         chain
-      end.paginate(:page => p[:page], :order => "audit_events.created_at #{p['direction'] || 'desc'}")
+      end.paginate(:page => p[:page], :order => "audit_events.created_at #{sort_direction}")
+    end
+
+    def sort_direction
+      params[:direction] == 'asc' ? 'asc' : 'desc'
     end
 
     def prepare_sphinx_results

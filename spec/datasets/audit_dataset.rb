@@ -15,5 +15,13 @@ class AuditDataset < Dataset::Base
                                 :audit_type => audit_types(:create), :log_message => "Admin created homepage", :created_at => 1.hour.ago
     create_record :audit_event, :auditable => pages(:home), :user => users(:admin), :ip_address => '192.168.0.0', 
                   :audit_type => audit_types(:update), :log_message => "Admin updated homepage"
+
+    create_record :audit_event, :first, :auditable => pages(:home), :user => users(:existing), :ip_address => '192.168.0.0',
+                  :audit_type => audit_types(:update), :log_message => "Existing updated homepage", :created_at => 5.days.ago
+    create_record :audit_event, :second, :auditable => pages(:home), :user => users(:existing), :ip_address => '192.168.0.0',
+                  :audit_type => audit_types(:update), :log_message => "Existing updated homepage", :created_at => 3.days.ago
+    create_record :audit_event, :third, :auditable => pages(:home), :user => users(:existing), :ip_address => '192.168.0.0',
+                  :audit_type => audit_types(:update), :log_message => "Existing updated homepage", :created_at => 1.days.ago
+    
   end  
 end

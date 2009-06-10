@@ -52,7 +52,7 @@ describe AuditEvent do
     end
 
     it "should be the previous date" do
-      AuditEvent.date_before(audit_events(:second).created_at).should eql(audit_events(:first).created_at.to_date)
+      AuditEvent.date_before(audit_events(:third).created_at).should eql(audit_events(:second).created_at.to_date)
     end
   end
 
@@ -60,11 +60,11 @@ describe AuditEvent do
     dataset :audit
 
     it "should be nil" do
-      AuditEvent.date_after(audit_events(:third).created_at).should be_nil
+      AuditEvent.date_after(audit_events(:third).created_at).should eql(nil)
     end
 
     it "should be the next date" do
-      AuditEvent.date_after(audit_events(:second).created_at).should eql(audit_events(:third).created_at.to_date)
+      AuditEvent.date_after(audit_events(:first).created_at).should eql(audit_events(:second).created_at.to_date)
     end
   end
 
