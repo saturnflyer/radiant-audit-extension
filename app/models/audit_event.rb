@@ -14,7 +14,7 @@ class AuditEvent < ActiveRecord::Base
   named_scope :after,           lambda { |date| {:conditions => ['created_at >= ?', DateTime.parse(date.to_s).utc]} }
   named_scope :log,             lambda { |msg| {:conditions => ['log_message LIKE ?', "%#{msg}%"]} }
   named_scope :auditable_type,  lambda { |type| {:conditions => {:auditable_type => type}} }
-  named_scope :auditable_id,    lambda { |type| {:conditions => {:auditable_id => id}} }
+  named_scope :auditable_id,    lambda { |id| {:conditions => {:auditable_id => id}} }
   named_scope :event_type,      lambda { |event|
     auditable, audit_type = event.split(' ')
     {:include => :audit_type, :conditions => { 'audit_types.name' => audit_type.upcase, :auditable_type => auditable}}
