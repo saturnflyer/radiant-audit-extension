@@ -38,6 +38,6 @@
           
   .FormAction
     = submit_tag "Apply Filter"
-    = link_to "Remove Filter", admin_audits_report_path, :class => "Small", :id => "remove-filters" if custom_report_filters_set?
+    = link_to "Remove Filter", report_admin_audits_path, :class => "Small", :id => "remove-filters" if custom_report_filters_set?
 
 .ClearFix <!-- do not remove -->

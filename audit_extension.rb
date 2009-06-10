@@ -8,8 +8,7 @@ class AuditExtension < Radiant::Extension
   
   define_routes do |map|
     map.namespace :admin do |admin|
-      admin.resources :audits
-      admin.audits_report 'audits/report', :controller => "audits", :action => "report"
+      admin.resources :audits, :collection => { :report => :get }
     end
   end
   

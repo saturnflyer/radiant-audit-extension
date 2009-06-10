@@ -10,7 +10,7 @@
 
 %h2.Block Custom Report
 
-- form_tag admin_audits_report_path, :method => "get", :id => "audit_filter_form", :class => "BlockForm" do
+- form_tag report_admin_audits_path, :method => "get", :id => "audit_filter_form", :class => "BlockForm" do
 
   = render :partial => "custom_report"
 
@@ -27,7 +27,7 @@
   %thead
     %tr
       -@params_to_pass[:direction] = @params_to_pass[:direction] == 'desc' ? 'asc' : 'desc'
-      %th= link_to "Date / Time", admin_audits_report_path + "?" + @params_to_pass.to_param
+      %th= link_to "Date / Time", report_admin_audits_path + "?" + @params_to_pass.to_param
       %th= "IP Address"
       %th= "User"
       %th= "Event Type"
