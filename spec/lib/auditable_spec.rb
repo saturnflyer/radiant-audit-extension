@@ -21,7 +21,7 @@ describe Auditable do
     end
     
     it "should map an existing event type" do
-      AuditType.find_or_create_by_name('update')
+      AuditType.find_or_create_by_name('UPDATE')
       lambda {
         @base.audit_event :update, &proc{}
       }.should_not change(AuditType, :count)
