@@ -3,10 +3,8 @@
 The Audit Extension for Radiant logs user actions in Radiant.  It has built-in support for logging Create, Update and Delete of Page, User, Snippet, and Layout actions and provides an admin interface for viewing and searching through these events.
 
 == Requirements
- * Sphinx-it! plugin https://github.com/digitalpulp/sphinxable-resource-extension/
- Sphinx-it! requires the following plugins:
-    * thinking-sphinx http://github.com/freelancing-god/thinking-sphinx/
-    * will-paginate http://github.com/mislav/will_paginate/
+ * will_paginate (http://github.com/mislav/will_paginate/) installed as a plugin or gem (via config.gem in environment.rb).
+    
     
 == Extending
  The Audit Extension was designed to be extensible so logging of any non-core Radiant functionality can be added.  This extension adds two models to your application- AuditEvent and AuditType.  AuditType describes the type of event that is being audited (such as CREATE, UPDATE, DESTROY).  AuditEvents store the audited events along with a handful of useful information about the event (the user and IP address of who performed the event, the time at which the event occurred, and the class and type of event that occurred).
