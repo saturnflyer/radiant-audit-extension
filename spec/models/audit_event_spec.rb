@@ -79,4 +79,22 @@ describe AuditEvent do
     end
   end
 
+  describe "log rebuilding" do
+    dataset :audit
+
+    specify ".rebuild_log_message should update record" do
+      audit = audit_events(:first)
+      audit.update_attribute(:log_message, "incorrect message")
+      audit.rebuild_log_message
+      audit.log_message.should eql(Page.log_formats[:create].call(audit))
+    end
+
+    specify "#rebuild_logs should update all records" do
+      AuditEvent.update_all(:log_message => "incorrect message")
+      AuditEvent.rebuild_logs
+      AuditEvent.all.each do |event|
+        event.log_message.should eql(Page.log_formats[event.audit_type.name.downcase.to_sym].call(event))
+      end
+    end
+  end
 end

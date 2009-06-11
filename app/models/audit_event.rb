@@ -41,6 +41,10 @@ class AuditEvent < ActiveRecord::Base
         event.created_at.to_date
       end
     end
+
+    def rebuild_logs
+      all.each { |event| event.rebuild_log_message }
+    end
   end
 
   def event_type
@@ -65,6 +69,13 @@ class AuditEvent < ActiveRecord::Base
     self.audit_type_without_cast = type
   end
   alias_method_chain :audit_type=, :cast
+
+  def rebuild_log_message
+    @event_type = audit_type.name.downcase.to_sym
+    assemble_log_message
+    update_attribute(:log_message, log_message)
+    reload
+  end
 
   private
 
