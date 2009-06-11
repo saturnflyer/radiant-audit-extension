@@ -42,8 +42,12 @@ class AuditEvent < ActiveRecord::Base
       end
     end
 
+    # For development use. This will not alter logs where the audited item
+    # has since been deleted.
     def rebuild_logs
       all.each { |event| event.rebuild_log_message }
+    rescue
+      true
     end
   end
 
