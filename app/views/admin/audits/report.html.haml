@@ -6,84 +6,134 @@
     %li.Selected
       %span Custom Report
   .ClearFix <!-- do not remove -->
-.ClearFix <!-- do not remove -->
 
 %h2.Block Custom Report
 
+- first_event = AuditEvent.first.created_at
+
+:javascript
+  DatePicker.CONFIG['show_helper_text'] = false;
+  DatePicker.CONFIG['start_date'] = new Date(#{first_event.strftime("%Y")},#{first_event.strftime("%m").to_i - 1},#{first_event.strftime("%d")});
+  DatePicker.CONFIG['end_date'] = new Date();
+
 - form_tag report_admin_audits_path, :method => "get", :id => "audit_filter_form", :class => "BlockForm" do
   %fieldset#custom-report-fieldset
+    %legend.Invisible Report Query
 
-    %legend Report Query
+    %table.LayoutTable
+      %col{ :width => "22%" }
+      %col{ :width => "26%" }
+      %col{ :width => "26%" }
+      %col{ :width => "26%" }
 
-    %table
-      %col{ :width => "50%" }
-      %col{ :width => "25%" }
-      %col{ :width => "25%" }
       %tbody
         %tr
           %td
-            %label{ :for => "after" } Date Range
-            = text_field_tag :after, params[:after], :class => 'DatePicker'
-            %label.Smaller{ :for => "before" } to
-            = text_field_tag :before, params[:before], :class => 'DatePicker'
+            %table.FormTable
+              %col{ :width => "50%" } 
+              %col{ :width => "50%" }
+
+              %tr
+                %th
+                  %label{ :for => "after" } Date Range
+                %td
+                  = text_field_tag :after, params[:after], :class => 'DatePicker'
+
+              %tr
+                %th
+                  %label{ :for => "before" } to
+                %td
+                  = text_field_tag :before, params[:before], :class => 'DatePicker'
 
           %td
-            %label{ :for => "ip" } IP Address
-            = text_field_tag "ip", params[:ip]
+            %table.FormTable
+              %col{ :width => "50%" }
+              %col{ :width => "50%" }
+
+              %tr
+                %th
+                  %label{ :for => "auditable_type" } Object Kind
+                %td
+                  = text_field_tag "auditable_type", params[:auditable_type]
+
+              %tr
+                %th
+                  %label{ :for => "auditable_id" } Object ID
+                %td
+                  = text_field_tag "auditable_id", params[:auditable_id]
 
           %td
-            %label{ :for => "user" } User ID
-            = text_field_tag "user", params[:user]
-        %tr
-          %td
-            %label{ :for => "auditable_type" } Object Kind
-            = text_field_tag "auditable_type", params[:auditable_type]
-            %label.Smaller{ :for => "auditable_id" } Object ID
-            = text_field_tag "auditable_id", params[:auditable_id]
+            %table.FormTable
+              %col{ :width => "50%" }
+              %col{ :width => "50%" }
+
+              %tr
+                %th
+                  %label{ :for => "ip" } IP Address
+                %td
+                  = text_field_tag "ip", params[:ip]
+
+              %tr
+                %th
+                  %label{ :for => "event_type" } Event Type
+                %td
+                  = text_field_tag :event_type, params[:event_type]
 
           %td
-            %label{ :for => "event_type" } Event Type
-            = text_field_tag :event_type, params[:event_type]
+            %table.FormTable
+              %col{ :width => "50%" }
+              %col{ :width => "50%" }
 
-          %td
-            %label{ :for => "query" } Message
-            = text_field_tag :log, params[:log]
+              %tr
+                %th
+                  %label{ :for => "user" } User ID
+                %td
+                  = text_field_tag "user", params[:user]
+
+              %tr
+                %th
+                  %label{ :for => "query" } Message
+                %td
+                  = text_field_tag :log, params[:log]
 
     .FormAction
       = submit_tag "Apply Filter"
-      = link_to "Remove Filter", report_admin_audits_path, :class => "Small", :id => "remove-filters" if custom_report_filters_set?
-
-  .ClearFix <!-- do not remove -->
+      = link_to "Remove Filter", report_admin_audits_path, :id => "remove-filters" if custom_report_filters_set?
 
 %p#total-audit-display
   Showing
   %strong= @audits.size
   = "of #{AuditEvent.count} total events"
-  
+
 #top-report-pagination.Top=will_paginate @audits, :previous_label => "Previous", :next_label => "Next"
 
-.ClearFix <!-- do not remove -->
-
 %table#audit-results.index
+  %col{ :width => "20%" }
+  %col{ :width => "10%" }
+  %col{ :width => "15%" }
+  %col{ :width => "15%" }
+  %col{ :width => "40%" }
+
   %thead
     %tr
       %th= link_to "Date / Time", :overwrite_params => { :direction => reverse_direction }
-      %th= "IP Address"
-      %th= "User"
-      %th= "Event Type"
-      %th= "Message"
+      %th IP Address
+      %th User
+      %th Event Type
+      %th Message
+
   %tbody
     - if @audits.size == 0
       %tr
-        %td.Placeholder{ :colspan => 5 }
-          %p= "No events that match the criteria exist for this day."
+        %td{ :colspan => 5 }
+          %p.Placeholder No events that match the criteria exist for this day.
     - else
       -@audits.each do |a|
         %tr
-          %td= a.created_at.to_s(:mdy_time)
-          %td= a.ip_address
-          %td= a.user.nil? ? "(Unknown)" : a.user.login
-          %td= a.event_type
+          %td= h(a.created_at.to_s(:mdy_time_tz))
+          %td= h(a.ip_address)
+          %td= h(a.user.nil? ? "(Unknown)" : a.user.login)
+          %td= h(a.event_type)
           %td= a.log_message
 
 .Bottom= will_paginate @audits, :previous_label => "Previous", :next_label => "Next"
