@@ -262,7 +262,8 @@ var PageWidget = Class.create({
 	},
 
 	setOptions : function(config) {
-		this.CONFIG = Object.extend(Object.clone(this.constructor.CONFIG), config || {});
+		config = config || {};
+		this.CONFIG = (this.CONFIG == undefined) ? Object.extend(Object.clone(this.constructor.CONFIG), config) : Object.extend(this.CONFIG, config);
 	}
 });
 
