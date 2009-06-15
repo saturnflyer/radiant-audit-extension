@@ -15,6 +15,7 @@ class AuditExtension < Radiant::Extension
   DATE_TIME_FORMATS = {
     :iso8601     => '%F',
     :mdy_time    => '%m/%d/%Y %I:%M %p',
+    :mdy_time_tz => '%m/%d/%Y %I:%M %p %Z',
     :mdy_short   => '%m/%d/%y'
   }
   
