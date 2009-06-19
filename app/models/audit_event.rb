@@ -15,8 +15,8 @@ class AuditEvent < ActiveRecord::Base
   # before and after scopes are inclusive!
   named_scope :ip,              lambda { |ip|   {:conditions => { :ip_address => ip }} }
   named_scope :user,            lambda { |user| {:conditions => { :user_id => user }} }
-  named_scope :before,          lambda { |date| {:conditions => ['audit_events.created_at <= ?', DateTime.parse(date.to_s).utc.end_of_day]} }
-  named_scope :after,           lambda { |date| {:conditions => ['audit_events.created_at >= ?', DateTime.parse(date.to_s).utc.beginning_of_day]} }
+  named_scope :before,          lambda { |date| {:conditions => ['audit_events.created_at <= ?', Time.zone.parse(date.to_s).end_of_day]} }
+  named_scope :after,           lambda { |date| {:conditions => ['audit_events.created_at >= ?', Time.zone.parse(date.to_s).beginning_of_day]} }
   named_scope :log,             lambda { |msg|  {:conditions => ['log_message LIKE ?', "%#{msg}%"]} }
   named_scope :auditable_type,  lambda { |type| {:conditions => {:auditable_type => type}} }
   named_scope :auditable_id,    lambda { |id|   {:conditions => {:auditable_id => id}} }
@@ -25,19 +25,19 @@ class AuditEvent < ActiveRecord::Base
     {:include => :audit_type, :conditions => { 'audit_types.name' => audit_type.upcase, 'audit_events.auditable_type' => auditable.camelcase}}
   }
   named_scope :date,            lambda { |date|
-    date = DateTime.parse(date.to_s).utc
+    date = Time.zone.parse(date.to_s)
     {:conditions => ['audit_events.created_at >= ? AND audit_events.created_at <= ?', date.beginning_of_day, date.end_of_day]}
   }
   
   class << self
     def date_before(date)
-      if event = find(:first, :conditions => ['created_at < ?', Date.parse(date.to_s).beginning_of_day], :select => :created_at, :order => 'audit_events.created_at desc')
+      if event = find(:first, :conditions => ['created_at < ?', Time.zone.parse(date.to_s).beginning_of_day], :select => :created_at, :order => 'audit_events.created_at desc')
         event.created_at.to_date
       end
     end
 
     def date_after(date)
-      if event = find(:first, :conditions => ['created_at > ?', Date.parse(date.to_s).end_of_day], :select => :created_at, :order => 'audit_events.created_at asc')
+      if event = find(:first, :conditions => ['created_at > ?', Time.zone.parse(date.to_s).end_of_day], :select => :created_at, :order => 'audit_events.created_at asc')
         event.created_at.to_date
       end
     end
