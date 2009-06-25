@@ -16,4 +16,12 @@ module Admin::AuditsHelper
   def entify_ampersands(snippet)
     snippet.gsub("amp;","").gsub("&","&amp;")
   end
+  
+  def event_user_name(event)
+    if event.user.nil?
+      event.log_message.match(/^File\sSystem/) ? "File System" : "(Unknown)"
+    else
+      event.user.login
+    end
+  end
 end

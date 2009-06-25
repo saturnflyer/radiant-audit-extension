@@ -102,7 +102,7 @@
         %tr
           %td= h(a.created_at.to_s(:mdy_time_tz))
           %td= h(a.ip_address)
-          %td= h(a.user.nil? ? "(Unknown)" : a.user.login)
+          %td= h(event_user_name(a))
           %td= h(a.event_type)
           %td= entify_ampersands(a.log_message)
 
