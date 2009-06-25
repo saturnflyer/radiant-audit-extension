@@ -12,4 +12,8 @@ module Admin::AuditsHelper
   def reverse_direction
     (params[:direction] == 'asc') ? 'desc' : 'asc'
   end
+  
+  def entify_ampersands(snippet)
+    snippet.gsub("amp;","").gsub("&","&amp;")
+  end
 end

@@ -134,6 +134,6 @@
           %td= h(a.ip_address)
           %td= h(a.user.nil? ? "(Unknown)" : a.user.login)
           %td= h(a.event_type)
-          %td= a.log_message
+          %td= entify_ampersands(a.log_message)
 
 .Bottom= will_paginate @audits, :previous_label => "Previous", :next_label => "Next"
