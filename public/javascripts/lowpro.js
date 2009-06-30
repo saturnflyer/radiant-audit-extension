@@ -144,7 +144,7 @@ var Behavior = {
       parent = properties.shift();
 
       var behavior = function() { 
-        var behavior = arguments.callee;
+
         if (!this.initialize) {
           var args = $A(arguments);
 
