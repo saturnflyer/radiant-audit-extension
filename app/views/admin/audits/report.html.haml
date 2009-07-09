@@ -9,12 +9,12 @@
 
 %h2.Block Custom Report
 
-- first_event = AuditEvent.first.created_at
-
-:javascript
-  DatePicker.CONFIG['show_helper_text'] = false;
-  DatePicker.CONFIG['start_date'] = new Date(#{first_event.strftime("%Y")},#{first_event.strftime("%m").to_i - 1},#{first_event.strftime("%d")});
-  DatePicker.CONFIG['end_date'] = new Date();
+- if AuditEvent.first
+  - first_event = AuditEvent.first.created_at
+  :javascript
+    DatePicker.CONFIG['show_helper_text'] = false;
+    DatePicker.CONFIG['start_date'] = new Date(#{first_event.strftime("%Y")},#{first_event.strftime("%m").to_i - 1},#{first_event.strftime("%d")});
+    DatePicker.CONFIG['end_date'] = new Date();
 
 - form_tag report_admin_audits_path, :method => "get", :id => "audit_filter_form", :class => "BlockForm" do
   %fieldset#custom-report-fieldset

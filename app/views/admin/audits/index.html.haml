@@ -7,12 +7,12 @@
     %li= link_to "Custom Report", report_admin_audits_path
   .ClearFix <!-- do not remove -->
 
-- first_event = AuditEvent.first.created_at
-
-:javascript
-  DatePicker.CONFIG['show_helper_text'] = false;
-  DatePicker.CONFIG['start_date'] = new Date(#{first_event.strftime("%Y")},#{first_event.strftime("%m").to_i - 1},#{first_event.strftime("%d")});
-  DatePicker.CONFIG['end_date'] = new Date();
+- if AuditEvent.first
+  - first_event = AuditEvent.first.created_at
+  :javascript
+    DatePicker.CONFIG['show_helper_text'] = false;
+    DatePicker.CONFIG['start_date'] = new Date(#{first_event.strftime("%Y")},#{first_event.strftime("%m").to_i - 1},#{first_event.strftime("%d")});
+    DatePicker.CONFIG['end_date'] = new Date();
 
 .BoxFix{ :style => 'position: relative;' }
 
