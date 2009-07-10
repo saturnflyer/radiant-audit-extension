@@ -72,3 +72,13 @@ FORM#date_filter_form { position: absolute; top: 5px; right: 0; }
 *:first-child+HTML #date-filter A { zoom: 1; margin-top: 1px; }
 *:first-child+HTML #date-filter #date { margin-top: 0; }
 *:first-child+HTML #top-report-pagination { padding-bottom: 3px; }
+
+@media print {
+	#header,
+	#tabs-wrapper,
+	#audit_filter_form,
+	#date_filter_form,
+	.hidden { display: none; }
+	#audit-results { width: 100%; font-size: 12px; }
+	* HTML #audit-results { width: 640px; }
+}
