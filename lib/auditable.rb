@@ -22,5 +22,23 @@ module Auditable
     options.delete :only_path
     ActionController::Routing::Routes.generate(options)
   end
+  
+  # helper function to collect any updated fields that we're interested in.
+  def updated_fields(updatables, auditable)
+    # ignore fields that went from nil to "".
+    updated = auditable.changes.collect {|a|
+      if updatables.include?(a[0]) && !(a[1][0].nil? && a[1][1] == "")
+        a[0]
+      end
+    }.compact.join(", ")
+  
+    if updated.empty?
+      ""
+    else
+      " (#{updated})"
+    end
+  end
+  
+  
 
 end
