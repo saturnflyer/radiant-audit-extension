@@ -28,7 +28,7 @@ class AuditExtension < Radiant::Extension
     require "audit"
     AuditEvent
     Audit.disable_logging unless ActiveRecord::Base.connection.tables.include?(AuditType.table_name)
-    ApplicationController.send :include, Audit::ApplicationExtensions
+    [ApplicationController, *ApplicationController.subclasses.map(&:constantize)].each { |c| c.send :include, Audit::ApplicationExtensions }
     Admin::WelcomeController.send :include, Audit::WelcomeControllerExtensions
     Page.send :include, Audit::PageExtensions
     User.send :include, Audit::UserExtensions
