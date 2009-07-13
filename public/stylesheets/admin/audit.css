@@ -80,5 +80,6 @@ FORM#date_filter_form { position: absolute; top: 5px; right: 0; }
 	#date_filter_form,
 	.hidden { display: none; }
 	#audit-results { width: 100%; font-size: 12px; }
+	#audit-results td, #audit-results th { text-align: center; }
 	* HTML #audit-results { width: 640px; }
 }
