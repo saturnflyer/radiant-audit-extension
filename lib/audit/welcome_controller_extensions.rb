@@ -11,8 +11,18 @@ module Audit
     private
     
     def audit_login
-      if (current_user)
-        audit :item => current_user, :user => current_user, :ip => request.remote_ip, :type => :login
+      
+      if (params[:user])
+        if (current_user)
+          audit :item => current_user, :user => current_user, :ip => request.remote_ip, :type => :login
+        else
+          # failed login! create a temporary user to pass the failed login info to the audit message
+          if tmpuser = User.find_by_login(params[:user][:login])
+            audit :item => tmpuser, :user => nil, :ip => request.remote_ip, :type => :bad_password
+          else
+            audit :item => User.first, :user => nil, :ip => request.remote_ip, :type => :bad_login
+          end
+        end
       end
     end
 

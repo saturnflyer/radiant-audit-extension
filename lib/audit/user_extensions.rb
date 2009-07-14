@@ -29,6 +29,15 @@ module Audit
         audit_event :logout do |event|
           "#{event.user_link} logged out"
         end
+
+        audit_event :bad_login do |event|
+          "failed login attempt"
+        end
+
+        audit_event :bad_password do |event|
+          "failed login attempt for #{event.auditable.login}"
+        end
+
       end
     end
 
