@@ -18,7 +18,7 @@ module Audit
           updatables = ["title", "slug", "breadcrumb", "description", "keywords"]
 
           log_message = "#{event.user_link} updated " + link_to(event.auditable.title, event.auditable_path)
-          log_message += " to revision #{event.auditable.revisions.last.number}"
+          log_message += " to revision #{event.auditable.revisions.first.number}"
           log_message += updated_fields(updatables, event.auditable)
           log_message
         end
