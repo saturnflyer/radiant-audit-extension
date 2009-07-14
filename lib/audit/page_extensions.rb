@@ -2,7 +2,10 @@ module Audit
   module PageExtensions
 
     def self.included(base)
-      base.const_set("OBSERVABLE_FIELDS", [:status_id])
+      # add to this if you want to fire off separate AuditEvents when particular fields are
+      # updated-- i.e. add :status_id to observe when the page's status changes.
+      # see audit_event :status_change below for how to handle such an event
+      base.const_set("OBSERVABLE_FIELDS", [])
 
       base.class_eval do
         extend Auditable
