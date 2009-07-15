@@ -79,7 +79,9 @@ FORM#date_filter_form { position: absolute; top: 5px; right: 0; }
 	#audit_filter_form,
 	#date_filter_form,
 	.hidden { display: none; }
-	#audit-results { width: 100%; font-size: 12px; }
+	#audit-results { width: 100%; font-size: 12px; font-family: "Lucida Grande", "Bitstream Vera Sans", Helvetica, Verdana, Arial, sans-serif; }
+	#audit-results a { text-decoration: none; }
+	#audit-results th a { display: block; width: 200px; }
 	#audit-results td, #audit-results th { text-align: center; }
 	* HTML #audit-results { width: 640px; }
 }
