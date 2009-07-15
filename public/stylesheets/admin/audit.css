@@ -78,10 +78,16 @@ FORM#date_filter_form { position: absolute; top: 5px; right: 0; }
 	#tabs-wrapper,
 	#audit_filter_form,
 	#date_filter_form,
+	#top-report-pagination,
+	#total-audit-display,
+	.Bottom,
 	.hidden { display: none; }
-	#audit-results { width: 100%; font-size: 12px; font-family: "Lucida Grande", "Bitstream Vera Sans", Helvetica, Verdana, Arial, sans-serif; }
-	#audit-results a { text-decoration: none; }
-	#audit-results th a { display: block; width: 200px; }
-	#audit-results td, #audit-results th { text-align: center; }
-	* HTML #audit-results { width: 640px; }
+	h1, h2 { font-size: 1.25em; margin: 0 0 .5em; }
+	h1, h2, table { font-family: "Lucida Grande", "Bitstream Vera Sans", Helvetica, Verdana, Arial, sans-serif; }
+	table { width: 100%; font-size: 12px; border-collapse: collapse; }
+	a { text-decoration: none; color: #000; font-weight: bold; }
+	thead { display: table-header-group; }
+	th a { display: block; width: 200px; }
+	th, td { vertical-align: top; text-align: left; padding: 3px 4px 3px 0; border-bottom: 1px solid #EAEAEA; }
+	* HTML table { width: 640px; }
 }
