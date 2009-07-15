@@ -21,8 +21,10 @@ class AuditEvent < ActiveRecord::Base
   named_scope :auditable_type,  lambda { |type| {:conditions => {:auditable_type => type}} }
   named_scope :auditable_id,    lambda { |id|   {:conditions => {:auditable_id => id}} }
   named_scope :event_type,      lambda { |event|
-    auditable, audit_type = event.split(' ')
-    {:include => :audit_type, :conditions => { 'audit_types.name' => audit_type.upcase, 'audit_events.auditable_type' => auditable.camelcase}}
+    # event format: "<Class> <EVENT_TYPE>", where Event Type can be >= 1 word, all caps, joined by underscores
+    eventarray = event.split(' ')
+    auditable, audit_type = eventarray.shift.camelcase, eventarray.join('_').upcase
+    {:include => :audit_type, :conditions => { 'audit_types.name' => audit_type, 'audit_events.auditable_type' => auditable}}
   }
   named_scope :date,            lambda { |date|
     date = Time.zone.parse(date.to_s)

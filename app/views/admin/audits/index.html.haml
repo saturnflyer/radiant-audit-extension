@@ -96,7 +96,11 @@
     - if @audits.size == 0
       %tr
         %td{ :colspan => 5 }
-          %p.Placeholder No events that match the criteria exist for this day.
+          - # if no results come up and you're performing a filtered search, show option to remove the filter.
+          - if params[:ip] || params[:user_id] || params[:event_type]
+            %p.Placeholder= "No events that match the criteria exist for this day. " + link_to("Remove Filter", admin_audits_path)
+          - else
+            %p.Placeholder= "No events that match the criteria exist for this day."
     - else
       -@audits.each do |a|
         %tr
