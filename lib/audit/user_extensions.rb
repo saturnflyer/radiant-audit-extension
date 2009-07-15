@@ -35,7 +35,7 @@ module Audit
         end
 
         audit_event :bad_password do |event|
-          "failed login attempt for #{event.auditable.login}"
+          "failed login attempt for " + link_to(event.auditable.login, event.auditable_path)
         end
 
       end
