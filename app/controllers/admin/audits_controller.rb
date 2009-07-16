@@ -9,7 +9,7 @@ class Admin::AuditsController < ApplicationController
     @audits = scope_from_params
     
     if @audits.empty?
-      @ip_addresses = params[:ip_address].blank? ? [] : [params[:ip_address]]
+      @ip_addresses = params[:ip].blank? ? [] : [params[:ip]]
       if (!params[:user].blank?)
         @users = [User.find(params[:user])]
       end
