@@ -33,6 +33,7 @@ module Audit
           log_message = "#{event.user_link} changed the status of " + link_to(event.auditable.title, event.auditable_path)
           log_message += " from #{oldstatus}" unless oldstatus.blank?
           log_message += " to #{event.auditable.status.name}"
+          log_message += " (" + link_to("link", edit_admin_page_path(event.auditable.id)) + ")"
         end
         
         audit_event :destroy do |event|
