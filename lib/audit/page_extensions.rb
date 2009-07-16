@@ -12,7 +12,7 @@ module Audit
         extend Auditor
 
         audit_event :create do |event|
-          "#{event.user_link} created " + link_to(event.auditable.title, event.auditable_path)
+          "#{event.user_link} created " + link_to(event.auditable.title, event.auditable_path) + " (" + link_to("link", edit_admin_page_path(event.auditable.id)) + ")"
         end
         
         audit_event :update do |event|
@@ -23,6 +23,7 @@ module Audit
           log_message = "#{event.user_link} updated " + link_to(event.auditable.title, event.auditable_path)
           log_message += " to revision #{event.auditable.revisions.first.number}"
           log_message += updated_fields(updatables, event.auditable)
+          log_message += " (" + link_to("link", edit_admin_page_path(event.auditable.id)) + ")"
           log_message
         end
         
