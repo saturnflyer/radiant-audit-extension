@@ -14,7 +14,9 @@ module Audit
           # it will be noted in the log message if any of the following fields have changed
           updatables = ["name", "email", "login", "password", "admin", "developer", "notes", "timezone"]
           log_message = "#{event.user_link} updated " + link_to(event.auditable.name, event.auditable_path)
-          log_message += updated_fields(updatables, event.auditable)
+          updates = updated_fields(updatables, event.auditable)
+          updates &&= " (#{updates.join(', ')})"
+          log_message += updates if updates
           log_message
         end
 

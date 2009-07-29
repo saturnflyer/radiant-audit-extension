@@ -30,13 +30,8 @@ module Auditable
       if updatables.include?(a[0]) && !(a[1][0].nil? && a[1][1] == "")
         a[0]
       end
-    }.compact.join(", ")
-  
-    if updated.empty?
-      ""
-    else
-      " (#{updated})"
-    end
+    }.compact
+    updated.any? ? updated : nil
   end
   
   

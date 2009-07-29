@@ -24,3 +24,4 @@ Spec::Runner.configure do |config|
   end
 end
 
+Time.zone ||= 'UTC'
