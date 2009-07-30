@@ -43,11 +43,11 @@ module Audit
         end
 
         def self.updated_fields(updatables, auditable)
-          auditable.parts.inject(super||[]) do |updates,part|
+          updated_fields = auditable.parts.inject(super||[]) do |updates,part|
             updates << part.name if part.changed?
             updates
           end
-          updates.any? ? updates : nil
+          updated_fields.any? ? updated_fields : nil
         end
       end
     end
