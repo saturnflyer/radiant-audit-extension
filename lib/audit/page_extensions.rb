@@ -21,7 +21,7 @@ module Audit
           updatables = ["title", "slug", "breadcrumb", "description", "keywords"]
 
           log_message = "#{event.user_link} updated " + link_to(event.auditable.title, event.auditable_path)
-          # log_message += " to revision #{event.auditable.revisions.first.number}"
+          log_message += " to revision #{event.auditable.revisions.first.number}"
           updates = updated_fields(updatables, event.auditable)
           updates &&= " (#{updates.join(', ')})"
           log_message += updates if updates
@@ -40,6 +40,14 @@ module Audit
         
         audit_event :destroy do |event|
           "#{event.user_link} deleted " + link_to(event.auditable.title, event.auditable_path)
+        end
+
+        def self.updated_fields(updatables, auditable)
+          auditable.parts.inject(super||[]) do |updates,part|
+            updates << part.name if part.changed?
+            updates
+          end
+          updates.any? ? updates : nil
         end
       end
     end

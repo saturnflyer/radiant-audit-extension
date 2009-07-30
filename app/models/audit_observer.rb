@@ -9,7 +9,7 @@ class AuditObserver < ActiveRecord::Observer
     audit :item => model, :user => @@current_user, :ip => @@current_ip, :type => :create
   end
 
-  def after_update(model)
+  def before_update(model)
     audit :item => model, :user => @@current_user, :ip => @@current_ip, :type => :update
 
     # allow an audit event to be chained on after the update event fires.
