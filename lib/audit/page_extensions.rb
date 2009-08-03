@@ -12,7 +12,6 @@ module Audit
         
         audit_event :update do |event|
           log_message = "#{event.user_link} updated " + link_to(event.auditable.title, event.auditable_path)
-          log_message += " to revision #{event.auditable.revisions.first.number}"
           log_message += " (" + link_to("link", edit_admin_page_path(event.auditable.id)) + ")"
           log_message
         end
