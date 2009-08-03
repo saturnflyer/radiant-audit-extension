@@ -16,15 +16,8 @@ module Audit
         end
         
         audit_event :update do |event|
-          # we are interested in the following fields to see if they've changed
-          # it will be noted in the log message if any of the following fields have changed
-          updatables = ["title", "slug", "breadcrumb", "description", "keywords"]
-
           log_message = "#{event.user_link} updated " + link_to(event.auditable.title, event.auditable_path)
           log_message += " to revision #{event.auditable.revisions.first.number}"
-          updates = updated_fields(updatables, event.auditable)
-          updates &&= " (#{updates.join(', ')})"
-          log_message += updates if updates
           log_message += " (" + link_to("link", edit_admin_page_path(event.auditable.id)) + ")"
           log_message
         end

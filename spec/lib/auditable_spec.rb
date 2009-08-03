@@ -34,20 +34,4 @@ describe Auditable do
     end
   end
 
-  describe "#updates" do
-    before do
-      @auditable = @base.new
-      @auditable.stub!(:changes).and_return({'alpha' => ['old', 'new']})
-    end
-    it "should return an array of updated fields" do
-      updated = @base.updated_fields(['alpha'], @auditable)
-      updated.should == ['alpha']
-    end
-
-    it "should return nil if no observed fields were changed" do
-      updated = @base.updated_fields(['beta'], @auditable)
-      updated.should be_nil
-    end
-  end
-
 end
