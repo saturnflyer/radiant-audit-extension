@@ -28,6 +28,12 @@ class Admin::AuditsController < ApplicationController
   
   def report
     @audits = scope_from_params
+    begin
+      if params[:auditable_id] and (klass = params[:auditable_type].camelcase.constantize)
+        @item = klass.find(params[:auditable_id])
+      end
+    rescue NameError
+    end
   end
   
   private

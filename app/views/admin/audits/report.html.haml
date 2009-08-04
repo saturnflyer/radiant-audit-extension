@@ -7,7 +7,10 @@
       %span Custom Report
   .ClearFix <!-- do not remove -->
 
-%h2.Block Custom Report
+%h2.Block
+  Custom Report
+  - if @item
+    == for #{item_link}
 
 - if AuditEvent.first
   - first_event = AuditEvent.first.created_at

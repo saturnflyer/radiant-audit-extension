@@ -1,6 +1,7 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
 describe Admin::AuditsHelper do
+  dataset :pages
   attr_accessor :params
   include Admin::AuditsHelper
   
@@ -43,6 +44,23 @@ describe Admin::AuditsHelper do
     it "should be true when any report filter is set" do
       @params = { :before => Time.now }
       custom_report_filters_set?.should be_true
+    end
+  end
+
+  describe "item_link" do
+    it "should be empty if @item is not assigned" do
+      item_link.should be_empty
+    end
+
+    it "should be a page link if @item is a page" do
+      @item = pages(:first)
+      item_link.should =~ /a href=".+"/
+      item_link.should =~ /#{@item.title}/
+    end
+
+    it "should not be linked if @item is of an unknown class" do
+      @item = String.new
+      item_link.should be_empty
     end
   end
 end
