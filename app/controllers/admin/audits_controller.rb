@@ -32,7 +32,7 @@ class Admin::AuditsController < ApplicationController
       if params[:auditable_id] and (klass = params[:auditable_type].camelcase.constantize)
         @item = klass.find(params[:auditable_id])
       end
-    rescue NameError
+    rescue NameError, ActiveRecord::RecordNotFound
     end
   end
   
