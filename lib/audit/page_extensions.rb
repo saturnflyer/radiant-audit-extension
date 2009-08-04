@@ -7,13 +7,11 @@ module Audit
         extend Auditor
 
         audit_event :create do |event|
-          "#{event.user_link} created " + link_to(event.auditable.title, event.auditable_path) + " (" + link_to("link", edit_admin_page_path(event.auditable.id)) + ")"
+          "#{event.user_link} created " + link_to(event.auditable.title, event.auditable_path)
         end
         
         audit_event :update do |event|
-          log_message = "#{event.user_link} updated " + link_to(event.auditable.title, event.auditable_path)
-          log_message += " (" + link_to("link", edit_admin_page_path(event.auditable.id)) + ")"
-          log_message
+          "#{event.user_link} updated " + link_to(event.auditable.title, event.auditable_path)
         end
         
         audit_event :destroy do |event|
