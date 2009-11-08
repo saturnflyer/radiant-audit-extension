@@ -107,6 +107,10 @@ cursor: pointer;
 
 #actions #remove-filters { background: none; color: #FFF; text-decoration: underline; padding: 0px; text-shadow: none; }
 
+#filtering-table { margin: 5px 15px; }
+#filtering-table td { padding: 2px 5px !important; }
+#filtering-options .FormAction { padding: 0 15px 1em; }
+
 * HTML .AdminTabSet UL.AdminTabNav { padding-top: 1px; }
 * HTML #tabs-wrapper { zoom: 1; }
 * HTML H2#current-date { padding-top: .5em; }
