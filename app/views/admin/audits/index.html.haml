@@ -1,12 +1,5 @@
 %h1 Audit Log
 
-#tabs-wrapper.AdminTabSet
-  %ul#report-tabs.AdminTabNav
-    %li.Selected
-      %span Browse by Date
-    %li= link_to "Custom Report", report_admin_audits_path
-  .ClearFix <!-- do not remove -->
-
 - if AuditEvent.first
   - first_event = AuditEvent.first.created_at
   :javascript
