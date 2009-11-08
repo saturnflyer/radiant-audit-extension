@@ -1,24 +1,96 @@
-= Radiant Audit Extension
+= Audit Extension
 
-The Audit Extension for Radiant logs user actions in Radiant.  It has built-in support for logging Create, Update and Delete of Page, User, Snippet, and Layout actions and provides an admin interface for viewing and searching through these events.
+An extensible auditing framework for Radiant.
 
-== Requirements
- * will_paginate (http://github.com/mislav/will_paginate/) installed as a plugin or gem (via config.gem in environment.rb).
-    
-    
-== Extending
- The Audit Extension was designed to be extensible so logging of any non-core Radiant functionality can be added.  This extension adds two models to your application- AuditEvent and AuditType.  AuditType describes the type of event that is being audited (such as CREATE, UPDATE, DESTROY).  AuditEvents store the audited events along with a handful of useful information about the event (the user and IP address of who performed the event, the time at which the event occurred, and the class and type of event that occurred).
-  
- Logging has been implemented using the Observer pattern as well as through filters.  The Observer pattern can be used to monitor ActiveRecord model actions.  To observe a model, add the model to the Observables array in audit_extension.rb and send your extensions to be included in that model.  Then, in your model extension, define the events you wish to audit.  See lib/audit/page_extensions.rb for an example.
- Filtering is useful when adding auditing to a controller's actions.  See lib/audit/welcome_controller_extensions.rb to see how the login and logout actions have been extended by using around_filter and after_filter.  Also, note that logging can be disabled as needed in case you don't want core events to be logged-- in the case of the WelcomeControllerExtensions, logging on the User model is suspended when the logout event occurs since logging out writes to the session_token of the User model.  This is accomplished by the following:
- 
- def audit_logout
-   if (current_user)
-     audit :item => current_user, :user => current_user, :ip => request.remote_ip, :type => :logout
-   end
-   Audit.disable_logging do
-     yield
-   end
- end
+== Overview
 
-audit_logout is an around_filter for the WelcomeController's logout action; note how the logout action is audited and then WelcomeController::logout is called via 'yield' in the Audit.disable_logging block.
+The Audit Extension provides Radiant with an extensible framework for auditing
+and logging admin interactions as well as a UI for reviewing and searching the
+audited events. With this extension, site admins now have the ability to track
+changes to their site over time. It can be added to any existing Radiant site
+with minimal effort.
+
+Out of the box, you'll find support for: create/update/destroy of the core
+Radiant models (User, Page, Snippet, and Layout), as well as User
+logins/logouts (both successful and failed). Extension developers can add in
+auditing capability to new models and actions with little effort.
+
+
+== Installation and Setup
+
+The Audit Extension requires Radiant 0.9 or later and all of its prerequsities.
+
+See the INSTALL file for more details.
+
+
+== Usage
+
+After installing the Audit Extension, all core Radiant events will be logged
+without any additional configuraiton. Just log in start using Radiant to start
+filling up the audit log with events.
+
+To review the audit log, go to the [new] Tools main tab in the Radiant admin
+interface and select Audit Log. You'll be able to browse the audit events by
+date, and do simple filtering and searching of audit events.
+
+Note: The Audit Log UI is available and intended to be used by all classes of
+Radiant admin users as it does not expose any senstive information aside from
+the fact that objects were created/updated/deleted. If your needs are
+different, however, the extension can be easily modified to restrict UI access
+as desired.
+
+
+== Customizing and Extending
+
+Attention Radiant extension authors: If you've written custom extensions
+(public or private) and would like to provide your users with auditing
+capability, it's fairly straight-forward because the Audit Extension was
+designed with extensibilty as one of its core principals.
+
+See our GitHub page for more info on the internals and how to extend/customize
+the extension for your needs.
+
+http://github.com/digitalpulp/radiant-audit-extension/
+
+
+== Known Issues
+
+* The audit log is never truncated. This is by design.
+
+
+== Roadmap
+
+=== Real Soon Now
+
+* bring back the UI for custom reports (need UI help due to new conventions
+  intrduced with Blade)
+
+=== Under Consideration
+
+* YOUR FEATURE HERE
+
+
+== Contributors
+
+This extension was originally developed by Digital Pulp for one of our clients
+and was extracted for release to the Radiant community.
+
+See the CONTRIBUTORS file for full credits list.
+
+
+== Support
+
+GitHub is the place to find all documentation, file tickets, and get the
+latest releases of the Audit Extension.
+
+http://github.com/digitalpulp/radiant-audit-extension/
+
+Please avoid posting questions and problems to the various Radiant user and
+developer email lists.
+
+
+== License
+
+The Audit Extension is released under the MIT license and is copyright 
+(c) 2009 Digital Pulp. A copy of the MIT license can be found in the LICENSE 
+file.

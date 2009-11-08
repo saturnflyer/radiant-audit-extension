@@ -1,0 +1,12 @@
+== Requirements
+
+ * Radiant 0.9 or later
+ * will_paginate (http://github.com/mislav/will_paginate/) gem installed
+
+
+== Installation
+
+ * cd vendor/extensions
+ * git clone git://github.com/digitalpulp/radiant-audit-extension.git audit
+ * rake <environment> db:migrate:extensions
+ * rake radiant:extensions:update_all
