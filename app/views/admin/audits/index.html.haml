@@ -99,7 +99,7 @@
           %td= h(a.ip_address)
           %td= h(event_user_name(a))
           %td= h(a.event_type)
-          %td= entify_ampersands(a.log_message)
+          %td= a.log_message
 
 .Bottom= will_paginate @audits, :previous_label => "Previous", :next_label => "Next"
 

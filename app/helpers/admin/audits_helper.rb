@@ -8,10 +8,6 @@ module Admin::AuditsHelper
     (params[:direction] == 'asc') ? 'desc' : 'asc'
   end
   
-  def entify_ampersands(snippet)
-    snippet.gsub("amp;","").gsub("&","&amp;")
-  end
-  
   def event_user_name(event)
     event.user.try(:login)
   end
