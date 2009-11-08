@@ -30,7 +30,6 @@ class AuditExtension < Radiant::Extension
   
   def activate
     require "audit"
-    AuditEvent
     Audit.disable_logging unless ActiveRecord::Base.connection.tables.include?(AuditType.table_name)
     [ApplicationController, *ApplicationController.subclasses.map(&:constantize)].each { |c| c.send :include, Audit::ApplicationExtensions }
     Admin::WelcomeController.send :include, Audit::WelcomeControllerExtensions
@@ -40,7 +39,6 @@ class AuditExtension < Radiant::Extension
     Layout.send :include, Audit::LayoutExtensions
 
     AuditObserver.instance
-    
 
     admin.nav << Radiant::AdminUI::NavTab.new(:tools, "Tools") unless admin.nav[:tools]
     admin.nav[:tools] << admin.nav_item("Audit Log", "Audit Log", "/admin/audits")
