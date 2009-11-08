@@ -2,7 +2,7 @@
 require_dependency 'application_controller'
 
 class AuditExtension < Radiant::Extension
-  version "1.0"
+  version "0.9"
   description "Audit Extension- logs user actions in Radiant"
   url "http://digitalpulp.com"
   
