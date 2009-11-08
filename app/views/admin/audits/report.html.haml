@@ -140,3 +140,5 @@
           %td= entify_ampersands(a.log_message)
 
 .Bottom= will_paginate @audits, :previous_label => "Previous", :next_label => "Next"
+
+= render :partial => "admin/audits/print_styles"
