@@ -40,8 +40,10 @@ class AuditExtension < Radiant::Extension
     Layout.send :include, Audit::LayoutExtensions
 
     AuditObserver.instance
+    
 
-    admin.nav[:settings] << admin.nav_item("Audit Log", "Audit Log", "/admin/audits")
+    admin.nav << Radiant::AdminUI::NavTab.new(:tools, "Tools")
+    admin.nav[:tools] << admin.nav_item("Audit Log", "Audit Log", "/admin/audits")
   end
   
   def deactivate
