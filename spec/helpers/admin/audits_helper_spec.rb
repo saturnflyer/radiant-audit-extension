@@ -36,17 +36,6 @@ describe Admin::AuditsHelper do
     end
   end
 
-  describe "#custom_report_filters_set?" do
-    it "should be false" do
-      custom_report_filters_set?.should be_false
-    end
-
-    it "should be true when any report filter is set" do
-      @params = { :before => Time.now }
-      custom_report_filters_set?.should be_true
-    end
-  end
-
   describe "item_link" do
     it "should be empty if @item is not assigned" do
       item_link.should be_blank

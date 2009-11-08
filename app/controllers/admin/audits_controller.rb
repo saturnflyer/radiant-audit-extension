@@ -7,23 +7,6 @@ class Admin::AuditsController < ApplicationController
     params[:date] &&= Date.parse(params[:date])
     params[:date] ||= Date.today
     @audits = scope_from_params
-    
-    if @audits.empty?
-      @ip_addresses = params[:ip].blank? ? [] : [params[:ip]]
-      if (!params[:user].blank?)
-        @users = [User.find(params[:user])]
-      end
-      @users = [] if @users.nil?
-      @event_types = params[:event_type].blank? ? [] : [params[:event_type]]
-
-    else
-      # some helper arrays for filter options - sorted
-      @ip_addresses = @audits.map(&:ip_address).uniq.compact.sort
-      @users = @audits.map(&:user).uniq.compact
-      @users.sort!{ |x,y| x.login <=> y.login} # sort users by login
-      @event_types = @audits.collect { |a| a.event_type }.uniq.compact.sort
-    end
-    
   end
   
   private

@@ -1,4 +1,17 @@
 module Admin::AuditsHelper
+
+  def audited_ip_addresses
+    @audited_ip_addresses ||= AuditEvent.find(:all, :select => :ip_address, :group => :ip_address).map(&:ip_address).compact
+  end
+
+  def audited_users
+    @audited_users ||= AuditEvent.find(:all, :group => :user_id, :include => :user, :order => 'users.login').map(&:user).compact
+  end
+
+  def audited_event_types
+    @audited_event_types ||= AuditEvent.find(:all, :select => 'auditable_type, audit_type_id', :group => 'auditable_type, audit_type_id').map(&:event_type).compact.sort
+  end
+
   def browse_by_date_filters_set?
     # have any filters been set on the browse_by_date form?
     not [params[:ip], params[:user], params[:event_type], params[:log]].all?(&:blank?)
