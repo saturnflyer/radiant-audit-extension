@@ -43,11 +43,9 @@ document.observe("dom:loaded", function(){
 		toggleFilteringOptions();
 	
 	var log = $("log");
-	if (log) {
-		if (!log.value.length > 0) {
-			var msg = "Message";
-			log.value = msg;
-			log.observe("focus", function() { if (log.value == msg) log.value = ""; });
-		}
+	var msg = "Message";
+	if (log && !log.value.length > 0 && !(log.value && log.value == msg)) {
+		log.value = msg;
+		log.observe("focus", function() { if (log.value == msg) log.value = ""; });
 	}
 });
