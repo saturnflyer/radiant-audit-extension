@@ -18,7 +18,7 @@ auditing capability to new models and actions with little effort.
 
 == Installation and Setup
 
-The Audit Extension requires Radiant 0.9 or later and all of its prerequsities.
+The Audit Extension requires Radiant 0.9 or later and all of its prerequisites.
 
 See the INSTALL file for more details.
 
@@ -26,7 +26,7 @@ See the INSTALL file for more details.
 == Usage
 
 After installing the Audit Extension, all core Radiant events will be logged
-without any additional configuraiton. Just log in start using Radiant to start
+without any additional configuration. Just log in start using Radiant to start
 filling up the audit log with events.
 
 To review the audit log, go to the [new] Tools main tab in the Radiant admin
@@ -34,7 +34,7 @@ interface and select Audit Log. You'll be able to browse the audit events by
 date, and do simple filtering and searching of audit events.
 
 Note: The Audit Log UI is available and intended to be used by all classes of
-Radiant admin users as it does not expose any senstive information aside from
+Radiant admin users as it does not expose any sensitive information aside from
 the fact that objects were created/updated/deleted. If your needs are
 different, however, the extension can be easily modified to restrict UI access
 as desired.
@@ -45,7 +45,7 @@ as desired.
 Attention Radiant extension authors: If you've written custom extensions
 (public or private) and would like to provide your users with auditing
 capability, it's fairly straight-forward because the Audit Extension was
-designed with extensibilty as one of its core principals.
+designed with extensibility as one of its core principals.
 
 See our GitHub page for more info on the internals and how to extend/customize
 the extension for your needs.
@@ -63,7 +63,7 @@ http://github.com/digitalpulp/radiant-audit-extension/
 === Real Soon Now
 
 * bring back the UI for custom reports (need UI help due to new conventions
-  intrduced with Blade)
+  introduced with Blade)
 
 === Under Consideration
 
