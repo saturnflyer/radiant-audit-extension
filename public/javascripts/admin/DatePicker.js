@@ -1,6 +1,7 @@
 // Define base PageWidget class, unless already defined
 
-if (!typeof PageWidget === "undefined") {
+if (typeof PageWidget === "undefined") {
+	
 	var PageWidget = Class.create({
 		node : null,
 		// basic, useless initialize method
