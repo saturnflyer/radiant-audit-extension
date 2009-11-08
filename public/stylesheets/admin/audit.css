@@ -72,6 +72,14 @@ body.reversed { background: #fff; }
 #date-filter #date { vertical-align: top; margin: -2px 4px 0; text-align: center; font-weight: bold; width: 8em; cursor: pointer !important; }
 #date-filter A { font-size: 100%; }
 #date-filter A:hover { border-color: #000; }
+#date-filter SPAN { 
+background: #eee url(/images/admin/buttons_background.png) repeat-x;
+border-radius: 5px;
+-moz-border-radius: 5px;
+-webkit-border-radius: 5px;
+padding: 8px 12px;
+color: #AAA;
+}
 
 #quick-filter { clear: both; padding: .5em .5em .75em; }
 #quick-filter .Field { margin-right: 8px; }

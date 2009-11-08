@@ -4,12 +4,18 @@
     %ul
       - if previous_date = AuditEvent.date_before(params[:date])
         %li= link_to "&laquo; #{previous_date.strftime('%b %d')}", :overwrite_params => { :date => previous_date }
-      
+      - else
+        %li
+          %span= params[:date].ago(1.day).strftime('%b %d')
+        
       %li
         = text_field_tag :date, params[:date].strftime('%m/%d/%Y'), :class => "AuditDatePicker"
         %label{ :for => "date", :class => "Invisible" } Date
         
       - if next_date = AuditEvent.date_after(params[:date])
         %li= link_to "#{next_date.strftime('%b %d')} &raquo;", :overwrite_params => { :date => next_date }
+      - else
+        %li
+          %span= params[:date].since(1.day).strftime('%b %d')
           
   .FormAction= submit_tag "Filter by Date"
