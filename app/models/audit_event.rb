@@ -62,11 +62,7 @@ class AuditEvent < ActiveRecord::Base
   end
   
   def user_link
-    if user.nil?
-      "Unknown User"
-    else
-      link_to h(user.login), admin_audits_path(:user => user_id)
-    end
+    user.nil? ? "Unknown User" : link_to(h(user.login), admin_audits_path(:user => user_id))
   end
 
   def auditable_path
