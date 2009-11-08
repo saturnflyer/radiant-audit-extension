@@ -1,38 +1,38 @@
 #filtering-options
   %span{ :id => "more-or-less-metadata" } More Filtering Options
   - form_tag admin_audits_path, :method => "get", :id => "audit_filter_form", :style => "display:none;" do
-    #quick-filter
-      .Field#ip-address-field
-        %label{ :for => "ip", :class => "Invisible" } IP Address
-        %select{ :name => "ip", :id => "ip" }
-          %option{ :value => "" } IP Address
-          %option{ :value => "" } &nbsp;
-          -if audited_ip_addresses.any?
-            = options_for_select(audited_ip_addresses, params[:ip])
-
-      .Field#user-field
-        %label{ :for => "user", :class => "Invisible" } User
-        %select{ :name => "user", :id => "user" }
-          %option{ :value => "" } User
-          %option{ :value => "" } &nbsp;
-          -if audited_users.any?
-            = options_from_collection_for_select(audited_users, "id", "login", (params[:user] || 0).to_i)
-
-      .Field#event-type-field
-        %label{ :for => "event_type", :class => "Invisible" } Event Type
-        %select{ :name => "event_type", :id => "event_type" }
-          %option{ :value => "" } Event Type
-          %option{ :value => "" } &nbsp;
-          -if audited_event_types.any?
-            = options_for_select(audited_event_types, (params[:event_type]))
-
-      .Field#message-text-field
-        %label{ :for => "log" } Message Text:
-        = text_field_tag :log, params[:log]
-
-      .FormAction
-        - if params[:date]
-          %input{ :type => "hidden", :name => "date", :value => params[:date] }
-        = submit_tag("Apply Filter")
-        &nbsp;
-        = link_to "Remove Filter", admin_audits_path, :id => "remove-filters" if browse_by_date_filters_set?
+    %table.FormTable#filtering-table
+      %tbody
+        %tr
+          %td
+            %label{ :for => "ip", :class => "Invisible" } IP Address
+            %select{ :name => "ip", :id => "ip" }
+              %option{ :value => "" } IP Address
+              %option{ :value => "" } &nbsp;
+              - if audited_ip_addresses.any?
+                = options_for_select(audited_ip_addresses, params[:ip])
+          %td
+            %label{ :for => "event_type", :class => "Invisible" } Event Type
+            %select{ :name => "event_type", :id => "event_type" }
+              %option{ :value => "" } Event Type
+              %option{ :value => "" } &nbsp;
+              - if audited_event_types.any?
+                = options_for_select(audited_event_types, (params[:event_type]))
+        %tr
+          %td
+            %label{ :for => "user", :class => "Invisible" } User
+            %select{ :name => "user", :id => "user" }
+              %option{ :value => "" } User
+              %option{ :value => "" } &nbsp;
+              - if audited_users.any?
+                = options_from_collection_for_select(audited_users, "id", "login", (params[:user] || 0).to_i)
+          %td
+            %label.Invisible{ :for => "log" } Message Text:
+            = text_field_tag :log, params[:log]
+            
+    .FormAction
+      - if params[:date]
+        %input{ :type => "hidden", :name => "date", :value => params[:date] }
+      = submit_tag("Apply Filter")
+      &nbsp;
+      = link_to "Remove Filter", admin_audits_path, :id => "remove-filters" if browse_by_date_filters_set?

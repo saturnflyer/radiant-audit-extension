@@ -41,4 +41,13 @@ document.observe("dom:loaded", function(){
 	metadata_toggle.observe("click", toggleFilteringOptions);
 	if (document.location.href.indexOf("Filter") > -1)
 		toggleFilteringOptions();
+	
+	var log = $("log");
+	if (log) {
+		if (!log.value.length > 0) {
+			var msg = "Message";
+			log.value = msg;
+			log.observe("focus", function() { if (log.value == msg) log.value = ""; });
+		}
+	}
 });

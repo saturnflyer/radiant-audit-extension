@@ -9,7 +9,7 @@
 .CalendarNavNextYear { display: none; }
 
 .CalendarTable { border-collapse: collapse; width: 100%; }
-.CalendarTable CAPTION { margin: 0; padding: 0 0 .5em; }
+.CalendarTable CAPTION { margin: 0; padding: 0 0 .5em; text-align: center; }
 .CalendarTable THEAD TH,
 .CalendarTable TBODY TD { text-align: center; border: 1px solid #CCC; padding: .2em 0 0 !important; }
 .CalendarTable THEAD TH { font-weight: bold; text-align: center !important; }
