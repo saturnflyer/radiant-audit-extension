@@ -20,7 +20,7 @@ module Audit
           if tmpuser = User.find_by_login(params[:user][:login])
             audit :item => tmpuser, :user => nil, :ip => request.remote_ip, :type => :bad_password
           else
-            audit :item => User.first, :user => nil, :ip => request.remote_ip, :type => :bad_login
+            audit :item => User.new, :user => nil, :ip => request.remote_ip, :type => :bad_login
           end
         end
       end
