@@ -1,8 +1,8 @@
-= Audit Extension
+# Audit Extension
 
 An extensible auditing framework for Radiant.
 
-== Overview
+## Overview
 
 The Audit Extension provides Radiant with an extensible framework for auditing
 and logging admin interactions as well as a UI for reviewing and searching the
@@ -16,14 +16,14 @@ logins/logouts (both successful and failed). Extension developers can add in
 auditing capability to new models and actions with little effort.
 
 
-== Installation and Setup
+## Installation and Setup
 
 The Audit Extension requires Radiant 0.9 or later and all of its prerequisites.
 
 See the INSTALL file for more details.
 
 
-== Usage
+## Usage
 
 After installing the Audit Extension, all core Radiant events will be logged
 without any additional configuration. Just log in and use Radiant as normal to
@@ -40,7 +40,7 @@ different, however, the extension can be easily modified to restrict UI access
 as desired.
 
 
-== Customizing and Extending
+## Customizing and Extending
 
 Attention Radiant extension authors: If you've written custom extensions
 (public or private) and would like to provide your users with auditing
@@ -53,24 +53,24 @@ the extension for your needs.
 http://github.com/digitalpulp/radiant-audit-extension/
 
 
-== Known Issues
+## Known Issues
 
 * The audit log is never truncated. This is by design.
 
 
-== Roadmap
+## Roadmap
 
-=== Real Soon Now
+### Real Soon Now
 
 * bring back the UI for custom reports (need UI help due to new conventions
   introduced with Blade)
 
-=== Under Consideration
+### Under Consideration
 
 * YOUR FEATURE HERE
 
 
-== Contributors
+## Contributors
 
 This extension was originally developed by Digital Pulp for a client and was
 extracted for release to the Radiant community.
@@ -78,7 +78,7 @@ extracted for release to the Radiant community.
 See the CONTRIBUTORS file for full credits list.
 
 
-== Support
+## Support
 
 GitHub is the place to find all documentation, file tickets, and get the
 latest releases of the Audit Extension.
@@ -89,7 +89,7 @@ Please avoid posting questions and problems to the various Radiant user and
 developer email lists.
 
 
-== License
+## License
 
 The Audit Extension is released under the MIT license and is copyright 
 (c) 2009 Digital Pulp. A copy of the MIT license can be found in the LICENSE 
