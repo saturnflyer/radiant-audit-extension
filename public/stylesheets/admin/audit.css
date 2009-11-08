@@ -15,11 +15,46 @@ BODY { position: relative; }
 .pagination A:active { border-color: #000; color: #000; }
 .pagination SPAN.current { border: 1px solid #000; font-weight: bold; cursor: default; }
 .pagination SPAN.disabled { border: 1px solid #EFEDED; color: #DDD; cursor: default; }
-
 .pagination { margin-top: .75em; }
 .Bottom .pagination { margin-top: 0; }
 
-H2#current-date { margin-bottom: 0; }
+.AdminTabSet .TabHeader { position: absolute; top: -9999px; left: -9999px; }
+.AdminTabSet .AdminTabNav { margin: 0; padding: 0; }
+.AdminTabSet .AdminTabNav LI { float: left; list-style-type: none; padding: 0 1px; margin: -1px 5px; font-weight: bold; border: 1px solid #CCC; background: #EEE; }
+.AdminTabSet .AdminTabNav LI SPAN,
+.AdminTabSet .AdminTabNav LI A { display: block; padding: 3px 8px 2px 8px; text-decoration: none !important; }
+.AdminTabSet .AdminTabNav LI SPAN SMALL,
+.AdminTabSet .AdminTabNav LI A SMALL { font-weight: normal; }
+.AdminTabSet .AdminTabNav LI.Selected,
+.AdminTabSet .AdminTabNav LI.Active { border: 1px solid #CCC !important; border-bottom: 1px solid #FFF !important; padding: 0; }
+.AdminTabSet .AdminTabNav LI.Selected A,
+.AdminTabSet .AdminTabNav LI.Selected SPAN,
+.AdminTabSet .AdminTabNav LI.Active SPAN,
+.AdminTabSet .AdminTabNav LI.Active A { color: #333; background: #FFF; }
+.AdminTabSet .TabBorder { border-top: 1px solid #CCC; margin-bottom: 8px; }
+
+.InlineForm,
+.InlineForm FIELDSET { border: 0; padding: 0; margin: 0; display: inline; }
+.InlineForm FIELDSET LEGEND { position: absolute; top: -9999em; left: -9999em; display: none; }
+.InlineForm INPUT,
+.InlineForm SELECT { vertical-align: middle; margin: 0; }
+.InlineForm DIV.Field,
+.InlineForm DIV.FormAction { display: inline; margin: 0; }
+
+.LayoutTable { width: 100%; }
+
+.FormTable { width: 100%; border: none; border-collapse: collapse; border-spacing: 0; clear: both; }
+.FormTable TD,
+.FormTable TH { padding: 4px 0 !important; line-height: normal; }
+.FormTable TH { font-weight: normal; text-align: right !important; padding: 8px .5em 3px 0 !important; vertical-align: top; }
+.FormTable THEAD TH { text-align: left; border-bottom: 1px solid #081E3F; }
+.FormTable TD .Inputs { margin-bottom: 0; }
+.FormTable TD .Inputs,
+.FormTable TD .FieldValue { min-height: 14px; padding-top: 4px; }
+.FormTable TD .FieldValue { font-weight: bold; }
+
+#current-date,
+#custom-report { margin: 1em 0 0; font-size: 125%; }
 
 #tabs-wrapper { border-bottom: 1px solid #CCC; }
 
@@ -43,6 +78,7 @@ FORM#date_filter_form { position: absolute; top: 5px; right: 0; }
 #message-text-field LABEL { font-size: .8em; }
 
 #audit-results { margin: 1em 0 !important; }
+#audit-results TH A { color: #fff; }
 
 #custom-report-fieldset { border: 1px solid #CCC !important; margin-bottom: .5em; padding: 5px 10px; }
 #custom-report-fieldset LEGEND { font-weight: bold; color: #000; }
@@ -64,6 +100,9 @@ FORM#date_filter_form { position: absolute; top: 5px; right: 0; }
 * HTML #date-filter A { zoom: 1; margin-top: 1px; }
 * HTML #date-filter #date { margin-top: 0; }
 * HTML #top-report-pagination { padding-bottom: 3px; }
+* HTML .AdminTabSet UL.AdminTabNav LI.Selected,
+* HTML .AdminTabSet UL.AdminTabNav LI.Active { position: relative; border-bottom: 1px solid #FFF !important; }
+* HTML .AdminTabSet UL.AdminTabNav { zoom: 1; }
 
 *:first-child+HTML #tabs-wrapper { zoom: 1; }
 *:first-child+HTML H2#current-date { padding-top: .5em; }
@@ -72,6 +111,9 @@ FORM#date_filter_form { position: absolute; top: 5px; right: 0; }
 *:first-child+HTML #date-filter A { zoom: 1; margin-top: 1px; }
 *:first-child+HTML #date-filter #date { margin-top: 0; }
 *:first-child+HTML #top-report-pagination { padding-bottom: 3px; }
+*:first-child+HTML .AdminTabSet UL.AdminTabNav { zoom: 1; }
+*:first-child+HTML .AdminTabSet UL.AdminTabNav LI.Selected,
+*:first-child+HTML .AdminTabSet UL.AdminTabNav LI.Active { position: relative; border-bottom: 1px solid #FFF !important; }
 
 @media print {
 	#header,
