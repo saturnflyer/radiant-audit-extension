@@ -7,24 +7,24 @@
         %select{ :name => "ip", :id => "ip" }
           %option{ :value => "" } IP Address
           %option{ :value => "" } &nbsp;
-          -if (!@ip_addresses.empty?)
-            = options_for_select(@ip_addresses, params[:ip])
+          -if audited_ip_addresses.any?
+            = options_for_select(audited_ip_addresses, params[:ip])
 
       .Field#user-field
         %label{ :for => "user", :class => "Invisible" } User
         %select{ :name => "user", :id => "user" }
           %option{ :value => "" } User
           %option{ :value => "" } &nbsp;
-          -if (!@users.empty?)
-            = options_from_collection_for_select(@users, "id", "login", (params[:user] || 0).to_i)
+          -if audited_users.any?
+            = options_from_collection_for_select(audited_users, "id", "login", (params[:user] || 0).to_i)
 
       .Field#event-type-field
         %label{ :for => "event_type", :class => "Invisible" } Event Type
         %select{ :name => "event_type", :id => "event_type" }
           %option{ :value => "" } Event Type
           %option{ :value => "" } &nbsp;
-          -if (!@event_types.empty?)
-            = options_for_select(@event_types, (params[:event_type]))
+          -if audited_event_types.any?
+            = options_for_select(audited_event_types, (params[:event_type]))
 
       .Field#message-text-field
         %label{ :for => "log" } Message Text:
