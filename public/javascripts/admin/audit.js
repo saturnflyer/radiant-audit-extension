@@ -43,7 +43,7 @@ document.observe("dom:loaded", function(){
 		toggleFilteringOptions();
 	
 	var log = $("log");
-	var msg = "Message";
+	var msg = "Log Message";
 	if (log && !log.value.length > 0 && !(log.value && log.value == msg)) {
 		log.value = msg;
 		log.observe("focus", function() { if (log.value == msg) log.value = ""; });
