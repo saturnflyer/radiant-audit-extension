@@ -78,7 +78,7 @@ body.reversed { background: #fff; }
 #message-text-field { margin-left: 20px;}
 #message-text-field LABEL { font-size: .8em; }
 
-#audit-results { margin: 0 0 1em !important; }
+#audit-results { margin: 0 0 5em !important; }
 #audit-results TH A { color: #fff; }
 
 #custom-report-fieldset { border: 1px solid #CCC !important; margin-bottom: .5em; padding: 5px 10px; }
