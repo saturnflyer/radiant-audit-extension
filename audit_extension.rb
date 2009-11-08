@@ -42,7 +42,7 @@ class AuditExtension < Radiant::Extension
     AuditObserver.instance
     
 
-    admin.nav << Radiant::AdminUI::NavTab.new(:tools, "Tools")
+    admin.nav << Radiant::AdminUI::NavTab.new(:tools, "Tools") unless admin.nav[:tools]
     admin.nav[:tools] << admin.nav_item("Audit Log", "Audit Log", "/admin/audits")
   end
   
