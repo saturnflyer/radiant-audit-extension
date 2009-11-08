@@ -39,8 +39,7 @@ class Admin::AuditsController < ApplicationController
   private
     def include_assets
       @stylesheets << 'admin/date_picker'
-      @stylesheets << { :href => 'admin/audit', :media => 'all' }
-      @javascripts << 'lowpro'
+      @stylesheets << 'admin/audit'
       @javascripts << 'prototype_extensions'
       @javascripts << 'admin/DatePicker'
       @javascripts << 'admin/audit'

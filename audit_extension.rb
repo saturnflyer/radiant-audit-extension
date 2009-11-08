@@ -6,6 +6,10 @@ class AuditExtension < Radiant::Extension
   description "Audit Extension- logs user actions in Radiant"
   url "http://digitalpulp.com"
   
+  extension_config do |ext|
+    ext.gem "will_paginate"
+  end
+  
   define_routes do |map|
     map.namespace :admin do |admin|
       admin.resources :audits, :collection => { :report => :get }
@@ -21,7 +25,7 @@ class AuditExtension < Radiant::Extension
   
   ActiveSupport::CoreExtensions::Date::Conversions::DATE_FORMATS.merge!(AuditExtension::DATE_TIME_FORMATS)
   ActiveSupport::CoreExtensions::Time::Conversions::DATE_FORMATS.merge!(AuditExtension::DATE_TIME_FORMATS)
-    
+  
   OBSERVABLES = [User, Page, Layout, Snippet]
   
   def activate
@@ -41,7 +45,7 @@ class AuditExtension < Radiant::Extension
   end
   
   def deactivate
-    admin.tabs.remove "Audit"
+    # admin.tabs.remove "Audit"
   end
   
 end
