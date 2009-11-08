@@ -40,7 +40,6 @@ class Admin::AuditsController < ApplicationController
     def include_assets
       @stylesheets << 'admin/date_picker'
       @stylesheets << 'admin/audit'
-      @javascripts << 'prototype_extensions'
       @javascripts << 'admin/DatePicker'
       @javascripts << 'admin/audit'
     end
