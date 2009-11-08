@@ -2,13 +2,13 @@ module Audit
   module ApplicationExtensions
     def self.included(base)
       base.class_eval do
-        append_before_filter :set_current_user_and_ip
+        append_before_filter :set_audited_user_and_ip
       end
     end
     
     private
     
-    def set_current_user_and_ip
+    def set_audited_user_and_ip
       AuditObserver.current_user = current_user
       AuditObserver.current_ip = request.remote_ip
     end

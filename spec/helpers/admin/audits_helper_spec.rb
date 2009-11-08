@@ -25,37 +25,14 @@ describe Admin::AuditsHelper do
     end
   end
 
-  describe "#browse_by_date_filters_set?" do
+  describe "#filters_set?" do
     it "should be false" do
-      browse_by_date_filters_set?.should be_false
+      filters_set?.should be_false
     end
 
     it "should be true when any date filter is set" do
       @params = { :ip => '127.0.0.1'}
-      browse_by_date_filters_set?.should be_true
-    end
-  end
-
-  describe "item_link" do
-    it "should be empty if @item is not assigned" do
-      item_link.should be_blank
-    end
-
-    it "should be a page link if @item is a page" do
-      @item = pages(:first)
-      item_link.should =~ /a href=".+"/
-      item_link.should =~ /#{@item.title}/
-    end
-
-    it "should not be linked if @item is of an unknown class" do
-      @item = String.new
-      item_link.should be_blank
-    end
-
-    it "should say (deleted) if object does not exist but we have logs" do
-      @params = { :auditable_type => 'Page', :auditable_id => page_id(:first) }
-      pages(:first).destroy
-      item_link.should == "Page ##{page_id(:first)} (deleted)"
+      filters_set?.should be_true
     end
   end
 end
