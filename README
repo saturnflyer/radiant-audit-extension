@@ -7,8 +7,8 @@ An extensible auditing framework for Radiant.
 The Audit Extension provides Radiant with an extensible framework for auditing
 and logging admin interactions as well as a UI for reviewing and searching the
 audited events. With this extension, site admins now have the ability to track
-changes to their site over time. It can be added to any existing Radiant site
-with minimal effort.
+changes to their site over time. It can be added to any existing Radiant 0.9
+site with minimal effort.
 
 Out of the box, you'll find support for: create/update/destroy of the core
 Radiant models (User, Page, Snippet, and Layout), as well as User
@@ -26,8 +26,8 @@ See the INSTALL file for more details.
 == Usage
 
 After installing the Audit Extension, all core Radiant events will be logged
-without any additional configuration. Just log in start using Radiant to start
-filling up the audit log with events.
+without any additional configuration. Just log in and use Radiant as normal to
+start filling up the audit log with events.
 
 To review the audit log, go to the [new] Tools main tab in the Radiant admin
 interface and select Audit Log. You'll be able to browse the audit events by
@@ -72,8 +72,8 @@ http://github.com/digitalpulp/radiant-audit-extension/
 
 == Contributors
 
-This extension was originally developed by Digital Pulp for one of our clients
-and was extracted for release to the Radiant community.
+This extension was originally developed by Digital Pulp for a clients and was
+extracted for release to the Radiant community.
 
 See the CONTRIBUTORS file for full credits list.
 
