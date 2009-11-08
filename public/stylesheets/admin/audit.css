@@ -118,28 +118,3 @@ cursor: pointer;
 #filtering-table { margin: 5px 15px; }
 #filtering-table td { padding: 2px 5px !important; }
 #filtering-options .FormAction { padding: 0 15px 1em; }
-
-* HTML .AdminTabSet UL.AdminTabNav { padding-top: 1px; }
-* HTML #tabs-wrapper { zoom: 1; }
-* HTML H2#current-date { padding-top: .5em; }
-* HTML #quick-filter { padding-top: 1em; padding-bottom: 0; }
-* HTML #quick-filter FIELDSET,
-* HTML #quick-filter .FormAction,
-* HTML #date-filter { padding-top: 0; }
-* HTML #date-filter A { zoom: 1; margin-top: 1px; }
-* HTML #date-filter #date { margin-top: 0; }
-* HTML #top-report-pagination { padding-bottom: 3px; }
-* HTML .AdminTabSet UL.AdminTabNav LI.Selected,
-* HTML .AdminTabSet UL.AdminTabNav LI.Active { position: relative; border-bottom: 1px solid #FFF !important; }
-* HTML .AdminTabSet UL.AdminTabNav { zoom: 1; }
-
-*:first-child+HTML #tabs-wrapper { zoom: 1; }
-*:first-child+HTML H2#current-date { padding-top: .5em; }
-*:first-child+HTML #quick-filter { padding-bottom: .5em; }
-*:first-child+HTML #date-filter { padding-top: 0; }
-*:first-child+HTML #date-filter A { zoom: 1; margin-top: 1px; }
-*:first-child+HTML #date-filter #date { margin-top: 0; }
-*:first-child+HTML #top-report-pagination { padding-bottom: 3px; }
-*:first-child+HTML .AdminTabSet UL.AdminTabNav { zoom: 1; }
-*:first-child+HTML .AdminTabSet UL.AdminTabNav LI.Selected,
-*:first-child+HTML .AdminTabSet UL.AdminTabNav LI.Active { position: relative; border-bottom: 1px solid #FFF !important; }
