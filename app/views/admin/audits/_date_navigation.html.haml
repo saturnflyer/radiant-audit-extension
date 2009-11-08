@@ -12,5 +12,4 @@
       - if next_date = AuditEvent.date_after(params[:date])
         %li= link_to "#{next_date.strftime('%b %d')} &raquo;", :overwrite_params => { :date => next_date }
           
-  .FormAction
-    = submit_tag "Filter by Date"
+  .FormAction= submit_tag "Filter by Date"
