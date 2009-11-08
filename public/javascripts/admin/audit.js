@@ -36,7 +36,7 @@ document.observe("dom:loaded", function(){
 	function toggleFilteringOptions(){
 		metadata.toggle();
 		filtering_options.toggleClassName("Active");
-		metadata_toggle.update(metadata_toggle.innerHTML.indexOf("More") > -1 ? "Less Filtering Options" : "More Filtering Options");
+		metadata_toggle.update(metadata_toggle.innerHTML.indexOf("More") > -1 ? "Hide Filtering Options" : "More Filtering Options");
 	}
 	metadata_toggle.observe("click", toggleFilteringOptions);
 	if (document.location.href.indexOf("Filter") > -1)
