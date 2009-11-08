@@ -23,7 +23,7 @@ module Audit
     end
 
     def audit_logout
-      audit (:item => current_user, :user => current_user, :ip => request.remote_ip, :type => :logout) if current_user
+      audit(:item => current_user, :user => current_user, :ip => request.remote_ip, :type => :logout) if current_user
       Audit.disable_logging do
         yield
       end
