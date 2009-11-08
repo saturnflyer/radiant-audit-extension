@@ -26,16 +26,6 @@ class Admin::AuditsController < ApplicationController
     
   end
   
-  def report
-    @audits = scope_from_params
-    begin
-      if params[:auditable_id] and (klass = params[:auditable_type].camelcase.constantize)
-        @item = klass.find(params[:auditable_id])
-      end
-    rescue NameError, ActiveRecord::RecordNotFound
-    end
-  end
-  
   private
     def include_assets
       @stylesheets << 'admin/date_picker'

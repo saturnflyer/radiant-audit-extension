@@ -8,14 +8,14 @@ describe AuditEvent do
   it "should link to the custom report view for the user" do
     admin = users(:admin)
     audit = AuditEvent.new(:user => admin)
-    audit.user_link.should eql("<a href=\"#{report_admin_audits_path(:user => users(:admin))}\">#{admin.login}</a>")
+    audit.user_link.should eql("<a href=\"#{admin_audits_path(:user => users(:admin))}\">#{admin.login}</a>")
   end
   
   it "should link to the custom report view for the auditable" do
     admin = users(:admin)
     auditable = pages(:home)
     audit = AuditEvent.new(:user => admin, :auditable => auditable)
-    audit.auditable_path.should eql(report_admin_audits_path(:auditable_type => 'Page', :auditable_id => page_id(:home)))
+    audit.auditable_path.should eql(admin_audits_path(:auditable_type => 'Page', :auditable_id => page_id(:home)))
   end
   
   it "should return 'Unknown User' if unknown user" do
