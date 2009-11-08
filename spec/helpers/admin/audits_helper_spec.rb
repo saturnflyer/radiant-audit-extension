@@ -25,14 +25,14 @@ describe Admin::AuditsHelper do
     end
   end
 
-  describe "#browse_by_date_filters_set?" do
+  describe "#filters_set?" do
     it "should be false" do
-      browse_by_date_filters_set?.should be_false
+      filters_set?.should be_false
     end
 
     it "should be true when any date filter is set" do
       @params = { :ip => '127.0.0.1'}
-      browse_by_date_filters_set?.should be_true
+      filters_set?.should be_true
     end
   end
 

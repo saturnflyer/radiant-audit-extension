@@ -9,9 +9,8 @@ module Audit
     end
 
     private
-    
+
     def audit_login
-      
       if (params[:user])
         if (current_user)
           audit :item => current_user, :user => current_user, :ip => request.remote_ip, :type => :login
@@ -27,12 +26,11 @@ module Audit
     end
 
     def audit_logout
-      if (current_user)
-        audit :item => current_user, :user => current_user, :ip => request.remote_ip, :type => :logout
-      end
+      audit (:item => current_user, :user => current_user, :ip => request.remote_ip, :type => :logout) if current_user
       Audit.disable_logging do
         yield
       end
     end
+
   end
 end

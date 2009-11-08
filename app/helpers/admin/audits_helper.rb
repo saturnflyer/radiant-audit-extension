@@ -12,7 +12,7 @@ module Admin::AuditsHelper
     @audited_event_types ||= AuditEvent.find(:all, :select => 'auditable_type, audit_type_id', :group => 'auditable_type, audit_type_id').map(&:event_type).compact.sort
   end
 
-  def browse_by_date_filters_set?
+  def filters_set?
     [params[:ip], params[:user], params[:event_type], params[:log], params[:auditable_id], params[:auditable_type]].compact.any?
   end
 
