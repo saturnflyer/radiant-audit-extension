@@ -1,4 +1,8 @@
-BODY { position: relative; }
+body.reversed { background: #fff; }
+.reversed #main { background: #fff; }
+.reversed .outset { color: #000;  }
+
+#actions { height: 46px; }
 
 .FormAction { padding-top: 5px; }
 .Small { font-size: .75em; }
@@ -33,7 +37,6 @@ BODY { position: relative; }
 .AdminTabSet .AdminTabNav LI.Active A { color: #333; background: #FFF; }
 .AdminTabSet .TabBorder { border-top: 1px solid #CCC; margin-bottom: 8px; }
 
-.InlineForm,
 .InlineForm FIELDSET { border: 0; padding: 0; margin: 0; display: inline; }
 .InlineForm FIELDSET LEGEND { position: absolute; top: -9999em; left: -9999em; display: none; }
 .InlineForm INPUT,
@@ -61,23 +64,21 @@ BODY { position: relative; }
 #date_filter_form FIELDSET,
 #audit_filter_form FIELDSET { border: 0; }
 
-#audit_filter_form { margin-top: 1em; display: block; }
+#audit_filter_form { background: #7E7E7E; }
 
-FORM#date_filter_form { position: absolute; top: 5px; right: 0; }
+#date_filter_form UL { padding-bottom: 8px; }
 #date-filter { font-size: .85em; }
 #date-filter IMG { vertical-align: top; }
-#date-filter #date { vertical-align: top; margin: -3px 0 0 5px; text-align: center; font-weight: bold; width: 8em; cursor: pointer !important; }
-#date-filter SPAN,
-#date-filter A { text-decoration: none; vertical-align: top; border: 1px solid #CCC; padding: 2px 3px 2px 4px; }
-#date-filter SPAN { border: 1px solid #CCC; cursor: default; }
+#date-filter #date { vertical-align: top; margin: -2px 4px 0; text-align: center; font-weight: bold; width: 8em; cursor: pointer !important; }
+#date-filter A { font-size: 100%; }
 #date-filter A:hover { border-color: #000; }
 
-#quick-filter { clear: both; border: 1px solid #CCC; padding: .5em .5em .75em; }
+#quick-filter { clear: both; padding: .5em .5em .75em; }
 #quick-filter .Field { margin-right: 8px; }
 #message-text-field { margin-left: 20px;}
 #message-text-field LABEL { font-size: .8em; }
 
-#audit-results { margin: 1em 0 !important; }
+#audit-results { margin: 0 0 1em !important; }
 #audit-results TH A { color: #fff; }
 
 #custom-report-fieldset { border: 1px solid #CCC !important; margin-bottom: .5em; padding: 5px 10px; }
@@ -89,6 +90,22 @@ FORM#date_filter_form { position: absolute; top: 5px; right: 0; }
 
 #total-audit-display { margin: 0; padding-top: .6em; float: left; }
 #top-report-pagination { float: right; }
+
+#filtering-options { position: absolute; bottom: 0; right: 6px; margin-bottom: 51px; }
+#filtering-options.Active { margin-bottom: 46px; }
+#more-or-less-metadata {
+-webkit-border-top-left-radius: 6px;
+-webkit-border-top-right-radius: 6px;
+-moz-border-radius-topleft: 6px;
+-moz-border-radius-topright: 6px;
+background: #7E7E7E url(/images/admin/metadata_toggle.png) 96% -19px no-repeat;
+padding: 4px 21px 5px 10px;
+text-shadow: #666 1px 1px 0;
+cursor: pointer;
+}
+.Active #more-or-less-metadata { background-position: 96% 9px; }
+
+#actions #remove-filters { background: none; color: #FFF; text-decoration: underline; padding: 0px; text-shadow: none; }
 
 * HTML .AdminTabSet UL.AdminTabNav { padding-top: 1px; }
 * HTML #tabs-wrapper { zoom: 1; }

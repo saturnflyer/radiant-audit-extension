@@ -1,4 +1,4 @@
-.CalendarWidget { position: absolute; width: 13.5em; padding: 8px; background: #FFF; border: 1px solid #CCC; border-width: 1px 2px 2px 1px; line-height: 1; font-family: helvetica, arial, sans-serif; font-size: 13px; }
+.CalendarWidget { position: absolute; width: 13.5em; padding: 8px; background: #FFF; border: 1px solid #CCC; border-width: 1px 2px 2px 1px; line-height: 1; font-family: helvetica, arial, sans-serif; font-size: 13px; color: #000; }
 .CalendarMonth { }
 
 .CalendarNav { height: 0; position: relative; }

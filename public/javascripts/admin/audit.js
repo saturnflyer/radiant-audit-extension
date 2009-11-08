@@ -2,11 +2,11 @@
 // as an auto-submit field.
 
 var AuditDatePicker = Behavior.create(DatePicker, {
-  _positionWidget : function() {
-  	var offset = this.element.cumulativeOffset();
-  	this.nodes['widget'].setStyle({ "top" : (offset[1] + 24) + "px", "left" : (offset[0] - 86) + "px" });
-  },
-  cellClickHandler : function(e, td_date) {
+	_positionWidget : function() {
+		var offset = this.element.cumulativeOffset();
+		this.nodes['widget'].setStyle({ "bottom" : "50px", "left" : offset[0] + "px" });
+	},
+	cellClickHandler : function(e, td_date) {
 		clearTimeout(this.hide_timeout);
 		e.stop();
 		this.element.value = td_date.format(this.CONFIG['field_date_format']);
@@ -30,4 +30,15 @@ document.observe("dom:loaded", function(){
   if (date_filter_form) {
     date_filter_form.select(".FormAction").invoke("hide");
   }
+	var metadata_toggle = $("more-or-less-metadata");
+	var metadata = $("audit_filter_form");
+	var filtering_options = $("filtering-options");
+	function toggleFilteringOptions(){
+		metadata.toggle();
+		filtering_options.toggleClassName("Active");
+		metadata_toggle.update(metadata_toggle.innerHTML.indexOf("More") > -1 ? "Less Filtering Options" : "More Filtering Options");
+	}
+	metadata_toggle.observe("click", toggleFilteringOptions);
+	if (document.location.href.indexOf("Filter") > -1)
+		toggleFilteringOptions();
 });

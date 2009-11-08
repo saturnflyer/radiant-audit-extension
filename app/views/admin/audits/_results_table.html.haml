@@ -1,0 +1,30 @@
+%table#audit-results.index
+  %col{ :width => "20%" }
+  %col{ :width => "10%" }
+  %col{ :width => "15%" }
+  %col{ :width => "15%" }
+  %col{ :width => "40%" }
+
+  %thead
+    %tr
+      %th= link_to "Date / Time", :overwrite_params => { :direction => reverse_direction }
+      %th IP Address
+      %th User
+      %th Event Type
+      %th Message
+
+  %tbody
+    - if @audits.size == 0
+      %tr
+        %td{ :colspan => 5 }
+          %p.Placeholder= "No events that match the criteria exist for this day."
+    - else
+      -@audits.each do |a|
+        %tr
+          %td= h(a.created_at.to_s(:mdy_time_tz))
+          %td= h(a.ip_address)
+          %td= h(event_user_name(a))
+          %td= h(a.event_type)
+          %td= entify_ampersands(a.log_message)
+
+.Bottom= will_paginate @audits, :previous_label => "Previous", :next_label => "Next"
