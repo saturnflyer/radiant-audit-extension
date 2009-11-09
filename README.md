@@ -85,9 +85,6 @@ latest releases of the Audit Extension.
 
 http://github.com/digitalpulp/radiant-audit-extension/
 
-Please avoid posting questions and problems to the various Radiant user and
-developer email lists.
-
 
 ## License
 
