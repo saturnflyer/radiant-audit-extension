@@ -14,6 +14,7 @@
   
 #actions
   = render :partial => "date_navigation"
+  = will_paginate @audits, :prev_label => "Previous", :next_label => "Next"
   = render :partial => "filter_options"
   
 = render :partial => "print_styles"

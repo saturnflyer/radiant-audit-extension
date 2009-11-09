@@ -13,20 +13,19 @@ fieldset { border: 0; }
 .Placeholder { padding: 1em; font-style: italic; text-align: center; font-weight: normal; }
 .Block { display: block; clear: both; }
 
-.pagination { text-align: right; clear: both; font-size: 86%; }
-.pagination A,
-.pagination SPAN { padding: 2px 4px 2px 4px; margin: 2px 1px; color: black; }
-.pagination A { border: 1px solid #CCC; text-decoration: none; }
-.pagination A:hover,
-.pagination A:active { border-color: #000; color: #000; }
-.pagination SPAN.current { border: 1px solid #000; font-weight: bold; cursor: default; }
-.pagination SPAN.disabled { border: 1px solid #EFEDED; color: #DDD; cursor: default; }
-.pagination { margin-top: .75em; }
-.Bottom .pagination { margin-top: 0; }
+#actions .pagination { text-align: right; font-size: 86%; float: right; margin: 14px 9px 0 0; }
+#actions .pagination A,
+#actions .pagination SPAN { padding: 2px 4px 2px 4px; margin: 2px 1px; }
+#actions .pagination A { border: 1px solid #ccc; text-decoration: none; -moz-border-radius: 0; -webkit-border-radius: 0; background: none; font-size: 100%; text-shadow: none !important; font-weight: bold; background: #efeded; }
+#actions .pagination A:hover,
+#actions .pagination A:active { text-decoration: underline; }
+#actions .pagination SPAN.current { border: 1px solid #efeded; color: #efeded; font-weight: bold; cursor: default; }
+#actions .pagination SPAN.disabled { border: 1px solid #efeded; color: #ddd; cursor: default; }
 
 #audit_filter_form { background: #7E7E7E; display: none; }
 .Active #audit_filter_form { display: block; }
 
+#date_filter_form { float: left; }
 #date_filter_form UL { padding-bottom: 8px; }
 #date-filter { font-size: .85em; border: 0; padding: 0; margin: 0; display: inline; }
 #date-filter IMG { vertical-align: top; }
