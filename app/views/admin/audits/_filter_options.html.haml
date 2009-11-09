@@ -27,7 +27,7 @@
               - if audited_users.any?
                 = options_from_collection_for_select(audited_users, "id", "login", (params[:user] || 0).to_i)
           %td
-            %label.Invisible{ :for => "log" } Message Text:
+            %label.Invisible.OverLabel{ :for => "log" }= (params[:log] if params[:log] && !params[:log].blank?) || "Log Message"
             = text_field_tag :log, params[:log]
             
     .FormAction
