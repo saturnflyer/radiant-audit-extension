@@ -22,8 +22,8 @@ var OverLabel = Behavior.create({
 		this.element.hide();
 		this.overlabel = this.element.innerHTML;
 		this.input = $(this.element.htmlFor);
-		if (this.overLabelIsWriteable)
-			this.initializeOverLabel();
+		if (!this.overLabelIsWriteable()) return;
+		this.initializeOverLabel();
 		this.element.up('form').observe("submit", this.clearOverLabelValue.bind(this));
 	},
 	initializeOverLabel : function(){
