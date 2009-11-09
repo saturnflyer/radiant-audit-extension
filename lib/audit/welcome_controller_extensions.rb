@@ -4,7 +4,8 @@ module Audit
       base.class_eval do
         include Auditor
         after_filter :audit_login, :only => :login
-        around_filter :audit_logout, :only => :logout
+        before_filter :audit_logout, :only => :logout
+        around_filter :disable_log, :only => [:login, :logout]
       end
     end
 
@@ -24,6 +25,9 @@ module Audit
 
     def audit_logout
       audit(:item => current_user, :user => current_user, :ip => request.remote_ip, :type => :logout) if current_user
+    end
+
+    def disable_log
       Audit.disable_logging do
         yield
       end

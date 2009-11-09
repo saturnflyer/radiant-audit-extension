@@ -27,5 +27,11 @@ describe Admin::WelcomeController do
       get :logout 
     }.should change(AuditEvent, :count).by(1)
   end
+
+  it "should not count remember-me as a separate update action" do
+    lambda {
+      post :login, :user => { :login => 'admin', :password => 'password'}, :remember_me => '1'
+    }.should change(AuditEvent, :count).by(1)
+  end
   
 end
