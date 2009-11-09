@@ -18,7 +18,7 @@ module Audit
         else
           # failed login! create a temporary user to pass the failed login info to the audit message
           if user = User.find_by_login(params[:user][:login])
-            audit :item => user, :user => nil, :ip => request.remote_ip, :type => :bad_password
+            audit :item => user, :user => user, :ip => request.remote_ip, :type => :bad_password
           else
             audit :item => User.new, :user => nil, :ip => request.remote_ip, :type => :bad_login
           end
