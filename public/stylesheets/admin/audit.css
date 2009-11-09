@@ -64,7 +64,8 @@ body.reversed { background: #fff; }
 #date_filter_form FIELDSET,
 #audit_filter_form FIELDSET { border: 0; }
 
-#audit_filter_form { background: #7E7E7E; }
+#audit_filter_form { background: #7E7E7E; display: none; }
+.Active #audit_filter_form { display: block; }
 
 #date_filter_form UL { padding-bottom: 8px; }
 #date-filter { font-size: .85em; }
